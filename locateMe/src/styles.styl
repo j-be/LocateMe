@@ -1,0 +1,30 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import '~leaflet/dist/leaflet.css';
+
+#map
+  position: absolute
+  top: 0
+  bottom: 0
+  left: 0
+  right: 0
+
+.on-map
+  z-index: 1000
+
+#startWatching,
+#stopWatching
+  position: absolute
+  bottom: 15px
+  right: 15px
+
+#share
+  @extend #stopWatching
+  right: 100px
+
+.duration
+  float: right
+
+.trip
+  width: 400px

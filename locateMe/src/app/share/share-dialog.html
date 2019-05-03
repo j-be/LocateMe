@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>Share</h1>
+<div mat-dialog-content>
+  <p><a mat-button href="{{ data.links.mailto }}">EMail</a></p>
+  <p><a mat-button href="{{ data.links.sms }}">SMS</a></p>
+  <p><a mat-button href="{{ data.links.whatsapp }}">WhatsApp</a></p>
+  <p>... or copy the link:</p>
+  <p><a href="{{ data.links.raw }}">[ Long-press here to copy ]</a></p>
+  <p><input onClick="this.select();" type="text" READONLY value="{{ data.links.raw }}"></p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Close</button>
+</div>

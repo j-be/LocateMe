@@ -1,0 +1,15 @@
+<div id="map" [hidden]="!mapService.showMap"></div>
+<button mat-raised-button color="primary" id="startWatching" class="on-map" (click)="locationService.startWatchingLocation()" *ngIf="!locationService.isWatchingLocation()">Start</button>
+<button mat-raised-button color="primary" id="stopWatching" class="on-map" (click)="locationService.stopWatchingLocation()" *ngIf="locationService.isWatchingLocation()">Stop</button>
+<app-share></app-share>
+
+<div class="container">
+  <div class="modal-header">
+    <h2 class="modal-title">Welcome to LocateMe</h2>
+  </div>
+  <div class="modal-body">
+    <p>LocateMe allows you to share your location.</p>
+    <p [hidden]="!locationService.isWatchingLocation()">Locating<br>This might take a bit...</p>
+    <p [hidden]="!locationService.error">An error occured!</p>
+  </div>
+</div>

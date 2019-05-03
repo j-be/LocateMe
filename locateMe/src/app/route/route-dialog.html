@@ -1,0 +1,18 @@
+<h1 mat-dialog-title>Share</h1>
+<div mat-dialog-content>
+  <mat-card class="trip" *ngFor="let trip of data.trips">
+
+    <mat-card-content>
+      <span>{{ formatPoint(trip.trip.legs[0].points[0]) }}</span><br/>
+      <span class="duration">{{ trip.trip.duration }}</span>
+      <span>
+        <span *ngFor="let leg of trip.trip.legs">{{ leg.mode.number }} </span>
+      </span><br/>
+      <span>{{ formatPoint(trip.trip.legs[trip.trip.legs.length - 1].points[1]) }}</span>
+    </mat-card-content>
+
+  </mat-card>
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>Close</button>
+</div>
