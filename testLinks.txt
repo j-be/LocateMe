@@ -1,0 +1,2 @@
+http://localhost:4200/show?lat=48.2&lon=16.3&acc=123
+
