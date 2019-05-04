@@ -1,8 +1,8 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {WlRoutingService} from '../wlRouting.service';
 import {LocationService} from '../location.service';
 import {MapService} from '../map.service';
+import {Dialog} from 'primeng/dialog';
 
 @Component({
   selector: 'app-route',
@@ -10,39 +10,31 @@ import {MapService} from '../map.service';
   styleUrls: ['./route.component.styl']
 })
 export class RouteComponent implements OnInit {
+  @ViewChild(Dialog) private dialog: Dialog;
+  display = false;
+  routes: any = {};
 
   constructor(
-    public dialog: MatDialog,
     private wlRoutingService: WlRoutingService,
     public locationService: LocationService,
-    public mapService: MapService
-  ) { }
+    public mapService: MapService) {
+  }
 
   ngOnInit() {
   }
 
   openDialog(): void {
+    this.display = true;
     const origin = this.mapService.getMe().location;
     const destination = this.mapService.getOther().location;
 
     this.locationService.stopWatchingLocation();
     this.wlRoutingService.getRoute(origin, destination)
       .subscribe((data) => {
-        console.log(data);
-        this.dialog.open(RouteDialogComponent, {
-          data
-        });
+        this.routes = data;
+        window.setTimeout(() => { this.dialog.center(); });
       });
   }
-}
-
-@Component({
-  selector: 'app-route-dialog',
-  templateUrl: 'route-dialog.html',
-})
-export class RouteDialogComponent {
-
-  constructor(@Inject(MAT_DIALOG_DATA) public data) {}
 
   formatPoint(point) {
     return point.dateTime.time + ' ' + point.name;

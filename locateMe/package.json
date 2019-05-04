@@ -12,17 +12,17 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^7.2.14",
-    "@angular/cdk": "^7.3.7",
     "@angular/common": "~7.2.0",
     "@angular/compiler": "~7.2.0",
     "@angular/core": "~7.2.0",
     "@angular/forms": "~7.2.0",
-    "@angular/material": "^7.3.7",
     "@angular/platform-browser": "~7.2.0",
     "@angular/platform-browser-dynamic": "~7.2.0",
     "@angular/router": "~7.2.0",
     "core-js": "^2.5.4",
     "leaflet": "^1.4.0",
+    "primeicons": "^1.0.0",
+    "primeng": "^7.1.2",
     "rxjs": "~6.3.3",
     "tslib": "^1.9.0",
     "zone.js": "~0.8.26"
@@ -47,5 +47,10 @@
     "ts-node": "~7.0.0",
     "tslint": "~5.11.0",
     "typescript": "~3.2.2"
-  }
+  },
+  "styles": [
+    "node_modules/primeng/resources/themes/nova-light/theme.css",
+    "node_modules/primeng/resources/primeng.min.css",
+    "node_modules/primeicons/primeicons.css"
+  ]
 }

@@ -1,1 +1,14 @@
-<button mat-raised-button color="primary" id="share" class="on-map" (click)="openDialog()" *ngIf="mapService.showMap">Share</button>
+<p-dialog class="on-map" header="Share" modal="true" [(visible)]="display">
+  <div *ngIf="links != null">
+    <p><a mat-button href="{{ links.mailto }}">EMail</a></p>
+    <p><a mat-button href="{{ links.sms }}">SMS</a></p>
+    <p><a mat-button href="{{ links.whatsapp }}">WhatsApp</a></p>
+    <p>... or copy the link:</p>
+    <p><a href="{{ links.raw }}">[ Long-press here to copy ]</a></p>
+    <p><input onClick="this.select();" type="text" READONLY value="{{ links.raw }}"></p>
+  </div>
+</p-dialog>
+
+<button pButton type="button" id="share" class="on-map"
+        label="Share" icon="pi pi-info-circle"
+        (click)="showDialog()" *ngIf="locationService.hasLocation()"></button>

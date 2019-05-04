@@ -7,12 +7,14 @@ import {MapService} from './map.service';
 import { OtherComponent } from './other/other.component';
 import {RouterModule, Routes} from '@angular/router';
 import {LocationService} from './location.service';
-import {ShareComponent, ShareDialogComponent} from './share/share.component';
+import {ShareComponent} from './share/share.component';
+import {HttpClientModule} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatButtonModule, MatCardModule, MatDialogModule, MatExpansionModule} from '@angular/material';
-import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {WlRoutingService} from './wlRouting.service';
-import {RouteComponent, RouteDialogComponent} from './route/route.component';
+import {RouteComponent} from './route/route.component';
+import {ButtonModule} from 'primeng/button';
+import {DialogModule} from 'primeng/dialog';
+import {CardModule} from 'primeng/card';
 
 const appRoutes: Routes = [
   { path: 'me', component: OwnComponent },
@@ -32,13 +34,7 @@ const appRoutes: Routes = [
     OwnComponent,
     OtherComponent,
     ShareComponent,
-    ShareDialogComponent,
     RouteComponent,
-    RouteDialogComponent
-  ],
-  entryComponents: [
-    ShareDialogComponent,
-    RouteDialogComponent
   ],
   imports: [
     RouterModule.forRoot(
@@ -46,11 +42,11 @@ const appRoutes: Routes = [
       {enableTracing: true} // <-- debugging purposes only
     ),
     BrowserAnimationsModule,
-    MatButtonModule,
-    MatDialogModule,
-    MatCardModule,
     BrowserModule,
-    HttpClientModule
+    HttpClientModule,
+    ButtonModule,
+    DialogModule,
+    CardModule
   ],
   providers: [MapService, LocationService, WlRoutingService],
   bootstrap: [AppComponent]

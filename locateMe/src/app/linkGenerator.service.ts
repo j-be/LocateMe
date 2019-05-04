@@ -1,5 +1,17 @@
 const BASE_URI = '/';
 
+export class Links {
+  whatsapp: string;
+  mailto: string;
+  sms: string;
+
+  constructor(public raw: string) {
+    this.whatsapp = 'whatsapp://send?text=' + encodeURI(raw);
+    this.mailto = 'mailto:?subject=Location&body=' + encodeURI(raw);
+    this.sms = 'sms:?body=' + encodeURI(raw);
+  }
+}
+
 export class LinkGeneratorService {
 
   static getLinks(location) {
@@ -9,12 +21,7 @@ export class LinkGeneratorService {
         'lon=' + location.coords.longitude + '&' +
         'acc=' + location.coords.accuracy;
 
-      return {
-        raw: link,
-        whatsapp: 'whatsapp://send?text=' + encodeURI(link),
-        mailto: 'mailto:?subject=Location&body=' + encodeURI(link),
-        sms: 'sms:?body=' + encodeURI(link)
-      };
+      return new Links(link);
     }
   }
 }

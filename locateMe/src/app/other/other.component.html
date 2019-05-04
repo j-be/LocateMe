@@ -1,5 +1,9 @@
 <div id="map">
-  <button mat-raised-button color="primary" id="startWatching" class="on-map" (click)="locationService.startWatchingLocation()" *ngIf="!locationService.isWatchingLocation()">Start</button>
-  <button mat-raised-button color="primary" id="stopWatching" class="on-map" (click)="locationService.stopWatchingLocation()" *ngIf="locationService.isWatchingLocation()">Stop</button>
+  <button pButton type="button" id="startWatching" class="on-map"
+          label="Start"
+          (click)="locationService.startWatchingLocation()" *ngIf="!locationService.isWatchingLocation()"></button>
+  <button pButton type="button" id="stopWatching" class="on-map"
+          label="Stop"
+          (click)="locationService.stopWatchingLocation()" *ngIf="locationService.isWatchingLocation()"></button>
   <app-route></app-route>
 </div>
