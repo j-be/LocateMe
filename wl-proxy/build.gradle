@@ -9,7 +9,7 @@ apply plugin:"application"
 apply plugin:"java"
 
 version "0.1"
-group "wl.proxy"
+group "org.duckdns.owly.locate_me.wl.proxy"
 
 repositories {
     mavenLocal()
@@ -44,7 +44,7 @@ shadowJar {
 
 run.jvmArgs('-noverify', '-XX:TieredStopAtLevel=1')
 
-mainClassName = "wl.proxy.Application"
+mainClassName = "org.duckdns.owly.locate_me.wl.proxy.Application"
 tasks.withType(JavaCompile){
     options.encoding = "UTF-8"
     options.compilerArgs.add('-parameters')
