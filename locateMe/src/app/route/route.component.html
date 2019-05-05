@@ -1,6 +1,7 @@
 <p-dialog header="Route" modal="true" [(visible)]="display"
+          [styleClass]="'card-dialog'"
           blockScroll="true">
-  <div *ngIf="routes == null" style="overflow: hidden">
+  <div *ngIf="routes == null" style="overflow: hidden; text-align: center">
     <p-progressSpinner></p-progressSpinner>
   </div>
 
@@ -9,11 +10,11 @@
       <p-card>
         <span>{{ formatPoint(trip.trip.legs[0].points[0]) }}</span><br/>
         <span class="duration">{{ trip.trip.duration }}</span>
-        <span>
+        <div class="transport-sequence">
         <span class="transport-chip"
               [ngClass]="getStyleForTransportationType(leg.mode.type)"
               *ngFor="let leg of trip.trip.legs">{{ leg.mode.number }}</span>
-      </span><br/>
+        </div>
         <span>{{ formatPoint(trip.trip.legs[trip.trip.legs.length - 1].points[1]) }}</span>
       </p-card>
     </div>

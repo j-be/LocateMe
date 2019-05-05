@@ -1,6 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 
-@import "~primeng/resources/themes/nova-light/theme.css";
+@import "~primeng/resources/themes/nova-colored/theme.css";
 @import "~primeng/resources/primeng.min.css";
 @import "~primeicons/primeicons.css";
 @import '~leaflet/dist/leaflet.css';
@@ -28,6 +28,8 @@
 
 .duration
   float: right
+  margin-left: 10px
+  padding-top: 6px
 
 #tileLayerSelector
   top: 15px
@@ -61,9 +63,17 @@
   background-image: url('/assets/css/img/ic_bus.svg')
 
 .walk
-  background-color: #fff
   background-image: url('/assets/css/img/ic_walk.svg')
 
 p-dialog .ui-dialog
   overflow-y: auto
   max-height: 100%
+
+body .ui-dialog.card-dialog .ui-dialog-content
+  background-color: #eee
+
+.transport-sequence
+  padding-top: 5px
+  padding-bottom: @padding-top
+  overflow-x: auto
+  margin-right: 5px
