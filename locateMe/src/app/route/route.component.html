@@ -4,8 +4,8 @@
     <p-progressSpinner></p-progressSpinner>
   </div>
 
-  <div *ngIf="routes != null && tripDetail == null">
-    <div class="trip" *ngFor="let trip of routes.trips" (click)="tripDetail = trip.trip">
+  <div *ngIf="routes != null">
+    <div class="trip" *ngFor="let trip of routes.trips" (click)="showDetails(trip.trip)">
       <p-card>
         <span>{{ formatPoint(trip.trip.legs[0].points[0]) }}</span><br/>
         <span class="duration">{{ trip.trip.duration }}</span>
@@ -18,40 +18,9 @@
       </p-card>
     </div>
   </div>
-
-  <div *ngIf="tripDetail != null">
-    <button pButton type="button"
-            label="Back" icon="pi pi-arrow-left"
-            (click)="tripDetail = null"></button>
-    <table>
-      <tbody>
-      <ng-container *ngFor="let leg of tripDetail.legs">
-        <tr>
-          <td>{{ leg.points[0].dateTime.time }}</td>
-          <td>&#9675;</td>
-          <td class="station-name">{{ leg.points[0].name }}</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td style="text-align: center">&#124;</td>
-          <td>
-            <span class="transport-chip" [ngClass]="getStyleForTransportationType(leg.mode.type)">{{ leg.mode.number }}</span>
-            <small>{{ leg.mode.destination }}</small>
-          </td>
-        </tr>
-        <tr>
-          <td>{{ leg.points[1].dateTime.time }}</td>
-          <td>&#9675;</td>
-          <td class="station-name">{{ leg.points[1].name }}</td>
-        </tr>
-        <tr>
-          <td colspan="3"><hr></td>
-        </tr>
-      </ng-container>
-      </tbody>
-    </table>
-  </div>
 </p-dialog>
+
+<app-route-detail></app-route-detail>
 
 <button pButton type="button" id="route" class="on-map"
         label="Route"

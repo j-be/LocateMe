@@ -18,6 +18,7 @@ import {CardModule} from 'primeng/card';
 import {ProgressSpinnerModule} from 'primeng/primeng';
 import { TileLayerComponent } from './tile-layer/tile-layer.component';
 import {FormsModule} from '@angular/forms';
+import { RouteDetailComponent } from './route-detail/route-detail.component';
 
 const appRoutes: Routes = [
   { path: 'me', component: OwnComponent },
@@ -39,6 +40,7 @@ const appRoutes: Routes = [
     ShareComponent,
     RouteComponent,
     TileLayerComponent,
+    RouteDetailComponent,
   ],
   imports: [
     RouterModule.forRoot(

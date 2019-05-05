@@ -3,28 +3,32 @@ import {WlRoutingService} from '../wlRouting.service';
 import {LocationService} from '../location.service';
 import {MapService} from '../map.service';
 import {Dialog} from 'primeng/dialog';
+import {RouteDetailComponent} from '../route-detail/route-detail.component';
+import {AbstractRouteComponent} from './abstract-route.component';
+import {Subject} from 'rxjs';
 
 @Component({
   selector: 'app-route',
   templateUrl: './route.component.html',
   styleUrls: ['./route.component.styl']
 })
-export class RouteComponent implements OnInit {
+export class RouteComponent extends AbstractRouteComponent implements OnInit {
   @ViewChild(Dialog) private dialog: Dialog;
   display = false;
   routes: any = null;
-  tripDetail: any = null;
+
+  detailSubject = new Subject<any>();
 
   constructor(
     private wlRoutingService: WlRoutingService,
     public locationService: LocationService,
     public mapService: MapService) {
+    super();
   }
 
   ngOnInit() {
     this.dialog.onHide.subscribe(() => {
       this.routes = null;
-      this.tripDetail = null;
     });
   }
 
@@ -41,23 +45,7 @@ export class RouteComponent implements OnInit {
       });
   }
 
-  formatPoint(point) {
-    return point.dateTime.time + ' ' + point.name;
-  }
-
-  getStyleForTransportationType(type: string) {
-    switch (type) {
-      case '1':
-        return 'subway';
-      case '3':
-        return 'bus';
-      case '4':
-        return 'tram';
-      case '99':
-      case '100':
-        return 'walk';
-      default:
-        return `unknown-${type}`;
-    }
+  showDetails(tripDetails) {
+    this.detailSubject.next(tripDetails);
   }
 }
