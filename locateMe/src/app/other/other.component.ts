@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {MapService} from '../map.service';
 import {ActivatedRoute} from '@angular/router';
 import {LocationService} from '../location.service';
-import {HttpClient} from '@angular/common/http';
-import {WlRoutingService} from '../wlRouting.service';
 
 @Component({
   selector: 'app-other',
@@ -23,7 +21,7 @@ export class OtherComponent implements OnInit {
 
     this.route
       .queryParams
-      .subscribe(params => {
+      .subscribe((params) => {
         const location = {
           coords: {
             latitude: params.lat,

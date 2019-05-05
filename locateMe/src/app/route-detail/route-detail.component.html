@@ -2,7 +2,7 @@
           blockScroll="true">
     <table>
       <tbody>
-      <ng-container *ngFor="let leg of tripDetail.legs">
+      <ng-container *ngFor="let leg of tripDetail?.legs">
         <tr>
           <td>{{ leg.points[0].dateTime.time }}</td>
           <td>&#9675;</td>
