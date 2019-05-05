@@ -15,7 +15,8 @@ const meOptions = new PersonOptions(
   {
     color: '#007CC4',
     fillColor: '#007CC4',
-    fillOpacity: 0.5
+    fillOpacity: 0.5,
+    radius: 0
   }
 );
 
@@ -29,7 +30,8 @@ const otherOptions = new PersonOptions(
   {
     color: '#74BF45',
     fillColor: '#74BF45',
-    fillOpacity: 0.5
+    fillOpacity: 0.5,
+    radius: 0
   }
 );
 
@@ -41,7 +43,8 @@ class Person {
   constructor(map, locationRaw, options: PersonOptions) {
     this.location = MapService.toLeaflet(locationRaw);
     this.marker = L.marker(this.location, {icon: options.icon}).addTo(map);
-    this.accuracy = L.circle(this.location, locationRaw.coords.accuracy, options.accuracyOptions).addTo(map);
+    this.accuracy = L.circle(this.location, options.accuracyOptions).addTo(map);
+    this.accuracy.setRadius(locationRaw.coords.accuracy);
   }
 
   setLocation(locationRaw) {
@@ -86,15 +89,16 @@ export class MapService {
       this.me.setLocation(location);
     }
 
-    if (enablePan) {
-      this.map.panTo(this.me.location);
-    }
+    this.showMap = true;
 
     if (this.other) {
       this.map.fitBounds(L.latLngBounds(this.me.location, this.other.location));
+      return;
     }
 
-    this.showMap = true;
+    if (enablePan) {
+      this.map.panTo(this.me.location);
+    }
   }
 
   showOtherOnMap(location, enablePan) {
