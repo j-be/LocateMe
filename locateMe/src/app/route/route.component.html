@@ -17,10 +17,14 @@
         <span>{{ formatPoint(trip.trip.legs[trip.trip.legs.length - 1].points[1]) }}</span>
       </p-card>
     </div>
+    <div *ngIf="routes.trips.length == 0">
+      <p-message severity="warn" text="Sorry, could not find any routes."></p-message>
+    </div>
   </div>
 </p-dialog>
 
 <app-route-detail></app-route-detail>
+<p-toast></p-toast>
 
 <button pButton type="button" id="route" class="on-map"
         label="Route"

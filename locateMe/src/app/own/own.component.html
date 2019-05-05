@@ -3,19 +3,16 @@
 </div>
 <button pButton type="button" id="startWatching" class="on-map"
         label="Start"
-        (click)="locationService.startWatchingLocation()" *ngIf="!locationService.isWatchingLocation()"></button>
+        (click)="startWatchingLocation()" *ngIf="!locationService.isWatchingLocation()"></button>
 <button pButton type="button" id="stopWatching" class="on-map"
         label="Stop"
         (click)="locationService.stopWatchingLocation()" *ngIf="locationService.isWatchingLocation()"></button>
 <app-share></app-share>
 
-<div class="container">
-  <div class="modal-header">
-    <h2 class="modal-title">Welcome to LocateMe</h2>
-  </div>
-  <div class="modal-body">
-    <p>LocateMe allows you to share your location.</p>
-    <p [hidden]="!locationService.isWatchingLocation()">Locating<br>This might take a bit...</p>
-    <p [hidden]="!locationService.error">An error occured!</p>
-  </div>
+<div>
+  <h2>Welcome to LocateMe</h2>
 </div>
+<div>
+  <p>LocateMe allows you to share your location.</p>
+</div>
+<p-messages [closable]="false"></p-messages>

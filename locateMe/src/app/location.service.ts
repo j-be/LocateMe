@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {MapService} from './map.service';
+import {MessageService} from 'primeng/api';
 
 const geolocationOptions = {
   enableHighAccuracy: true,
@@ -14,7 +15,10 @@ export class LocationService {
   public error = false;
   private location = null;
 
-  constructor(protected mapService: MapService) { }
+  constructor(
+    protected mapService: MapService,
+    private messageService: MessageService
+  ) { }
 
   startWatchingLocation() {
     if (this.locationWatchId === null) {
@@ -22,7 +26,7 @@ export class LocationService {
     }
 
     if (this.locationWatchId === null) {
-      this.errorLocation();
+      this.errorLocation({message: 'Cannot watch location!'});
     }
 
     window.onclose = this.stopWatchingLocation;
@@ -45,12 +49,18 @@ export class LocationService {
     this.mapService.showMeOnMap(location, true);
   }
 
-  private errorLocationCallback = () => {
-    this.errorLocation();
+  private errorLocationCallback = (error) => {
+    this.errorLocation(error);
   }
 
-  private errorLocation() {
-    this.error = true;
+  private errorLocation(error) {
+    console.log(error);
+    this.messageService.clear();
+    this.messageService.add({
+      severity: 'error',
+      summary: 'Error while locating',
+      detail: error.message
+    });
     this.stopWatchingLocation();
   }
 

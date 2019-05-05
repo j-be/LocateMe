@@ -15,10 +15,11 @@ import {RouteComponent} from './route/route.component';
 import {ButtonModule} from 'primeng/button';
 import {DialogModule} from 'primeng/dialog';
 import {CardModule} from 'primeng/card';
-import {ProgressSpinnerModule} from 'primeng/primeng';
+import {MessageModule, MessageService, MessagesModule, ProgressSpinnerModule} from 'primeng/primeng';
 import { TileLayerComponent } from './tile-layer/tile-layer.component';
 import {FormsModule} from '@angular/forms';
 import { RouteDetailComponent } from './route-detail/route-detail.component';
+import {ToastModule} from 'primeng/toast';
 
 const appRoutes: Routes = [
   { path: 'me', component: OwnComponent },
@@ -54,9 +55,16 @@ const appRoutes: Routes = [
     DialogModule,
     CardModule,
     ProgressSpinnerModule,
-    FormsModule
+    FormsModule,
+    ToastModule,
+    MessagesModule,
+    MessageModule
   ],
-  providers: [MapService, LocationService, WlRoutingService],
+  providers: [
+    MapService,
+    LocationService,
+    WlRoutingService,
+    MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

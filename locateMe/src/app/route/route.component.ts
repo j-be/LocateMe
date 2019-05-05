@@ -6,6 +6,7 @@ import {Dialog} from 'primeng/dialog';
 import {RouteDetailComponent} from '../route-detail/route-detail.component';
 import {AbstractRouteComponent} from './abstract-route.component';
 import {Subject} from 'rxjs';
+import {MessageService} from 'primeng/api';
 
 @Component({
   selector: 'app-route',
@@ -21,6 +22,7 @@ export class RouteComponent extends AbstractRouteComponent implements OnInit {
 
   constructor(
     private wlRoutingService: WlRoutingService,
+    private messageService: MessageService,
     public locationService: LocationService,
     public mapService: MapService) {
     super();
@@ -39,10 +41,20 @@ export class RouteComponent extends AbstractRouteComponent implements OnInit {
 
     this.locationService.stopWatchingLocation();
     this.wlRoutingService.getRoute(origin, destination)
-      .subscribe((data) => {
-        this.routes = data;
-        window.setTimeout(() => { this.dialog.center(); });
-      });
+      .subscribe(
+        (data) => {
+          this.routes = data;
+          console.log(this.routes);
+          window.setTimeout(() => { this.dialog.center(); });
+        },
+        () => {
+          this.display = false;
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Cannot fetch routes',
+            detail: 'An error occured while fetching data from WienerLininen!'
+          });
+        });
   }
 
   showDetails(tripDetails) {
