@@ -15,6 +15,8 @@ import {RouteComponent} from './route/route.component';
 import {ButtonModule} from 'primeng/button';
 import {DialogModule} from 'primeng/dialog';
 import {CardModule} from 'primeng/card';
+import { TileLayerComponent } from './tile-layer/tile-layer.component';
+import {FormsModule} from '@angular/forms';
 
 const appRoutes: Routes = [
   { path: 'me', component: OwnComponent },
@@ -35,6 +37,7 @@ const appRoutes: Routes = [
     OtherComponent,
     ShareComponent,
     RouteComponent,
+    TileLayerComponent,
   ],
   imports: [
     RouterModule.forRoot(
@@ -46,7 +49,8 @@ const appRoutes: Routes = [
     HttpClientModule,
     ButtonModule,
     DialogModule,
-    CardModule
+    CardModule,
+    FormsModule
   ],
   providers: [MapService, LocationService, WlRoutingService],
   bootstrap: [AppComponent]

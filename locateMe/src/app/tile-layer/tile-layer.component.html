@@ -1,0 +1,5 @@
+<div id="tileLayerSelector" class="on-map">
+  <select [(ngModel)]="selectedLayer" (change)="onChange()">
+    <option *ngFor="let layer of getTileLayers()" [ngValue]="layer" >{{layer.name}}</option>
+  </select>
+</div>

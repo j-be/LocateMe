@@ -58,11 +58,47 @@ class Person {
   }
 }
 
+const osmDataAttribution = 'Data &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors';
+
+export class TileLayer {
+  constructor(
+    public id,
+    public name,
+    public url,
+    public attribution = '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors') { }
+}
+
+export const tileLayers = [
+  new TileLayer(
+    0,
+    'HOT',
+    'https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
+    `${osmDataAttribution}, Tiles &copy; HOT`),
+  new TileLayer(
+    1,
+    'OSM Mapnik B&W',
+    'https://tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png'),
+  new TileLayer(2,
+    'OSM Mapnik',
+    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'),
+  new TileLayer(
+    3,
+    'Carto Light',
+    'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png',
+    'Map tiles by Carto, under CC BY 3.0. Data by OpenStreetMap, under ODbL'),
+  new TileLayer(
+    4,
+    'Wikimedia Maps',
+    'https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png')
+];
+
 @Injectable()
 export class MapService {
   private map: L.Map;
   private me: Person;
   private other: Person;
+  private tileLayer: L.layer = tileLayers[0];
+
   public showMap = false;
 
   static toLeaflet(location) {
@@ -75,11 +111,7 @@ export class MapService {
       center: [0, 0],
       zoom: 15
     });
-
-    // add an OpenStreetMap tile layer
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(this.map);
+    this.setTileLayer(this.tileLayer);
   }
 
   showMeOnMap(location, enablePan) {
@@ -121,5 +153,22 @@ export class MapService {
 
   getOther() {
     return this.other;
+  }
+
+  getTileLayer() {
+    return this.tileLayer;
+  }
+
+  setTileLayer(tileLayer: TileLayer) {
+    console.log('Setting tileLayer', tileLayer);
+
+    if (this.tileLayer != null) {
+      this.map.removeLayer(this.tileLayer);
+    }
+    // add an OpenStreetMap tile layer
+    this.tileLayer = L.tileLayer(tileLayer.url, {
+      attribution: tileLayer.attribution
+    });
+    this.tileLayer.addTo(this.map);
   }
 }
