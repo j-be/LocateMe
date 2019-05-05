@@ -12,7 +12,8 @@ import {Dialog} from 'primeng/dialog';
 export class RouteComponent implements OnInit {
   @ViewChild(Dialog) private dialog: Dialog;
   display = false;
-  routes: any = {};
+  routes: any = null;
+  tripDetail: any = null;
 
   constructor(
     private wlRoutingService: WlRoutingService,
@@ -21,6 +22,10 @@ export class RouteComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.dialog.onHide.subscribe(() => {
+      this.routes = null;
+      this.tripDetail = null;
+    });
   }
 
   openDialog(): void {
