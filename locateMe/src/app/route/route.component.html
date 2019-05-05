@@ -1,11 +1,13 @@
-<p-dialog class="on-map" header="Route" modal="true" [(visible)]="display" [contentStyle]="{'pointer-events': 'none'}">
+<p-dialog class="on-map" header="Route" modal="true" [(visible)]="display">
   <p-card class="trip" *ngFor="let trip of routes.trips">
-      <span>{{ formatPoint(trip.trip.legs[0].points[0]) }}</span><br/>
-      <span class="duration">{{ trip.trip.duration }}</span>
-      <span>
-        <span *ngFor="let leg of trip.trip.legs">{{ leg.mode.number }} </span>
+    <span>{{ formatPoint(trip.trip.legs[0].points[0]) }}</span><br/>
+    <span class="duration">{{ trip.trip.duration }}</span>
+    <span>
+        <span class="transport-chip"
+              [ngClass]="getStyleForTransportationType(leg.mode.type)"
+              *ngFor="let leg of trip.trip.legs">{{ leg.mode.number }} </span>
       </span><br/>
-      <span>{{ formatPoint(trip.trip.legs[trip.trip.legs.length - 1].points[1]) }}</span>
+    <span>{{ formatPoint(trip.trip.legs[trip.trip.legs.length - 1].points[1]) }}</span>
   </p-card>
 </p-dialog>
 
