@@ -1,4 +1,4 @@
-const BASE_URI = '/';
+const BASE_URI = '/locateMe/';
 
 export class Links {
   whatsapp: string;
