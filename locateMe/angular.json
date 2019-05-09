@@ -40,6 +40,7 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
+              "baseHref": "/locateMe/",
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
