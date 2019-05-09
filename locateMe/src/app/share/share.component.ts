@@ -1,7 +1,6 @@
 import {Component} from '@angular/core';
 import {LinkGeneratorService, Links} from '../linkGenerator.service';
 import {LocationService} from '../location.service';
-import {DialogModule} from 'primeng/dialog';
 
 @Component({
   selector: 'app-share',
@@ -17,7 +16,6 @@ export class ShareComponent {
   showDialog() {
     this.display = true;
     this.locationService.stopWatchingLocation();
-    console.log(this.locationService.getLocation());
     this.links = LinkGeneratorService.getLinks(this.locationService.getLocation());
   }
 }

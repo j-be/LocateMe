@@ -1,4 +1,4 @@
-const BASE_URI = '/locateMe/';
+import {environment} from '../environments/environment';
 
 export class Links {
   whatsapp: string;
@@ -16,7 +16,7 @@ export class LinkGeneratorService {
 
   static getLinks(location) {
     if (location) {
-      const link = 'https://' + window.location.host + BASE_URI + 'show?' +
+      const link = window.location.protocol + '//' + window.location.host + environment.baseHref + 'show?' +
         'lat=' + location.coords.latitude + '&' +
         'lon=' + location.coords.longitude + '&' +
         'acc=' + location.coords.accuracy;
