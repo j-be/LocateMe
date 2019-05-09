@@ -15,7 +15,7 @@ import {RouteComponent} from './route/route.component';
 import {ButtonModule} from 'primeng/button';
 import {DialogModule} from 'primeng/dialog';
 import {CardModule} from 'primeng/card';
-import {MessageModule, MessageService, MessagesModule, ProgressSpinnerModule} from 'primeng/primeng';
+import {DropdownModule, MessageModule, MessageService, MessagesModule, ProgressSpinnerModule} from 'primeng/primeng';
 import { TileLayerComponent } from './tile-layer/tile-layer.component';
 import {FormsModule} from '@angular/forms';
 import { RouteDetailComponent } from './route-detail/route-detail.component';
@@ -58,7 +58,8 @@ const appRoutes: Routes = [
     FormsModule,
     ToastModule,
     MessagesModule,
-    MessageModule
+    MessageModule,
+    DropdownModule
   ],
   providers: [
     MapService,
