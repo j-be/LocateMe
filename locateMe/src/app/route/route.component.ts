@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {WlRoutingService} from '../wlRouting.service';
 import {LocationService} from '../location.service';
 import {MapService} from '../map.service';
@@ -12,7 +12,7 @@ import {MessageService} from 'primeng/api';
   templateUrl: './route.component.html',
   styleUrls: ['./route.component.styl']
 })
-export class RouteComponent extends AbstractRouteComponent implements OnInit {
+export class RouteComponent extends AbstractRouteComponent implements AfterViewInit {
   @ViewChild(Dialog) private dialog: Dialog;
   display = false;
   routes: any = null;
@@ -27,7 +27,7 @@ export class RouteComponent extends AbstractRouteComponent implements OnInit {
     super();
   }
 
-  ngOnInit() {
+  ngAfterViewInit(): void {
     this.dialog.onHide.subscribe(() => {
       this.routes = null;
     });
