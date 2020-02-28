@@ -1,4 +1,6 @@
 build: clean
+	npm install
+	npm audit fix
 	ng build --prod
 
 clean:
