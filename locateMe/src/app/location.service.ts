@@ -11,18 +11,21 @@ const geolocationOptions = {
 @Injectable()
 export class LocationService {
 
-  private locationWatchId = null;
+  private locationWatchId: number = null;
   public error = false;
-  private location = null;
+  private location: Position = null;
 
   constructor(
     protected mapService: MapService,
     private messageService: MessageService
   ) { }
 
-  startWatchingLocation() {
+  startWatchingLocation(): void {
     if (this.locationWatchId === null) {
-      this.locationWatchId = navigator.geolocation.watchPosition(this.newLocationCallback, this.errorLocationCallback, geolocationOptions);
+      this.locationWatchId = navigator.geolocation.watchPosition(
+        newLocation => this.gotNewLocation(newLocation),
+        error => this.errorLocation(error),
+        geolocationOptions);
     }
 
     if (this.locationWatchId === null) {
@@ -32,7 +35,7 @@ export class LocationService {
     window.onclose = this.stopWatchingLocation;
   }
 
-  stopWatchingLocation() {
+  stopWatchingLocation(): void {
     console.log('Stop ' + this.locationWatchId);
     if (this.locationWatchId != null) {
       navigator.geolocation.clearWatch(this.locationWatchId);
@@ -40,20 +43,12 @@ export class LocationService {
     }
   }
 
-  private newLocationCallback = (location) => {
-    this.gotNewLocation(location);
-  }
-
-  private gotNewLocation(location) {
+  private gotNewLocation(location): void {
     this.location = location;
     this.mapService.showMeOnMap(location, true);
   }
 
-  private errorLocationCallback = (error) => {
-    this.errorLocation(error);
-  }
-
-  private errorLocation(error) {
+  private errorLocation(error): void {
     console.log(error);
     this.messageService.clear();
     this.messageService.add({
@@ -64,15 +59,15 @@ export class LocationService {
     this.stopWatchingLocation();
   }
 
-  getLocation() {
+  getLocation(): Position {
     return this.location;
   }
 
-  isWatchingLocation() {
+  isWatchingLocation(): boolean {
     return this.locationWatchId != null;
   }
 
-  hasLocation() {
+  hasLocation(): boolean {
     return this.location != null;
   }
 }
