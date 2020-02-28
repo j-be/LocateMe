@@ -1,11 +1,11 @@
 <p-dialog header="Share" modal="true" [(visible)]="display">
   <div *ngIf="links != null">
-    <p><a mat-button href="{{ links.mailto }}">EMail</a></p>
-    <p><a mat-button href="{{ links.sms }}">SMS</a></p>
-    <p><a mat-button href="{{ links.whatsapp }}">WhatsApp</a></p>
+    <p><a href="{{ links.mailto }}">EMail</a></p>
+    <p><a [href]="links.sms">SMS</a></p>
+    <p><a href="{{ links.whatsapp }}">WhatsApp</a></p>
     <p>... or copy the link:</p>
-    <p><a href="{{ links.raw }}">[ Long-press here to copy ]</a></p>
-    <p><input onClick="this.select();" type="text" READONLY value="{{ links.raw }}"></p>
+    <p><a href="{{ links.link }}">[ Long-press here to copy ]</a></p>
+    <p><input onClick="this.select();" type="text" READONLY value="{{ links.link }}"></p>
   </div>
 </p-dialog>
 

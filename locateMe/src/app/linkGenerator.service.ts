@@ -1,29 +1,38 @@
 import {environment} from '../environments/environment';
+import {Injectable, SecurityContext} from '@angular/core';
+import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
 
 export const SEP_CHAR = '+';
 
-export class Links {
+export interface Links {
+  link: string;
   whatsapp: string;
   mailto: string;
-  sms: string;
-
-  constructor(public raw: string) {
-    this.whatsapp = 'whatsapp://send?text=' + encodeURI(raw);
-    this.mailto = 'mailto:?subject=Location&body=' + encodeURI(raw);
-    this.sms = 'sms:?body=' + encodeURI(raw);
-  }
+  sms: SafeUrl;
 }
 
+@Injectable({providedIn: 'root'})
 export class LinkGeneratorService {
 
-  static getLinks(location) {
+  constructor(
+    private sanitizer: DomSanitizer,
+  ) {
+  }
+
+  getLinks(location): Links {
     if (location) {
       const link = window.location.protocol + '//' + window.location.host + environment.baseHref + 'show#' +
         location.coords.latitude + SEP_CHAR +
         location.coords.longitude + SEP_CHAR +
         location.coords.accuracy;
 
-      return new Links(link);
+      return {
+        link,
+        whatsapp: 'https://wa.me/?text=' + link,
+        mailto: 'mailto:?subject=Location&body=' + link,
+        sms: this.sanitizer.bypassSecurityTrustUrl('sms:?body=' +
+          this.sanitizer.sanitize(SecurityContext.URL, link)),
+      };
     }
   }
 }

@@ -11,11 +11,14 @@ export class ShareComponent {
   display = false;
   links: Links = null;
 
-  constructor(public locationService: LocationService) {}
+  constructor(
+    public locationService: LocationService,
+    private linkGeneratorService: LinkGeneratorService,
+  ) {}
 
   showDialog() {
     this.display = true;
     this.locationService.stopWatchingLocation();
-    this.links = LinkGeneratorService.getLinks(this.locationService.getLocation());
+    this.links = this.linkGeneratorService.getLinks(this.locationService.getLocation());
   }
 }
