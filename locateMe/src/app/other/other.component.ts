@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {MapService} from '../map.service';
 import {ActivatedRoute} from '@angular/router';
 import {LocationService} from '../location.service';
+import {SEP_CHAR} from '../linkGenerator.service';
 
 @Component({
   selector: 'app-other',
@@ -19,14 +20,14 @@ export class OtherComponent implements OnInit {
   ngOnInit() {
     this.mapService.init('map');
 
-    this.route
-      .queryParams
-      .subscribe((params) => {
+    this.route.fragment
+      .subscribe((fragment) => {
+        const fragments = fragment.split(SEP_CHAR);
         const location = {
           coords: {
-            latitude: params.lat,
-            longitude: params.lon,
-            accuracy: params.acc
+            latitude: fragments[0],
+            longitude: fragments[1],
+            accuracy: fragments[2],
           }
         };
         this.mapService.showOtherOnMap(location, true);

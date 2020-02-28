@@ -1,5 +1,7 @@
 import {environment} from '../environments/environment';
 
+export const SEP_CHAR = '+';
+
 export class Links {
   whatsapp: string;
   mailto: string;
@@ -16,10 +18,10 @@ export class LinkGeneratorService {
 
   static getLinks(location) {
     if (location) {
-      const link = window.location.protocol + '//' + window.location.host + environment.baseHref + 'show?' +
-        'lat=' + location.coords.latitude + '&' +
-        'lon=' + location.coords.longitude + '&' +
-        'acc=' + location.coords.accuracy;
+      const link = window.location.protocol + '//' + window.location.host + environment.baseHref + 'show#' +
+        location.coords.latitude + SEP_CHAR +
+        location.coords.longitude + SEP_CHAR +
+        location.coords.accuracy;
 
       return new Links(link);
     }
