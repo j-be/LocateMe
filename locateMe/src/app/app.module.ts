@@ -1,10 +1,10 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
 
-import { AppComponent } from './app.component';
-import { OwnComponent } from './own/own.component';
+import {AppComponent} from './app.component';
+import {OwnComponent} from './own/own.component';
 import {MapService} from './map.service';
-import { OtherComponent } from './other/other.component';
+import {OtherComponent} from './other/other.component';
 import {RouterModule, Routes} from '@angular/router';
 import {LocationService} from './location.service';
 import {ShareComponent} from './share/share.component';
@@ -15,10 +15,14 @@ import {RouteComponent} from './route/route.component';
 import {ButtonModule} from 'primeng/button';
 import {DialogModule} from 'primeng/dialog';
 import {CardModule} from 'primeng/card';
-import {DropdownModule, MessageModule, MessageService, MessagesModule, ProgressSpinnerModule} from 'primeng/primeng';
-import { TileLayerComponent } from './tile-layer/tile-layer.component';
+import {DropdownModule} from 'primeng/dropdown';
+import {MessageModule} from 'primeng/message';
+import {MessagesModule} from 'primeng/messages';
+import {MessageService} from 'primeng/api';
+import {ProgressSpinnerModule} from 'primeng/progressspinner';
+import {TileLayerComponent} from './tile-layer/tile-layer.component';
 import {FormsModule} from '@angular/forms';
-import { RouteDetailComponent } from './route-detail/route-detail.component';
+import {RouteDetailComponent} from './route-detail/route-detail.component';
 import {ToastModule} from 'primeng/toast';
 
 const appRoutes: Routes = [
