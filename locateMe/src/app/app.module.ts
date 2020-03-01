@@ -33,7 +33,7 @@ const appRoutes: Routes = [
     pathMatch: 'full'
   },
   { path: 'test',
-    redirectTo: '/show?lat=48&lon=16&acc=123',
+    redirectTo: '/show#48.2009786+16.3693116+12',
     pathMatch: 'full'
   }];
 
