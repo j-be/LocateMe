@@ -1,5 +1,7 @@
-<div id="map" [hidden]="!mapService.showMap">
-  <app-tile-layer></app-tile-layer>
+<div id="map-container">
+  <div id="map" [hidden]="!mapService.showMap">
+    <app-tile-layer></app-tile-layer>
+  </div>
 </div>
 <button pButton type="button" id="startWatching" class="on-map"
         label="Start"
