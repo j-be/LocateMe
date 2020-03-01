@@ -1,32 +1,49 @@
 import {Injectable} from '@angular/core';
-import {MapService} from './map.service';
 import {MessageService} from 'primeng/api';
-
-const geolocationOptions = {
-  enableHighAccuracy: true,
-  timeout: 300000,
-  maximumAge: 60000
-};
+import {geolocationOptions} from '../common';
+import {Store} from '@ngrx/store';
+import {AppState} from '../store/states/app.state';
+import {locatingStop, positionFound} from '../store/actions/position.actions';
+import {selectLocating} from '../store/selectors/position.selectors';
 
 @Injectable()
 export class LocationService {
 
   private locationWatchId: number = null;
   public error = false;
-  private location: Position = null;
 
   constructor(
-    protected mapService: MapService,
+    protected store: Store<AppState>,
     private messageService: MessageService
-  ) { }
+  ) {
+    this.store.select(selectLocating)
+      .subscribe(geolocationState => {
+        if (geolocationState.locating) {
+          this.startWatchingLocation();
+        } else {
+          this.stopWatchingLocation();
+        }
+      });
+  }
 
   startWatchingLocation(): void {
     if (this.locationWatchId === null) {
       this.locationWatchId = navigator.geolocation.watchPosition(
-        newLocation => this.gotNewLocation(newLocation),
+        newLocation => this.store.dispatch(positionFound({
+          lat: newLocation.coords.latitude,
+          lng: newLocation.coords.longitude,
+          acc: newLocation.coords.accuracy
+        })),
         error => this.errorLocation(error),
         geolocationOptions);
     }
+
+    this.messageService.clear();
+    this.messageService.add({
+      severity: 'info',
+      summary: 'Locating',
+      detail: 'This might take a bit...'
+    });
 
     if (this.locationWatchId === null) {
       this.errorLocation({message: 'Cannot watch location!'});
@@ -36,38 +53,19 @@ export class LocationService {
   }
 
   stopWatchingLocation(): void {
-    console.log('Stop ' + this.locationWatchId);
     if (this.locationWatchId != null) {
       navigator.geolocation.clearWatch(this.locationWatchId);
       this.locationWatchId = null;
     }
   }
 
-  private gotNewLocation(location): void {
-    this.location = location;
-    this.mapService.showMeOnMap(location, true);
-  }
-
   private errorLocation(error): void {
-    console.log(error);
     this.messageService.clear();
     this.messageService.add({
       severity: 'error',
       summary: 'Error while locating',
       detail: error.message
     });
-    this.stopWatchingLocation();
-  }
-
-  getLocation(): Position {
-    return this.location;
-  }
-
-  isWatchingLocation(): boolean {
-    return this.locationWatchId != null;
-  }
-
-  hasLocation(): boolean {
-    return this.location != null;
+    this.store.dispatch(locatingStop());
   }
 }

@@ -32,6 +32,7 @@
               "node_modules/primeng/resources/themes/nova-colored/theme.css",
               "node_modules/primeicons/primeicons.css",
               "node_modules/leaflet/dist/leaflet.css",
+              "node_modules/materialize-css/dist/css/materialize.css",
               "src/styles.styl"
             ],
             "scripts": []

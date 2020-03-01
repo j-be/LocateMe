@@ -27,6 +27,7 @@
 <app-route-detail></app-route-detail>
 <p-toast></p-toast>
 
-<button pButton type="button" id="route" class="on-map"
-        label="Route"
-        (click)="openDialog()" *ngIf="locationService.hasLocation()"></button>
+<a class="btn-floating btn-large waves-effect waves-light red darken-2 right" style="margin-right: 12px"
+   (click)="openDialog()" *ngIf="(origin$ | async) && (destination$ | async)">
+  <i class="material-icons">directions_transit</i>
+</a>

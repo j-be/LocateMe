@@ -1,0 +1,57 @@
+<nav>
+  <div class="nav-wrapper light-green">
+    <span class="brand-logo">LocateMe</span>
+  </div>
+</nav>
+
+<main>
+  <div leaflet *ngIf="!hidden"
+       [leafletOptions]="options"
+       [leafletLayersControl]="layersControl"
+       (leafletMapReady)="onMapReady($event)">
+  </div>
+
+  <div class="container" *ngIf="hidden">
+    <div class="row">
+      <div class="col s12 m6 offset-m3">
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title"><i class="material-icons">my_location</i> Share your location</span>
+            <p>Tell your friends where you are.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col s12 m6 offset-m3">
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title"><i class="material-icons">lock_outline</i> Privacy focused</span>
+            <p>You decide who sees your location.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col s12 m6 offset-m3">
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title"><i class="material-icons">check</i> Ready to use</span>
+            <p>No app install or account needed.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <a class="btn-floating btn-large waves-effect waves-light light-green right"
+     (click)="locateMe()" *ngIf="!(isWatchingLocation$ | async).locating">
+    <i class="material-icons">location_searching</i>
+  </a>
+  <a class="btn-floating btn-large waves-effect waves-light light-green right"
+     (click)="stopLocatingMe()" *ngIf="(isWatchingLocation$ | async).locating">
+    <i class="material-icons">stop</i>
+  </a>
+  <app-share></app-share>
+  <app-route></app-route>
+</footer>

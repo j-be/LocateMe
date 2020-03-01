@@ -1,29 +1,26 @@
-/* You can add global styles to this file, and also import other style files */
+/* You can add global styles to this file, and also import map style files */
 
-#map
-  width 100%
+html,
+body,
+main,
+.leaflet-container
   height 100%
 
-#map-container
-  position: absolute
-  top: 0
-  bottom: 0
-  left: 0
-  right: 0
+nav
+  position fixed
+  z-index 10000000
 
-.on-map
-  position: absolute
-  z-index: 1000
+main
+  padding-top 56px
+  @media screen and (min-width: 601px)
+    padding-top 64px
 
-#startWatching,
-#stopWatching
-  bottom: 15px
-  right: 15px
-
-#share,
-#route
-  @extend #stopWatching
-  right: 100px
+footer
+  position fixed
+  padding 12px
+  width 100%
+  bottom 0
+  z-index 10000000
 
 .duration
   float: right

@@ -2,60 +2,52 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 
 import {AppComponent} from './app.component';
-import {OwnComponent} from './own/own.component';
-import {MapService} from './map.service';
-import {OtherComponent} from './other/other.component';
+import {MapComponent} from './map/map.component';
 import {RouterModule, Routes} from '@angular/router';
-import {LocationService} from './location.service';
+import {LocationService} from './service/location.service';
 import {ShareComponent} from './share/share.component';
 import {HttpClientModule} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {WlRoutingService} from './wlRouting.service';
+import {WlRoutingService} from './service/wlRouting.service';
 import {RouteComponent} from './route/route.component';
-import {ButtonModule} from 'primeng/button';
 import {DialogModule} from 'primeng/dialog';
 import {CardModule} from 'primeng/card';
-import {DropdownModule} from 'primeng/dropdown';
 import {MessageModule} from 'primeng/message';
 import {MessagesModule} from 'primeng/messages';
 import {MessageService} from 'primeng/api';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
-import {TileLayerComponent} from './tile-layer/tile-layer.component';
 import {FormsModule} from '@angular/forms';
 import {RouteDetailComponent} from './route-detail/route-detail.component';
 import {ToastModule} from 'primeng/toast';
+import {LeafletModule} from '@asymmetrik/ngx-leaflet';
+import {StoreModule} from '@ngrx/store';
+import {locatingReducer, meLocationReducer, otherLocationReducer} from './store/reducers/position.reducers';
+import {EffectsModule} from '@ngrx/effects';
+import {PositionEffects} from './store/effects/position.effects';
 
 const appRoutes: Routes = [
-  { path: 'me', component: OwnComponent },
-  { path: 'show', component: OtherComponent },
-  { path: '',
-    redirectTo: '/me',
-    pathMatch: 'full'
-  },
-  { path: 'test',
-    redirectTo: '/show#48.2009786+16.3693116+12',
-    pathMatch: 'full'
+  {path: '', component: MapComponent},
+  {
+    path: 'test',
+    redirectTo: '/#48.2009786+16.3693116+12',
+    pathMatch: 'full',
   }];
 
 @NgModule({
   declarations: [
     AppComponent,
-    OwnComponent,
-    OtherComponent,
+    MapComponent,
     ShareComponent,
     RouteComponent,
-    TileLayerComponent,
     RouteDetailComponent,
   ],
   imports: [
     RouterModule.forRoot(
       appRoutes,
-      {enableTracing: true} // <-- debugging purposes only
     ),
     BrowserAnimationsModule,
     BrowserModule,
     HttpClientModule,
-    ButtonModule,
     DialogModule,
     CardModule,
     ProgressSpinnerModule,
@@ -63,13 +55,21 @@ const appRoutes: Routes = [
     ToastModule,
     MessagesModule,
     MessageModule,
-    DropdownModule
+    LeafletModule.forRoot(),
+    StoreModule.forRoot({
+      me: meLocationReducer,
+      other: otherLocationReducer,
+      locating: locatingReducer,
+    }),
+    EffectsModule.forRoot([
+      PositionEffects,
+    ]),
   ],
   providers: [
-    MapService,
     LocationService,
     WlRoutingService,
     MessageService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
