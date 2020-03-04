@@ -6,6 +6,8 @@ import {AppState} from '../store/states/app.state';
 import {locatingStop, positionFound} from '../store/actions/position.actions';
 import {selectLocating} from '../store/selectors/position.selectors';
 
+const MSG_LOCATING = 'locating';
+
 @Injectable()
 export class LocationService {
 
@@ -28,12 +30,14 @@ export class LocationService {
 
   startWatchingLocation(): void {
     if (this.locationWatchId === null) {
-      this.locationWatchId = navigator.geolocation.watchPosition(
-        newLocation => this.store.dispatch(positionFound({
-          lat: newLocation.coords.latitude,
-          lng: newLocation.coords.longitude,
-          acc: newLocation.coords.accuracy
-        })),
+      this.locationWatchId = navigator.geolocation.watchPosition(newLocation => {
+          this.messageService.clear(MSG_LOCATING);
+          this.store.dispatch(positionFound({
+            lat: newLocation.coords.latitude,
+            lng: newLocation.coords.longitude,
+            acc: newLocation.coords.accuracy
+          }));
+        },
         error => this.errorLocation(error),
         geolocationOptions);
     }
@@ -42,7 +46,9 @@ export class LocationService {
     this.messageService.add({
       severity: 'info',
       summary: 'Locating',
-      detail: 'This might take a bit...'
+      detail: 'This might take a bit...',
+      sticky: true,
+      id: MSG_LOCATING,
     });
 
     if (this.locationWatchId === null) {
@@ -57,6 +63,7 @@ export class LocationService {
       navigator.geolocation.clearWatch(this.locationWatchId);
       this.locationWatchId = null;
     }
+    this.messageService.clear(MSG_LOCATING);
   }
 
   private errorLocation(error): void {
