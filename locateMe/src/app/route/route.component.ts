@@ -17,7 +17,7 @@ import {AbstractRouteComponent} from './abstract-route.component';
 })
 export class RouteComponent extends AbstractRouteComponent implements OnInit, AfterViewInit {
   @ViewChild(Dialog)
-  private dialog: Dialog;
+  dialog: Dialog;
 
   display = false;
   routes: any = null;

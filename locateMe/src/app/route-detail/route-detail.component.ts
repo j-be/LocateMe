@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {AbstractRouteComponent} from '../route/abstract-route.component';
 import {RouteComponent} from '../route/route.component';
+import {Dialog} from 'primeng/dialog';
 
 @Component({
   selector: 'app-route-detail',
@@ -8,6 +9,8 @@ import {RouteComponent} from '../route/route.component';
   styleUrls: ['./route-detail.component.styl']
 })
 export class RouteDetailComponent extends AbstractRouteComponent implements OnInit {
+  @ViewChild(Dialog)
+  dialog: Dialog;
 
   tripDetail = null;
   display = false;
