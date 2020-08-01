@@ -1,11 +1,10 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {LinkGeneratorService, Links} from '../service/linkGenerator.service';
-import {Store} from '@ngrx/store';
-import {AppState, Position} from '../store/states/app.state';
-import {selectMe} from '../store/selectors/position.selectors';
 import {Observable, Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
-import {locatingStop} from '../store/actions/position.actions';
+import {MePositionState, Position} from '../store/states/app.state';
+import {Select, Store} from '@ngxs/store';
+import {StopLocating} from '../store/actions/position.actions';
 
 @Component({
   selector: 'app-share',
@@ -16,18 +15,17 @@ export class ShareComponent implements OnInit, OnDestroy {
   display = false;
   links: Links = null;
 
+  @Select(MePositionState)
   location$: Observable<Position>;
 
   private onDestroy$ = new Subject<boolean>();
 
   constructor(
     private linkGeneratorService: LinkGeneratorService,
-    private store: Store<AppState>,
+    private store: Store,
   ) {}
 
   ngOnInit(): void {
-    this.location$ = this.store.select(selectMe)
-      .pipe(takeUntil(this.onDestroy$));
   }
 
   ngOnDestroy(): void {
@@ -37,7 +35,7 @@ export class ShareComponent implements OnInit, OnDestroy {
 
   showDialog() {
     this.display = true;
-    this.store.dispatch(locatingStop());
+    this.store.dispatch(new StopLocating());
     this.location$
       .pipe(takeUntil(this.onDestroy$))
       .subscribe(position => this.links = this.linkGeneratorService.getLinks(position));

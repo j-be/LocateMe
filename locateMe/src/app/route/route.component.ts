@@ -3,12 +3,11 @@ import {WlRoutingService} from '../service/wlRouting.service';
 import {Dialog} from 'primeng/dialog';
 import {combineLatest, Observable, Subject} from 'rxjs';
 import {MessageService} from 'primeng/api';
-import {Store} from '@ngrx/store';
-import {AppState, Position} from '../store/states/app.state';
-import {locatingStop} from '../store/actions/position.actions';
 import {switchMap} from 'rxjs/operators';
-import {selectMe, selectOther} from '../store/selectors/position.selectors';
 import {AbstractRouteComponent} from './abstract-route.component';
+import {MePositionState, OtherPositionState} from '../store/states/app.state';
+import {Select, Store} from '@ngxs/store';
+import {StopLocating} from '../store/actions/position.actions';
 
 @Component({
   selector: 'app-route',
@@ -24,20 +23,20 @@ export class RouteComponent extends AbstractRouteComponent implements OnInit, Af
 
   detailSubject = new Subject<any>();
 
+  @Select(MePositionState)
   origin$: Observable<Position>;
+  @Select(OtherPositionState)
   destination$: Observable<Position>;
 
   constructor(
     private wlRoutingService: WlRoutingService,
     private messageService: MessageService,
-    private store: Store<AppState>,
+    private store: Store,
   ) {
     super();
   }
 
   ngOnInit(): void {
-    this.origin$ = this.store.select(selectMe);
-    this.destination$ = this.store.select(selectOther);
   }
 
   ngAfterViewInit(): void {
@@ -46,7 +45,7 @@ export class RouteComponent extends AbstractRouteComponent implements OnInit, Af
 
   openDialog(): void {
     this.display = true;
-    this.store.dispatch(locatingStop());
+    this.store.dispatch(new StopLocating());
 
     combineLatest([this.origin$, this.destination$])
       .pipe(switchMap(([origin, destination]) => this.wlRoutingService.getRoute(origin, destination)))

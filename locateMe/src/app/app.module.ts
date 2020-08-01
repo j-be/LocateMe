@@ -4,7 +4,6 @@ import {NgModule} from '@angular/core';
 import {AppComponent} from './app.component';
 import {MapComponent} from './map/map.component';
 import {RouterModule, Routes} from '@angular/router';
-import {LocationService} from './service/location.service';
 import {ShareComponent} from './share/share.component';
 import {HttpClientModule} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -20,10 +19,9 @@ import {FormsModule} from '@angular/forms';
 import {RouteDetailComponent} from './route-detail/route-detail.component';
 import {ToastModule} from 'primeng/toast';
 import {LeafletModule} from '@asymmetrik/ngx-leaflet';
-import {StoreModule} from '@ngrx/store';
-import {locatingReducer, meLocationReducer, otherLocationReducer} from './store/reducers/position.reducers';
-import {EffectsModule} from '@ngrx/effects';
-import {PositionEffects} from './store/effects/position.effects';
+import {NgxsModule} from '@ngxs/store';
+import {environment} from '../environments/environment';
+import {GeolocationState, MePositionState, OtherPositionState} from './store/states/app.state';
 
 const appRoutes: Routes = [
   {path: '', component: MapComponent},
@@ -56,19 +54,20 @@ const appRoutes: Routes = [
     MessagesModule,
     MessageModule,
     LeafletModule.forRoot(),
-    StoreModule.forRoot({
-      me: meLocationReducer,
-      other: otherLocationReducer,
-      locating: locatingReducer,
-    }),
-    EffectsModule.forRoot([
-      PositionEffects,
-    ]),
+    NgxsModule.forRoot(
+      [
+        MePositionState,
+        OtherPositionState,
+        GeolocationState,
+      ], {
+        developmentMode: !environment.production
+      }
+    ),
   ],
   providers: [
-    LocationService,
     WlRoutingService,
-    MessageService],
+    MessageService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

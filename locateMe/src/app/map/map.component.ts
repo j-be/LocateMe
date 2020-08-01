@@ -2,15 +2,14 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {takeUntil} from 'rxjs/operators';
 import {SEP_CHAR} from '../service/linkGenerator.service';
-import {Observable, Subject} from 'rxjs';
+import {combineLatest, Observable, Subject} from 'rxjs';
 import {Circle, LatLng, Map, MapOptions, Marker, tileLayer} from 'leaflet';
-import {Store} from '@ngrx/store';
-import {AppState, GeolocationState, Position} from '../store/states/app.state';
-import {locatingStart, locatingStop, positionFound, positionOther} from '../store/actions/position.actions';
-import {selectLocating, selectMe, selectOther} from '../store/selectors/position.selectors';
 import {meOptions, otherOptions, PersonOptions, PositionMarker} from '../common';
 import {LeafletControlLayersConfig} from '@asymmetrik/ngx-leaflet';
 import {environment} from '../../environments/environment';
+import {Select, Store} from '@ngxs/store';
+import {Geolocation, GeolocationState, MePositionState, OtherPositionState, Position} from '../store/states/app.state';
+import {PositionFound, PositionOther, StartLocating, StopLocating} from '../store/actions/position.actions';
 
 @Component({
   selector: 'app-map',
@@ -20,8 +19,14 @@ import {environment} from '../../environments/environment';
 export class MapComponent implements OnInit, OnDestroy {
 
   map: Map = null;
-  isWatchingLocation$: Observable<GeolocationState>;
   hidden = true;
+
+  @Select(GeolocationState)
+  isWatchingLocation$: Observable<Geolocation>;
+  @Select(MePositionState)
+  positionMe$: Observable<Position>;
+  @Select(OtherPositionState)
+  positionOther$: Observable<Position>;
 
   options: MapOptions = null;
   layersControl: LeafletControlLayersConfig = {
@@ -55,7 +60,7 @@ export class MapComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    private store: Store<AppState>,
+    private store: Store,
   ) {
   }
 
@@ -76,11 +81,11 @@ export class MapComponent implements OnInit, OnDestroy {
       layers: [this.layersControl.baseLayers[localStorage.getItem('baseLayer')] || this.layersControl.baseLayers['Wikimedia Maps']],
     };
 
-    this.store.select(selectMe)
+    this.positionMe$
       .pipe(takeUntil(this.onDestroy$))
       .subscribe((me: Position) => this.applyPosition(this.me, me));
 
-    this.store.select(selectOther)
+    this.positionOther$
       .pipe(takeUntil(this.onDestroy$))
       .subscribe((other: Position) => this.applyPosition(this.other, other));
 
@@ -88,11 +93,9 @@ export class MapComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.onDestroy$))
       .subscribe((fragment) => {
         if (fragment && fragment.length > 0) {
-          this.store.dispatch(positionOther(MapComponent.parseFragment(fragment)));
+          this.store.dispatch(new PositionOther(MapComponent.parseFragment(fragment)));
         }
       });
-
-    this.isWatchingLocation$ = this.store.select(selectLocating);
   }
 
   ngOnDestroy(): void {
@@ -101,16 +104,15 @@ export class MapComponent implements OnInit, OnDestroy {
   }
 
   locateMe() {
-
     if (!environment.production) {
-      this.store.dispatch(positionFound({lat: 48, lng: 16, acc: 12}));
+      this.store.dispatch(new PositionFound({lat: 	48.1478968, lng: 16.3046695988471748, acc: 12}));
     } else {
-      this.store.dispatch(locatingStart());
+      this.store.dispatch(new StartLocating());
     }
   }
 
   stopLocatingMe() {
-    this.store.dispatch(locatingStop());
+    this.store.dispatch(new StopLocating());
   }
 
   onMapReady(map: Map) {
@@ -127,17 +129,20 @@ export class MapComponent implements OnInit, OnDestroy {
     });
 
     // Register pan-and-zoom on location changes
-    this.store
+    combineLatest([
+      this.positionMe$,
+      this.positionOther$,
+    ])
       .pipe(takeUntil(this.onDestroy$))
-      .subscribe((state: AppState) => {
-        if (!state.me && !state.other) {
+      .subscribe(([me, other]: [Position, Position]) => {
+        if (!me && !other) {
           return;
-        } else if (!state.me && state.other) {
-          this.map.setView(new LatLng(state.other.lat, state.other.lng), 18);
-        } else if (state.me && !state.other) {
-          this.map.setView(new LatLng(state.me.lat, state.me.lng), 18);
+        } else if (!me && other) {
+          this.map.setView(new LatLng(other.lat, other.lng), 18);
+        } else if (me && !other) {
+          this.map.setView(new LatLng(me.lat, me.lng), 18);
         } else {
-          this.map.fitBounds([[state.me.lat, state.me.lng], [state.other.lat, state.other.lng]]);
+          this.map.fitBounds([[me.lat, me.lng], [other.lat, other.lng]]);
         }
       });
   }

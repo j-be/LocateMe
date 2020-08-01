@@ -1,6 +1,17 @@
-import {createAction, props} from '@ngrx/store';
+import {Position} from '../states/app.state';
 
-export const positionFound = createAction('[Position] Found', props<{ lat: number; lng: number, acc: number }>());
-export const positionOther = createAction('[Position] Other', props<{ lat: number; lng: number, acc: number }>());
-export const locatingStart = createAction('[Locating] start');
-export const locatingStop = createAction('[Locating] stop');
+export class PositionFound {
+  static readonly type = '[Position] Found';
+  constructor(public payload: Position) {}
+}
+export class PositionOther {
+  static readonly type = '[Position] Other';
+  constructor(public payload: Position) {}
+}
+
+export class StartLocating {
+  static readonly type = '[Locating] start';
+}
+export class StopLocating {
+  static readonly type = '[Locating] stop';
+}
