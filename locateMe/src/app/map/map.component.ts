@@ -104,11 +104,7 @@ export class MapComponent implements OnInit, OnDestroy {
   }
 
   locateMe() {
-    if (!environment.production) {
-      this.store.dispatch(new PositionFound({lat: 	48.1478968, lng: 16.3046695988471748, acc: 12}));
-    } else {
-      this.store.dispatch(new StartLocating());
-    }
+    this.store.dispatch(new StartLocating());
   }
 
   stopLocatingMe() {

@@ -28,7 +28,7 @@ export class MePositionState {
   ) { }
 
   @Action(PositionFound)
-  positionOther(ctx: StateContext<Position>, positionFound: PositionFound) {
+  positionMe(ctx: StateContext<Position>, positionFound: PositionFound) {
     ctx.setState({
       ...positionFound.payload,
     });
@@ -63,7 +63,6 @@ export class GeolocationState {
     private store: Store,
   ) { }
 
-
   @Action(StartLocating)
   startLocating(ctx: StateContext<Geolocation>, _: StartLocating) {
     const state = ctx.getState();
@@ -74,7 +73,6 @@ export class GeolocationState {
     }
 
     const locationWatchId = navigator.geolocation.watchPosition(newLocation => {
-        this.messageService.clear(MSG_LOCATING);
         this.store.dispatch(new PositionFound({
           lat: newLocation.coords.latitude,
           lng: newLocation.coords.longitude,
@@ -82,11 +80,12 @@ export class GeolocationState {
         }));
       },
       error => this.errorLocation(error),
-      geolocationOptions);
+      geolocationOptions
+    );
 
     this.messageService.clear();
     this.messageService.add({
-      id: MSG_LOCATING,
+      key: MSG_LOCATING,
       severity: 'info',
       summary: 'Locating',
       detail: 'This might take a bit...',
