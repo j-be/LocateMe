@@ -1,5 +1,0 @@
-profile: service
-defaultPackage: wl.proxy
----
-testFramework: junit
-sourceLanguage: java

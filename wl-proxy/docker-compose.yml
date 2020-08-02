@@ -1,0 +1,8 @@
+version: "3"
+services:
+  wl-proxy:
+    image: nginx
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./wl-proxy.conf:/etc/nginx/conf.d/wl-proxy.conf:ro
