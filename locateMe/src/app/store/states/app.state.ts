@@ -6,7 +6,6 @@ import {Injectable} from '@angular/core';
 
 const MSG_LOCATING = 'locating';
 
-
 export interface Geolocation {
   locationWatchId: number;
 }
@@ -75,6 +74,13 @@ export class GeolocationState {
       geolocationOptions
     );
 
+    if (locationWatchId === null) {
+      this.errorLocation({
+        message: 'Cannot watch location! Is GPS activated?',
+      });
+      return;
+    }
+
     this.messageService.clear();
     this.messageService.add({
       key: MSG_LOCATING,
@@ -83,10 +89,6 @@ export class GeolocationState {
       detail: 'This might take a bit...',
       sticky: true,
     });
-
-    if (locationWatchId === null) {
-      this.errorLocation({message: 'Cannot watch location!'});
-    }
 
     ctx.setState({
       locationWatchId,
@@ -107,7 +109,7 @@ export class GeolocationState {
     this.messageService.clear(MSG_LOCATING);
   }
 
-  private errorLocation(error): void {
+  private errorLocation(error: {message: string}): void {
     this.messageService.clear();
     this.messageService.add({
       severity: 'error',
