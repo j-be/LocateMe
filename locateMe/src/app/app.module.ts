@@ -12,10 +12,8 @@ import {RouteComponent} from './route/route.component';
 import {DialogModule} from 'primeng/dialog';
 import {CardModule} from 'primeng/card';
 import {MessageModule} from 'primeng/message';
-import {MessagesModule} from 'primeng/messages';
 import {MessageService} from 'primeng/api';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
-import {FormsModule} from '@angular/forms';
 import {RouteDetailComponent} from './route-detail/route-detail.component';
 import {ToastModule} from 'primeng/toast';
 import {LeafletModule} from '@asymmetrik/ngx-leaflet';
@@ -49,9 +47,7 @@ const appRoutes: Routes = [
     DialogModule,
     CardModule,
     ProgressSpinnerModule,
-    FormsModule,
     ToastModule,
-    MessagesModule,
     MessageModule,
     LeafletModule.forRoot(),
     NgxsModule.forRoot(
