@@ -3,7 +3,7 @@ import {ActivatedRoute} from '@angular/router';
 import {takeUntil} from 'rxjs/operators';
 import {SEP_CHAR} from '../service/linkGenerator.service';
 import {combineLatest, Observable, Subject} from 'rxjs';
-import {Circle, LatLng, LatLngBounds, LatLngBoundsExpression, Map, MapOptions, Marker, tileLayer} from 'leaflet';
+import {Circle, LatLng, LatLngBoundsExpression, Map, Marker, tileLayer} from 'leaflet';
 import {meOptions, otherOptions, PersonOptions, PositionMarker} from '../common';
 import {LeafletControlLayersConfig} from '@asymmetrik/ngx-leaflet';
 import {Select, Store} from '@ngxs/store';
@@ -17,7 +17,6 @@ import {PositionOther, StartLocating, StopLocating} from '../store/actions/posit
 })
 export class MapComponent implements OnInit, OnDestroy {
 
-  map: Map = null;
   hidden = true;
 
   @Select(GeolocationState)
@@ -27,15 +26,8 @@ export class MapComponent implements OnInit, OnDestroy {
   @Select(OtherPositionState)
   positionOther$: Observable<Position>;
 
-  options: MapOptions = null;
   layersControl: LeafletControlLayersConfig = {
     baseLayers: {
-      HOT:
-        tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
-          {
-            attribution: 'Data &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors Tiles &copy; HOT',
-            maxZoom: 15,
-          }),
       'OSM Mapnik B&W':
         tileLayer('https://tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png',
           {attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'}),
@@ -87,10 +79,6 @@ export class MapComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.options = {
-      layers: [this.layersControl.baseLayers[localStorage.getItem('baseLayer')] || this.layersControl.baseLayers['Wikimedia Maps']],
-    };
-
     this.positionMe$
       .pipe(takeUntil(this.onDestroy$))
       .subscribe((me: Position) => this.applyPosition(this.me, me));
@@ -122,15 +110,15 @@ export class MapComponent implements OnInit, OnDestroy {
   }
 
   onMapReady(map: Map) {
-    this.map = map;
+    map.addLayer(this.layersControl.baseLayers[localStorage.getItem('baseLayer')] || this.layersControl.baseLayers['Wikimedia Maps']);
 
     // Add the markers
-    this.map.addLayer(this.me.marker)
+    map.addLayer(this.me.marker)
       .addLayer(this.me.accuracy);
-    this.map.addLayer(this.other.marker)
+    map.addLayer(this.other.marker)
       .addLayer(this.other.accuracy);
 
-    this.map.on({
+    map.on({
       baselayerchange: event => localStorage.setItem('baseLayer', event.name),
     });
 
@@ -144,11 +132,11 @@ export class MapComponent implements OnInit, OnDestroy {
         if (!me && !other) {
           return;
         } else if (!me && other) {
-          this.map.setView(this.toLeafletLatLng(other), 18);
+          map.setView(this.toLeafletLatLng(other), 18);
         } else if (me && !other) {
-          this.map.setView(this.toLeafletLatLng(me), 18);
+          map.setView(this.toLeafletLatLng(me), 18);
         } else {
-          this.map.fitBounds(this.toLeafletLatLngBound(me, other));
+          map.fitBounds(this.toLeafletLatLngBound(me, other));
         }
       });
   }
