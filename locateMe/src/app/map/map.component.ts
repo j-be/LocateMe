@@ -3,13 +3,12 @@ import {ActivatedRoute} from '@angular/router';
 import {takeUntil} from 'rxjs/operators';
 import {SEP_CHAR} from '../service/linkGenerator.service';
 import {combineLatest, Observable, Subject} from 'rxjs';
-import {Circle, LatLng, Map, MapOptions, Marker, tileLayer} from 'leaflet';
+import {Circle, LatLng, LatLngBounds, LatLngBoundsExpression, Map, MapOptions, Marker, tileLayer} from 'leaflet';
 import {meOptions, otherOptions, PersonOptions, PositionMarker} from '../common';
 import {LeafletControlLayersConfig} from '@asymmetrik/ngx-leaflet';
-import {environment} from '../../environments/environment';
 import {Select, Store} from '@ngxs/store';
-import {Geolocation, GeolocationState, MePositionState, OtherPositionState, Position} from '../store/states/app.state';
-import {PositionFound, PositionOther, StartLocating, StopLocating} from '../store/actions/position.actions';
+import {Geolocation, GeolocationState, MePositionState, OtherPositionState} from '../store/states/app.state';
+import {PositionOther, StartLocating, StopLocating} from '../store/actions/position.actions';
 
 @Component({
   selector: 'app-map',
@@ -73,7 +72,18 @@ export class MapComponent implements OnInit, OnDestroy {
 
   private static parseFragment(fragment: string): Position {
     const fragments = fragment.split(SEP_CHAR);
-    return {lat: Number(fragments[0]), lng: Number(fragments[1]), acc: Number(fragments[2])};
+    return {
+      coords: {
+        latitude: Number(fragments[0]),
+        longitude: Number(fragments[1]),
+        accuracy: Number(fragments[2]),
+        altitude: null,
+        altitudeAccuracy: null,
+        heading: null,
+        speed: null,
+      },
+      timestamp: null,
+    };
   }
 
   ngOnInit() {
@@ -134,27 +144,35 @@ export class MapComponent implements OnInit, OnDestroy {
         if (!me && !other) {
           return;
         } else if (!me && other) {
-          this.map.setView(new LatLng(other.lat, other.lng), 18);
+          this.map.setView(this.toLeafletLatLng(other), 18);
         } else if (me && !other) {
-          this.map.setView(new LatLng(me.lat, me.lng), 18);
+          this.map.setView(this.toLeafletLatLng(me), 18);
         } else {
-          this.map.fitBounds([[me.lat, me.lng], [other.lat, other.lng]]);
+          this.map.fitBounds(this.toLeafletLatLngBound(me, other));
         }
       });
   }
 
   private applyPosition(positionMarker: PositionMarker, position: Position): void {
-    if (!position) {
+    if (!position?.coords) {
       return;
     }
 
     this.hidden = false;
 
-    const latLng = new LatLng(position.lat, position.lng);
+    const latLng = this.toLeafletLatLng(position);
     positionMarker.marker.setOpacity(1);
     positionMarker.marker.setLatLng(latLng);
     positionMarker.accuracy.setStyle({opacity: 1});
     positionMarker.accuracy.setLatLng(latLng);
-    positionMarker.accuracy.setRadius(position.acc);
+    positionMarker.accuracy.setRadius(position.coords.accuracy);
+  }
+
+  private toLeafletLatLng(position: Position): LatLng {
+    return new LatLng(position.coords.latitude, position.coords.longitude);
+  }
+
+  private toLeafletLatLngBound(first: Position, second: Position): LatLngBoundsExpression {
+    return [[first.coords.latitude, first.coords.longitude], [second.coords.latitude, second.coords.longitude]];
   }
 }

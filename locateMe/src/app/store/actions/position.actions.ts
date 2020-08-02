@@ -1,5 +1,3 @@
-import {Position} from '../states/app.state';
-
 export class PositionFound {
   static readonly type = '[Position] Found';
   constructor(public payload: Position) {}

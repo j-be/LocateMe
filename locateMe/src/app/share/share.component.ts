@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {LinkGeneratorService, Links} from '../service/linkGenerator.service';
 import {Observable, Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
-import {MePositionState, Position} from '../store/states/app.state';
+import {MePositionState} from '../store/states/app.state';
 import {Select, Store} from '@ngxs/store';
 import {StopLocating} from '../store/actions/position.actions';
 

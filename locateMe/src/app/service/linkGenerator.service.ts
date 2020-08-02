@@ -1,7 +1,6 @@
 import {environment} from '../../environments/environment';
 import {Injectable, SecurityContext} from '@angular/core';
 import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
-import {Position} from '../store/states/app.state';
 
 export const SEP_CHAR = '+';
 
@@ -23,9 +22,9 @@ export class LinkGeneratorService {
   getLinks(location: Position): Links {
     if (location) {
       const link = window.location.protocol + '//' + window.location.host + environment.baseHref + '#' +
-        location.lat + SEP_CHAR +
-        location.lng + SEP_CHAR +
-        location.acc;
+        location.coords.latitude + SEP_CHAR +
+        location.coords.longitude + SEP_CHAR +
+        location.coords.accuracy;
 
       return {
         link,
