@@ -4,14 +4,9 @@ SHELL := /bin/bash
 DEPLOY_TARGET ?= root@owly.duckdns.org
 
 build: clean
-	npm install
-	npm audit fix
-	ng build --prod
-
-ansible-build: clean
 	source ../node-env/bin/activate && npm install
-	source ../node-env/bin/activate && npm audit fix
-	source ../node-env/bin/activate && ng build --prod
+	source ../node-env/bin/activate && npm audit fix || true
+	source ../node-env/bin/activate && ng build
 
 clean:
 	rm -rf dist/
