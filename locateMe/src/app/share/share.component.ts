@@ -10,7 +10,7 @@ import {StopLocating} from '../store/actions/position.actions';
   selector: 'app-share',
   templateUrl: './share.component.html',
 })
-export class ShareComponent implements OnInit, OnDestroy {
+export class ShareComponent implements OnDestroy {
   display = false;
   links: Links | null = null;
 
@@ -23,9 +23,6 @@ export class ShareComponent implements OnInit, OnDestroy {
     private linkGeneratorService: LinkGeneratorService,
     private store: Store,
   ) {}
-
-  ngOnInit(): void {
-  }
 
   ngOnDestroy(): void {
     this.onDestroy$.next(true);

@@ -1,5 +1,4 @@
 import {Circle, CircleMarkerOptions, Icon, LocateOptions, Marker, tileLayer} from 'leaflet';
-import {LeafletControlLayersConfig} from '@asymmetrik/ngx-leaflet';
 
 export interface PositionMarker {
   marker: Marker;

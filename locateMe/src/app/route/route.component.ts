@@ -13,7 +13,7 @@ import {StopLocating} from '../store/actions/position.actions';
   selector: 'app-route',
   templateUrl: './route.component.html',
 })
-export class RouteComponent extends AbstractRouteComponent implements OnInit, AfterViewInit {
+export class RouteComponent extends AbstractRouteComponent implements AfterViewInit {
   @ViewChild(Dialog)
   dialog!: Dialog;
 
@@ -35,9 +35,6 @@ export class RouteComponent extends AbstractRouteComponent implements OnInit, Af
     super();
   }
 
-  ngOnInit(): void {
-  }
-
   ngAfterViewInit(): void {
     this.dialog.onHide.subscribe(() => this.routes = null);
   }
@@ -49,8 +46,8 @@ export class RouteComponent extends AbstractRouteComponent implements OnInit, Af
     combineLatest([this.origin$, this.destination$])
       .pipe(switchMap(([origin, destination]) => this.wlRoutingService.getRoute(origin, destination)))
       .subscribe(
-        (data) => this.routes = data,
-        () => {
+        data => this.routes = data,
+        _ => {
           this.display = false;
           this.messageService.add({
             severity: 'error',

@@ -19,7 +19,7 @@ export class RouteDetailComponent extends AbstractRouteComponent implements OnIn
   }
 
   ngOnInit() {
-    this.parent.detailSubject.subscribe((tripDetail) => this.showDialog(tripDetail));
+    this.parent.detailSubject.subscribe(tripDetail => this.showDialog(tripDetail));
   }
 
   showDialog(tripDetail: any) {
