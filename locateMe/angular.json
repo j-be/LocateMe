@@ -42,6 +42,7 @@
           },
           "configurations": {
             "production": {
+              "baseHref": "/locateMe/",
               "budgets": [
                 {
                   "type": "initial",
