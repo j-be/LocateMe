@@ -1,7 +1,7 @@
-<p-dialog header="Route" modal="true" [(visible)]="display"
+<p-dialog header="Route" [modal]="true" [(visible)]="display"
           [styleClass]="'card-dialog'"
           (onShow)="dialog.maximize()"
-          blockScroll="true">
+          [blockScroll]="true">
   <div *ngIf="routes == null" style="overflow: hidden; text-align: center">
     <p-progressSpinner></p-progressSpinner>
   </div>

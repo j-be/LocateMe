@@ -4,23 +4,23 @@ html,
 body,
 main,
 .leaflet-container
-  height 100%
+  height: 100%
 
 nav
-  position fixed
-  z-index 10000000
+  position: fixed
+  z-index: 10000000
 
 main
-  padding-top 56px
+  padding-top: 56px
   @media screen and (min-width: 601px)
-    padding-top 64px
+    padding-top: 64px
 
 footer
-  position fixed
-  padding 12px
-  width 100%
-  bottom 0
-  z-index 10000000
+  position: fixed
+  padding: 12px
+  width: 100%
+  bottom: 0
+  z-index: 10000000
 
 .duration
   float: right
@@ -35,13 +35,15 @@ footer
   margin-bottom: 12px
 
 .transport-chip
-  padding 3px
-  padding-left: 24px
+  $roundess: 3px
+  $padding-left: 24px
+  padding: $roundess
+  padding-left: $padding-left
   margin-right: 7px
-  height: @padding-left + 2 * @padding
-  border-radius: @padding
+  height: $padding-left + 2 * $roundess
+  border-radius: $roundess
   color: white
-  background-repeat: no-repeat;
+  background-repeat: no-repeat
 
 .station-name
   white-space: nowrap
@@ -55,7 +57,7 @@ footer
   background-image: url('assets/css/img/ic_tram.svg')
 
 .bus
-  background-color #1e3158
+  background-color: #1e3158
   background-image: url('assets/css/img/ic_bus.svg')
 
 .walk
@@ -69,18 +71,19 @@ body .ui-dialog.card-dialog .ui-dialog-content
   background-color: #eee
 
 .transport-sequence
-  padding-top: 5px
-  padding-bottom: @padding-top
+  $padding-top: 5px
+  padding-top: $padding-top
+  padding-bottom: $padding-top
   overflow-x: auto
-  margin-right: 5px
+  margin-right: $padding-top
 
 app-route-detail table
   tr
-    border-bottom none
+    border-bottom: none
   td
-    padding 0
+    padding: 0
     hr
-      color white
+      color: white
 
 .ui-toast
-  margin-top: 62px;
+  margin-top: 62px

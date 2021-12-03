@@ -13,18 +13,17 @@ import {PositionOther, StartLocating, StopLocating} from '../store/actions/posit
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
-  styleUrls: ['./map.component.styl']
 })
 export class MapComponent implements OnInit, OnDestroy {
 
   hidden = true;
 
   @Select(GeolocationState)
-  isWatchingLocation$: Observable<Geolocation>;
+  isWatchingLocation$!: Observable<Geolocation>;
   @Select(MePositionState)
-  positionMe$: Observable<Position>;
+  positionMe$!: Observable<GeolocationPosition>;
   @Select(OtherPositionState)
-  positionOther$: Observable<Position>;
+  positionOther$!: Observable<GeolocationPosition>;
 
   layersControl: LeafletControlLayersConfig = {
     baseLayers: {
@@ -62,7 +61,7 @@ export class MapComponent implements OnInit, OnDestroy {
     };
   }
 
-  private static parseFragment(fragment: string): Position {
+  private static parseFragment(fragment: string): GeolocationPosition {
     const fragments = fragment.split(SEP_CHAR);
     return {
       coords: {
@@ -74,18 +73,18 @@ export class MapComponent implements OnInit, OnDestroy {
         heading: null,
         speed: null,
       },
-      timestamp: null,
+      timestamp: new Date().getTime(),
     };
   }
 
   ngOnInit() {
     this.positionMe$
       .pipe(takeUntil(this.onDestroy$))
-      .subscribe((me: Position) => this.applyPosition(this.me, me));
+      .subscribe((me: GeolocationPosition) => this.applyPosition(this.me, me));
 
     this.positionOther$
       .pipe(takeUntil(this.onDestroy$))
-      .subscribe((other: Position) => this.applyPosition(this.other, other));
+      .subscribe((other: GeolocationPosition) => this.applyPosition(this.other, other));
 
     this.route.fragment
       .pipe(takeUntil(this.onDestroy$))
@@ -110,7 +109,7 @@ export class MapComponent implements OnInit, OnDestroy {
   }
 
   onMapReady(map: Map) {
-    map.addLayer(this.layersControl.baseLayers[localStorage.getItem('baseLayer')] || this.layersControl.baseLayers['Wikimedia Maps']);
+    map.addLayer(this.layersControl.baseLayers[localStorage.getItem('baseLayer') || 'Wikimedia Maps']);
 
     // Add the markers
     map.addLayer(this.me.marker)
@@ -128,7 +127,7 @@ export class MapComponent implements OnInit, OnDestroy {
       this.positionOther$,
     ])
       .pipe(takeUntil(this.onDestroy$))
-      .subscribe(([me, other]: [Position, Position]) => {
+      .subscribe(([me, other]: [GeolocationPosition, GeolocationPosition]) => {
         if (!me && !other) {
           return;
         } else if (!me && other) {
@@ -141,7 +140,7 @@ export class MapComponent implements OnInit, OnDestroy {
       });
   }
 
-  private applyPosition(positionMarker: PositionMarker, position: Position): void {
+  private applyPosition(positionMarker: PositionMarker, position: GeolocationPosition): void {
     if (!position?.coords) {
       return;
     }
@@ -156,11 +155,11 @@ export class MapComponent implements OnInit, OnDestroy {
     positionMarker.accuracy.setRadius(position.coords.accuracy);
   }
 
-  private toLeafletLatLng(position: Position): LatLng {
+  private toLeafletLatLng(position: GeolocationPosition): LatLng {
     return new LatLng(position.coords.latitude, position.coords.longitude);
   }
 
-  private toLeafletLatLngBound(first: Position, second: Position): LatLngBoundsExpression {
+  private toLeafletLatLngBound(first: GeolocationPosition, second: GeolocationPosition): LatLngBoundsExpression {
     return [[first.coords.latitude, first.coords.longitude], [second.coords.latitude, second.coords.longitude]];
   }
 }

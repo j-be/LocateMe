@@ -1,6 +1,6 @@
-<p-dialog header="Route details" modal="true" [(visible)]="display"
+<p-dialog header="Route details" [modal]="true" [(visible)]="display"
           (onShow)="dialog.maximize()"
-          blockScroll="true">
+          [blockScroll]="true">
   <table>
     <tbody>
     <ng-container *ngFor="let leg of tripDetail?.legs">

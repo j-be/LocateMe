@@ -19,20 +19,22 @@ export class LinkGeneratorService {
   ) {
   }
 
-  getLinks(location: Position): Links {
-    if (location) {
-      const link = window.location.protocol + '//' + window.location.host + environment.baseHref + '#' +
-        location.coords.latitude + SEP_CHAR +
-        location.coords.longitude + SEP_CHAR +
-        location.coords.accuracy;
-
-      return {
-        link,
-        whatsApp: 'https://wa.me/?text=' + link,
-        mailto: 'mailto:?subject=Location&body=' + link,
-        sms: this.sanitizer.bypassSecurityTrustUrl('sms:?body=' +
-          this.sanitizer.sanitize(SecurityContext.URL, link)),
-      };
+  getLinks(location: GeolocationPosition): Links | null {
+    if (!location) {
+      return null;
     }
+
+    const link = window.location.protocol + '//' + window.location.host + environment.baseHref + '#' +
+      location.coords.latitude + SEP_CHAR +
+      location.coords.longitude + SEP_CHAR +
+      location.coords.accuracy;
+
+    return {
+      link,
+      whatsApp: 'https://wa.me/?text=' + link,
+      mailto: 'mailto:?subject=Location&body=' + link,
+      sms: this.sanitizer.bypassSecurityTrustUrl('sms:?body=' +
+        this.sanitizer.sanitize(SecurityContext.URL, link)),
+    };
   }
 }

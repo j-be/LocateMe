@@ -47,11 +47,11 @@
 
 <footer>
   <a class="btn-floating btn-large waves-effect waves-light light-green right"
-     (click)="locateMe()" *ngIf="(isWatchingLocation$ | async).locationWatchId === null">
+     (click)="locateMe()" *ngIf="(isWatchingLocation$ | async)?.locationWatchId === null">
     <i class="material-icons">my_location</i>
   </a>
   <a class="btn-floating btn-large waves-effect waves-light light-green right"
-     (click)="stopLocatingMe()" *ngIf="(isWatchingLocation$ | async).locationWatchId !== null">
+     (click)="stopLocatingMe()" *ngIf="(isWatchingLocation$ | async)?.locationWatchId !== null">
     <i class="material-icons">stop</i>
   </a>
   <app-share></app-share>

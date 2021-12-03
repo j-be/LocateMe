@@ -7,10 +7,10 @@ import {Injectable} from '@angular/core';
 const MSG_LOCATING = 'locating';
 
 export interface Geolocation {
-  locationWatchId: number;
+  locationWatchId: number | null;
 }
 
-@State<Position>({
+@State<GeolocationPosition | null>({
   name: 'MyPositionState',
   defaults: null,
 })
@@ -22,7 +22,7 @@ export class MePositionState {
   ) { }
 
   @Action(PositionFound)
-  positionMe(ctx: StateContext<Position>, action: PositionFound) {
+  positionMe(ctx: StateContext<GeolocationPosition>, action: PositionFound) {
     ctx.setState({
       coords: action.payload.coords,
       timestamp: action.payload.timestamp,
@@ -31,14 +31,14 @@ export class MePositionState {
   }
 }
 
-@State<Position>({
+@State<GeolocationPosition | null>({
   name: 'OtherPositionState',
   defaults: null,
 })
 @Injectable()
 export class OtherPositionState {
   @Action(PositionOther)
-  positionOther(ctx: StateContext<Position>, action: PositionOther) {
+  positionOther(ctx: StateContext<GeolocationPosition>, action: PositionOther) {
     ctx.setState({
       coords: action.payload.coords,
       timestamp: action.payload.timestamp,
@@ -69,8 +69,8 @@ export class GeolocationState {
     }
 
     const locationWatchId = navigator.geolocation.watchPosition(
-      (newLocation: Position) => this.store.dispatch(new PositionFound(newLocation)),
-      (error: PositionError) => this.errorLocation(error),
+      (newLocation: GeolocationPosition) => this.store.dispatch(new PositionFound(newLocation)),
+      (error: GeolocationPositionError) => this.errorLocation(error),
       geolocationOptions
     );
 

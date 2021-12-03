@@ -6,13 +6,12 @@ import {Dialog} from 'primeng/dialog';
 @Component({
   selector: 'app-route-detail',
   templateUrl: './route-detail.component.html',
-  styleUrls: ['./route-detail.component.styl']
 })
 export class RouteDetailComponent extends AbstractRouteComponent implements OnInit {
   @ViewChild(Dialog)
-  dialog: Dialog;
+  dialog!: Dialog;
 
-  tripDetail = null;
+  tripDetail: any = null;
   display = false;
 
   constructor(private parent: RouteComponent) {
@@ -23,7 +22,7 @@ export class RouteDetailComponent extends AbstractRouteComponent implements OnIn
     this.parent.detailSubject.subscribe((tripDetail) => this.showDialog(tripDetail));
   }
 
-  showDialog(tripDetail) {
+  showDialog(tripDetail: any) {
     this.tripDetail = tripDetail;
     this.display = true;
   }

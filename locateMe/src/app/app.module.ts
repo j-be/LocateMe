@@ -49,7 +49,7 @@ const appRoutes: Routes = [
     ProgressSpinnerModule,
     ToastModule,
     MessageModule,
-    LeafletModule.forRoot(),
+    LeafletModule,
     NgxsModule.forRoot(
       [
         MePositionState,

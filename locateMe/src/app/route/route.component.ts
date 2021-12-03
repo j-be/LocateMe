@@ -12,11 +12,10 @@ import {StopLocating} from '../store/actions/position.actions';
 @Component({
   selector: 'app-route',
   templateUrl: './route.component.html',
-  styleUrls: ['./route.component.styl']
 })
 export class RouteComponent extends AbstractRouteComponent implements OnInit, AfterViewInit {
   @ViewChild(Dialog)
-  dialog: Dialog;
+  dialog!: Dialog;
 
   display = false;
   routes: any = null;
@@ -24,9 +23,9 @@ export class RouteComponent extends AbstractRouteComponent implements OnInit, Af
   detailSubject = new Subject<any>();
 
   @Select(MePositionState)
-  origin$: Observable<Position>;
+  origin$!: Observable<GeolocationPosition>;
   @Select(OtherPositionState)
-  destination$: Observable<Position>;
+  destination$!: Observable<GeolocationPosition>;
 
   constructor(
     private wlRoutingService: WlRoutingService,
@@ -61,7 +60,7 @@ export class RouteComponent extends AbstractRouteComponent implements OnInit, Af
         });
   }
 
-  showDetails(tripDetails) {
+  showDetails(tripDetails: any) {
     this.detailSubject.next(tripDetails);
   }
 }

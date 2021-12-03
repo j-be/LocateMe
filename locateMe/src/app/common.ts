@@ -2,8 +2,8 @@ import {Circle, CircleMarkerOptions, Icon, LocateOptions, Marker, tileLayer} fro
 import {LeafletControlLayersConfig} from '@asymmetrik/ngx-leaflet';
 
 export interface PositionMarker {
-  marker?: Marker;
-  accuracy?: Circle;
+  marker: Marker;
+  accuracy: Circle;
 }
 
 export interface PersonOptions {

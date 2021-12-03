@@ -11,11 +11,11 @@ export class WlRoutingService {
 
   constructor(private http: HttpClient) { }
 
-  private static formatLocation(position: Position) {
+  private static formatLocation(position: GeolocationPosition) {
     return position.coords.longitude + ':' + position.coords.latitude + ':WGS84';
   }
 
-  getRoute(origin: Position, destination: Position): Observable<any> {
+  getRoute(origin: GeolocationPosition, destination: GeolocationPosition): Observable<any> {
     const options = {
       params: new HttpParams()
         .set('name_origin', WlRoutingService.formatLocation(origin))

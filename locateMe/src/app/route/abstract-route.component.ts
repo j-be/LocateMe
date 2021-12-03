@@ -15,7 +15,7 @@ export class AbstractRouteComponent {
     }
   }
 
-  formatPoint(point) {
+  formatPoint(point: any) {
     return point.dateTime.time + ' ' + point.name;
   }
 }

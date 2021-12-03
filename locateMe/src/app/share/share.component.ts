@@ -9,14 +9,13 @@ import {StopLocating} from '../store/actions/position.actions';
 @Component({
   selector: 'app-share',
   templateUrl: './share.component.html',
-  styleUrls: ['./share.component.styl', ]
 })
 export class ShareComponent implements OnInit, OnDestroy {
   display = false;
-  links: Links = null;
+  links: Links | null = null;
 
   @Select(MePositionState)
-  location$: Observable<Position>;
+  location$!: Observable<GeolocationPosition>;
 
   private onDestroy$ = new Subject<boolean>();
 

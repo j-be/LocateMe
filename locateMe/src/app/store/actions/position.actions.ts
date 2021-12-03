@@ -1,10 +1,10 @@
 export class PositionFound {
-  static readonly type = '[Position] Found';
-  constructor(public payload: Position) {}
+  static readonly type = '[GeolocationPosition] Found';
+  constructor(public payload: GeolocationPosition) {}
 }
 export class PositionOther {
-  static readonly type = '[Position] Other';
-  constructor(public payload: Position) {}
+  static readonly type = '[GeolocationPosition] Other';
+  constructor(public payload: GeolocationPosition) {}
 }
 
 export class StartLocating {
