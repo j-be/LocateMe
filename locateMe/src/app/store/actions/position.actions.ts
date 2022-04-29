@@ -14,6 +14,10 @@ export class StopLocating {
   static readonly type = '[Locating] stop';
 }
 
+export class FetchTrips {
+  static readonly type = '[PublicTransport] Fetch trips';
+  constructor(public origin: GeolocationPosition, public destination: GeolocationPosition) {}
+}
 export class SetTrips {
   static readonly type = '[PublicTransport] Set trips';
   constructor(public trips: any[]) {}

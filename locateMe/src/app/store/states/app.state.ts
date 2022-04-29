@@ -3,6 +3,7 @@ import * as Actions from '../actions/position.actions';
 import {geolocationOptions} from '../../common';
 import {MessageService} from 'primeng/api';
 import {Injectable} from '@angular/core';
+import { WlRoutingService } from 'src/app/service/wlRouting.service';
 
 const MSG_LOCATING = 'locating';
 
@@ -124,6 +125,7 @@ export class GeolocationState {
 export interface PublicTransport {
   trips: any[];
   trip: any;
+  fetching: boolean;
 }
 
 @State<PublicTransport>({
@@ -131,16 +133,41 @@ export interface PublicTransport {
   defaults: {
     trips: [],
     trip: null,
+    fetching: false,
   },
 })
 @Injectable()
 export class PublicTransportState {
+
+  constructor(
+    private wlRoutingService: WlRoutingService,
+    private messageService: MessageService,
+  ) {
+  }
+
+  @Action(Actions.FetchTrips)
+  fetchTrips(ctx: StateContext<PublicTransport>, action: Actions.FetchTrips) {
+    ctx.patchState({ fetching: true });
+    console.log("action", action);
+    this.wlRoutingService.getRoute(action.origin, action.destination).subscribe({
+      next: trips => ctx.dispatch(new Actions.SetTrips(trips)),
+      error: _ => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Cannot fetch routes',
+          detail: 'An error occured while fetching data from WienerLininen!'
+        });
+        ctx.patchState({ fetching: false });
+      }
+    });
+  }
 
   @Action(Actions.SetTrips)
   setTrips(ctx: StateContext<PublicTransport>, action: Actions.SetTrips) {
     ctx.setState({
       trips: action.trips,
       trip: null,
+      fetching: true,
     });
   }
 
@@ -154,6 +181,7 @@ export class PublicTransportState {
     ctx.setState({
       trips: [],
       trip: null,
+      fetching: false,
     });
   }
 
@@ -167,5 +195,10 @@ export class PublicTransportState {
   @Selector()
   static trip(state: PublicTransport) {
     return state.trip;
+  }
+
+  @Selector()
+  static fetching(state: PublicTransport) {
+    return state.fetching;
   }
 }

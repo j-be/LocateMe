@@ -4,30 +4,35 @@
     <div class="right-align"><a routerLink="../"><i class="material-icons">close</i></a></div>
   </div>
 </nav>
-<main *ngIf="(routes$ | async) as routes; else loading">
-  <ng-container *ngIf="routes.trips?.length; else noRoutes">
-    <div  class="trip" *ngFor="let trip of routes.trips" (click)="showDetails(trip)">
-      <p-card>
-        <span>{{ formatPoint(trip.legs[0].points[0]) }}</span><br/>
-        <span class="duration">{{ trip.duration }}</span>
-        <div class="transport-sequence">
-        <span class="transport-chip"
-              [ngClass]="getStyleForTransportationType(leg.mode.type)"
-              *ngFor="let leg of trip.legs">{{ leg.mode.number }}</span>
-        </div>
-        <span>{{ formatPoint(trip.legs[trip.legs.length - 1].points[1]) }}</span>
-      </p-card>
+<main>
+  <ng-container *ngIf="fetching$ | async; else trips">
+    <div style="overflow: hidden; text-align: center">
+      <p-progressSpinner></p-progressSpinner>
     </div>
   </ng-container>
-  <ng-template #noRoutes>
-    <div >
-      <p-message severity="warn" text="Sorry, could not find any routes."></p-message>
-    </div>
+
+  <ng-template #trips>
+    <ng-container *ngIf="(routes$ | async) as routes">
+      <ng-container *ngIf="routes.trips?.length; else noRoutes">
+        <div class="trip" *ngFor="let trip of routes.trips" (click)="showDetails(trip)">
+          <p-card>
+            <span>{{ formatPoint(trip.legs[0].points[0]) }}</span><br/>
+            <span class="duration">{{ trip.duration }}</span>
+            <div class="transport-sequence">
+            <span class="transport-chip"
+                  [ngClass]="getStyleForTransportationType(leg.mode.type)"
+                  *ngFor="let leg of trip.legs">{{ leg.mode.number }}</span>
+            </div>
+            <span>{{ formatPoint(trip.legs[trip.legs.length - 1].points[1]) }}</span>
+          </p-card>
+        </div>
+      </ng-container>
+      <ng-template #noRoutes>
+        <div >
+          <p-message severity="warn" text="Sorry, could not find any routes."></p-message>
+        </div>
+      </ng-template>
+    </ng-container>
   </ng-template>
 </main>
 
-<ng-template #loading>
-  <div style="overflow: hidden; text-align: center">
-    <p-progressSpinner></p-progressSpinner>
-  </div>
-</ng-template>
