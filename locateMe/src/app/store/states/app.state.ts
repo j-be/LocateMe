@@ -61,6 +61,7 @@ export class GeolocationState {
 
   @Action(Actions.StartLocating)
   startLocating(ctx: StateContext<Geolocation>) {
+    ctx.dispatch(new Actions.ClearTrips());
 
     if (ctx.getState().locationWatchId != null) {
       // Already running I guess...
@@ -117,5 +118,49 @@ export class GeolocationState {
       detail: error.message
     });
     this.store.dispatch(new Actions.StopLocating());
+  }
+}
+
+export interface PublicTransport {
+  trips: any[];
+  trip: any;
+}
+
+@State<PublicTransport>({
+  name: 'PublicTransportState',
+  defaults: {
+    trips: [],
+    trip: null,
+  },
+})
+@Injectable()
+export class PublicTransportState {
+
+  @Action(Actions.SetTrips)
+  setTrips(ctx: StateContext<PublicTransport>, action: Actions.SetTrips) {
+    ctx.setState({
+      trips: action.trips,
+      trip: null,
+    });
+  }
+
+  @Action(Actions.SetTrip)
+  setTrip(ctx: StateContext<PublicTransport>, action: Actions.SetTrip) {
+    ctx.patchState({trip: action.trip});
+  }
+
+  @Action(Actions.ClearTrips)
+  clearTrips(ctx: StateContext<PublicTransport>) {
+    ctx.setState({
+      trips: [],
+      trip: null,
+    });
+  }
+
+  @Action(Actions.ClearTrip)
+  clearTrip(ctx: StateContext<PublicTransport>) {
+    ctx.patchState({
+      trip: null,
+    });
   }
 }

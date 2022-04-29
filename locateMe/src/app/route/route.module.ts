@@ -9,7 +9,7 @@ import { MessageModule } from 'primeng/message';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { RouteDetailComponent } from '../route-detail/route-detail.component';
 import { WlRoutingService } from '../service/wlRouting.service';
-import { GeolocationState, MePositionState, OtherPositionState } from '../store/states/app.state';
+import { GeolocationState, MePositionState, OtherPositionState, PublicTransportState } from '../store/states/app.state';
 import { RouteComponent } from './route.component';
 
 @NgModule({
@@ -33,6 +33,7 @@ import { RouteComponent } from './route.component';
       MePositionState,
       OtherPositionState,
       GeolocationState,
+      PublicTransportState,
     ]),
   ],
   providers: [

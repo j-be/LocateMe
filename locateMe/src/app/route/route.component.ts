@@ -1,13 +1,13 @@
 import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {WlRoutingService} from '../service/wlRouting.service';
 import {Dialog} from 'primeng/dialog';
-import {combineLatest, Observable, Subject} from 'rxjs';
+import { combineLatest, Observable } from 'rxjs';
 import {MessageService} from 'primeng/api';
 import {switchMap} from 'rxjs/operators';
 import {AbstractRouteComponent} from './abstract-route.component';
-import {MePositionState, OtherPositionState} from '../store/states/app.state';
+import {MePositionState, OtherPositionState, PublicTransport, PublicTransportState} from '../store/states/app.state';
 import {Select, Store} from '@ngxs/store';
-import {StopLocating} from '../store/actions/position.actions';
+import {ClearTrips, SetTrip, SetTrips, StopLocating} from '../store/actions/position.actions';
 
 @Component({
   selector: 'app-route',
@@ -18,14 +18,13 @@ export class RouteComponent extends AbstractRouteComponent implements AfterViewI
   dialog!: Dialog;
 
   display = false;
-  routes: any = null;
-
-  detailSubject = new Subject<any>();
 
   @Select(MePositionState)
   origin$!: Observable<GeolocationPosition>;
   @Select(OtherPositionState)
   destination$!: Observable<GeolocationPosition>;
+  @Select(PublicTransportState)
+  routes$!: Observable<PublicTransport>;
 
   constructor(
     private wlRoutingService: WlRoutingService,
@@ -36,7 +35,7 @@ export class RouteComponent extends AbstractRouteComponent implements AfterViewI
   }
 
   ngAfterViewInit(): void {
-    this.dialog.onHide.subscribe(() => this.routes = null);
+    this.dialog.onHide.subscribe(() => this.store.dispatch(new ClearTrips()));
   }
 
   openDialog(): void {
@@ -46,7 +45,7 @@ export class RouteComponent extends AbstractRouteComponent implements AfterViewI
     combineLatest([this.origin$, this.destination$])
       .pipe(switchMap(([origin, destination]) => this.wlRoutingService.getRoute(origin, destination)))
       .subscribe({
-        next: data => this.routes = data,
+        next: data => this.store.dispatch(new SetTrips(data.trips)),
         error: _ => {
           this.display = false;
           this.messageService.add({
@@ -58,7 +57,7 @@ export class RouteComponent extends AbstractRouteComponent implements AfterViewI
       });
   }
 
-  showDetails(tripDetails: any) {
-    this.detailSubject.next(tripDetails);
+  showDetails(trip: any) {
+    this.store.dispatch(new SetTrip(trip));
   }
 }

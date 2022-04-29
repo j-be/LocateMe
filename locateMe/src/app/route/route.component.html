@@ -3,7 +3,7 @@
           (onShow)="dialog.maximize()"
           [blockScroll]="true">
 
-  <div *ngIf="routes; else loading">
+  <div *ngIf="(routes$ | async) as routes; else loading">
     <ng-container *ngIf="routes.trips?.length; else noRoutes">
       <div  class="trip" *ngFor="let trip of routes.trips" (click)="showDetails(trip)">
         <p-card>

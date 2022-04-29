@@ -13,3 +13,18 @@ export class StartLocating {
 export class StopLocating {
   static readonly type = '[Locating] stop';
 }
+
+export class SetTrips {
+  static readonly type = '[PublicTransport] Set trips';
+  constructor(public trips: any[]) {}
+}
+export class SetTrip {
+  static readonly type = '[PublicTransport] Set trip';
+  constructor(public trip: any) {}
+}
+export class ClearTrips {
+  static readonly type = '[PublicTransport] Clear trips';
+}
+export class ClearTrip {
+  static readonly type = '[PublicTransport] Clear trip';
+}
