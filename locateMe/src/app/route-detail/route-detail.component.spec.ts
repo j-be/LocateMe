@@ -4,6 +4,7 @@ import { RouteComponent } from '../route/route.component';
 
 import { RouteDetailComponent } from './route-detail.component';
 import { RouteModule } from '../route/route.module';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('RouteDetailComponent', () => {
   let component: RouteDetailComponent;
@@ -13,6 +14,7 @@ describe('RouteDetailComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         RouteModule,
+        RouterTestingModule,
         NgxsModule.forRoot(),
       ],
       providers: [

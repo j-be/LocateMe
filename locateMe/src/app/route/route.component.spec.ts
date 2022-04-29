@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { NgxsModule } from '@ngxs/store';
 
 import { RouteComponent } from './route.component';
@@ -12,6 +13,7 @@ describe('RouteComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         RouteModule,
+        RouterTestingModule,
         NgxsModule.forRoot(),
       ],
     })
