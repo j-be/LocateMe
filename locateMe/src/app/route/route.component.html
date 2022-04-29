@@ -1,28 +1,35 @@
 <p-dialog header="Route" [modal]="true" [(visible)]="display"
-          [styleClass]="'card-dialog'"
+          styleClass="card-dialog"
           (onShow)="dialog.maximize()"
           [blockScroll]="true">
-  <div *ngIf="routes == null" style="overflow: hidden; text-align: center">
-    <p-progressSpinner></p-progressSpinner>
+
+  <div *ngIf="routes; else loading">
+    <ng-container *ngIf="routes.trips?.length; else noRoutes">
+      <div  class="trip" *ngFor="let trip of routes.trips" (click)="showDetails(trip)">
+        <p-card>
+          <span>{{ formatPoint(trip.legs[0].points[0]) }}</span><br/>
+          <span class="duration">{{ trip.duration }}</span>
+          <div class="transport-sequence">
+          <span class="transport-chip"
+                [ngClass]="getStyleForTransportationType(leg.mode.type)"
+                *ngFor="let leg of trip.legs">{{ leg.mode.number }}</span>
+          </div>
+          <span>{{ formatPoint(trip.legs[trip.legs.length - 1].points[1]) }}</span>
+        </p-card>
+      </div>
+    </ng-container>
+    <ng-template #noRoutes>
+      <div >
+        <p-message severity="warn" text="Sorry, could not find any routes."></p-message>
+      </div>
+    </ng-template>
   </div>
 
-  <div *ngIf="routes != null">
-    <div class="trip" *ngFor="let trip of routes.trips" (click)="showDetails(trip)">
-      <p-card>
-        <span>{{ formatPoint(trip.legs[0].points[0]) }}</span><br/>
-        <span class="duration">{{ trip.duration }}</span>
-        <div class="transport-sequence">
-        <span class="transport-chip"
-              [ngClass]="getStyleForTransportationType(leg.mode.type)"
-              *ngFor="let leg of trip.legs">{{ leg.mode.number }}</span>
-        </div>
-        <span>{{ formatPoint(trip.legs[trip.legs.length - 1].points[1]) }}</span>
-      </p-card>
+  <ng-template #loading>
+    <div style="overflow: hidden; text-align: center">
+      <p-progressSpinner></p-progressSpinner>
     </div>
-    <div *ngIf="routes.trips.length == 0">
-      <p-message severity="warn" text="Sorry, could not find any routes."></p-message>
-    </div>
-  </div>
+  </ng-template>
 </p-dialog>
 
 <app-route-detail></app-route-detail>

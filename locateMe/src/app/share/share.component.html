@@ -1,5 +1,5 @@
 <p-dialog header="Share" [modal]="true" [(visible)]="display">
-  <div *ngIf="links != null">
+  <div *ngIf="links">
     <p><a href="{{ links.mailto }}">EMail</a></p>
     <p><a [href]="links.sms">SMS</a></p>
     <p><a href="{{ links.whatsApp }}">WhatsApp</a></p>
