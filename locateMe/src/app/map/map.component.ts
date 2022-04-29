@@ -27,9 +27,6 @@ export class MapComponent implements OnInit, OnDestroy {
 
   layersControl: LeafletControlLayersConfig = {
     baseLayers: {
-      'OSM Mapnik B&W':
-        tileLayer('https://tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png',
-          {attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'}),
       'OSM Mapnik':
         tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
           {attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'}),
@@ -109,7 +106,8 @@ export class MapComponent implements OnInit, OnDestroy {
   }
 
   onMapReady(map: Map) {
-    map.addLayer(this.layersControl.baseLayers[localStorage.getItem('baseLayer') || 'Wikimedia Maps']);
+    map.addLayer(this.layersControl.baseLayers[localStorage.getItem('baseLayer') || 'Wikimedia Maps'] ||
+      this.layersControl.baseLayers['Wikimedia Maps']);
 
     // Add the markers
     map.addLayer(this.me.marker)
