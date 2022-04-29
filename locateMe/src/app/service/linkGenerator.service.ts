@@ -31,8 +31,8 @@ export class LinkGeneratorService {
 
     return {
       link,
-      whatsApp: 'https://wa.me/?text=' + link,
-      mailto: 'mailto:?subject=Location&body=' + link,
+      whatsApp: `https://wa.me/?text=${link}`,
+      mailto: `mailto:?subject=Location&body=${link}`,
       sms: this.sanitizer.bypassSecurityTrustUrl('sms:?body=' +
         this.sanitizer.sanitize(SecurityContext.URL, link)),
     };

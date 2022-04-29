@@ -1,5 +1,5 @@
 import {Action, State, StateContext, Store} from '@ngxs/store';
-import {PositionFound, PositionOther, StartLocating, StopLocating} from '../actions/position.actions';
+import * as Actions from '../actions/position.actions';
 import {geolocationOptions} from '../../common';
 import {MessageService} from 'primeng/api';
 import {Injectable} from '@angular/core';
@@ -21,8 +21,8 @@ export class MePositionState {
     private messageService: MessageService,
   ) { }
 
-  @Action(PositionFound)
-  positionMe(ctx: StateContext<GeolocationPosition>, action: PositionFound) {
+  @Action(Actions.PositionFound)
+  positionMe(ctx: StateContext<GeolocationPosition>, action: Actions.PositionFound) {
     ctx.setState({
       coords: action.payload.coords,
       timestamp: action.payload.timestamp,
@@ -37,8 +37,8 @@ export class MePositionState {
 })
 @Injectable()
 export class OtherPositionState {
-  @Action(PositionOther)
-  positionOther(ctx: StateContext<GeolocationPosition>, action: PositionOther) {
+  @Action(Actions.PositionOther)
+  positionOther(ctx: StateContext<GeolocationPosition>, action: Actions.PositionOther) {
     ctx.setState({
       coords: action.payload.coords,
       timestamp: action.payload.timestamp,
@@ -59,17 +59,16 @@ export class GeolocationState {
     private store: Store,
   ) { }
 
-  @Action(StartLocating)
-  startLocating(ctx: StateContext<Geolocation>, _: StartLocating) {
-    const state = ctx.getState();
+  @Action(Actions.StartLocating)
+  startLocating(ctx: StateContext<Geolocation>) {
 
-    if (state.locationWatchId != null) {
+    if (ctx.getState().locationWatchId != null) {
       // Already running I guess...
       return;
     }
 
     const locationWatchId = navigator.geolocation.watchPosition(
-      (newLocation: GeolocationPosition) => this.store.dispatch(new PositionFound(newLocation)),
+      (newLocation: GeolocationPosition) => this.store.dispatch(new Actions.PositionFound(newLocation)),
       (error: GeolocationPositionError) => this.errorLocation(error),
       geolocationOptions
     );
@@ -93,10 +92,11 @@ export class GeolocationState {
     ctx.setState({
       locationWatchId,
     });
+
   }
 
-  @Action(StopLocating)
-  stopLocating(ctx: StateContext<Geolocation>, _: StopLocating) {
+  @Action(Actions.StopLocating)
+  stopLocating(ctx: StateContext<Geolocation>) {
     const state = ctx.getState();
 
     if (state.locationWatchId != null) {
@@ -116,6 +116,6 @@ export class GeolocationState {
       summary: 'Error while locating',
       detail: error.message
     });
-    this.store.dispatch(new StopLocating());
+    this.store.dispatch(new Actions.StopLocating());
   }
 }

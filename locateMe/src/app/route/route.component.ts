@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {WlRoutingService} from '../service/wlRouting.service';
 import {Dialog} from 'primeng/dialog';
 import {combineLatest, Observable, Subject} from 'rxjs';
@@ -45,16 +45,17 @@ export class RouteComponent extends AbstractRouteComponent implements AfterViewI
 
     combineLatest([this.origin$, this.destination$])
       .pipe(switchMap(([origin, destination]) => this.wlRoutingService.getRoute(origin, destination)))
-      .subscribe(
-        data => this.routes = data,
-        _ => {
+      .subscribe({
+        next: data => this.routes = data,
+        error: _ => {
           this.display = false;
           this.messageService.add({
             severity: 'error',
             summary: 'Cannot fetch routes',
             detail: 'An error occured while fetching data from WienerLininen!'
           });
-        });
+        }
+      });
   }
 
   showDetails(tripDetails: any) {
