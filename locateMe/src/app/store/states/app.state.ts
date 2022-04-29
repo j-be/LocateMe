@@ -148,9 +148,8 @@ export class PublicTransportState {
   @Action(Actions.FetchTrips)
   fetchTrips(ctx: StateContext<PublicTransport>, action: Actions.FetchTrips) {
     ctx.patchState({ fetching: true });
-    console.log("action", action);
     this.wlRoutingService.getRoute(action.origin, action.destination).subscribe({
-      next: trips => ctx.dispatch(new Actions.SetTrips(trips)),
+      next: data => ctx.dispatch(new Actions.SetTrips(data.trips)),
       error: _ => {
         this.messageService.add({
           severity: 'error',
@@ -167,7 +166,7 @@ export class PublicTransportState {
     ctx.setState({
       trips: action.trips,
       trip: null,
-      fetching: true,
+      fetching: false,
     });
   }
 
