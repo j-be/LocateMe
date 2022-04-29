@@ -5,7 +5,6 @@ import { NgxsModule } from '@ngxs/store';
 import { ToastModule } from 'primeng/toast';
 import { GeolocationState, MePositionState, OtherPositionState } from '../store/states/app.state';
 import { MapComponent } from './map.component';
-import { RouteModule } from '../route/route.module';
 import { ShareModule } from '../share/share.module';
 import { RouterModule } from '@angular/router';
 
@@ -32,7 +31,6 @@ import { RouterModule } from '@angular/router';
     ]),
 
     // App
-    RouteModule,
     ShareModule,
   ],
   exports: [

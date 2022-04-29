@@ -1,4 +1,4 @@
-import {Action, State, StateContext, Store} from '@ngxs/store';
+import {Action, Selector, State, StateContext, Store} from '@ngxs/store';
 import * as Actions from '../actions/position.actions';
 import {geolocationOptions} from '../../common';
 import {MessageService} from 'primeng/api';
@@ -162,5 +162,10 @@ export class PublicTransportState {
     ctx.patchState({
       trip: null,
     });
+  }
+
+  @Selector()
+  static trip(state: PublicTransport) {
+    return state.trip;
   }
 }

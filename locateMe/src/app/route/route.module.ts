@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { NgxsModule } from '@ngxs/store';
 import { MessageService } from 'primeng/api';
 import { CardModule } from 'primeng/card';
-import { DialogModule } from 'primeng/dialog';
 import { MessageModule } from 'primeng/message';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { RouteDetailComponent } from '../route-detail/route-detail.component';
@@ -21,10 +21,13 @@ import { RouteComponent } from './route.component';
     // Angular
     CommonModule,
     HttpClientModule,
+    RouterModule.forChild([
+      { path: '', component: RouteComponent },
+      { path: 'detail', component: RouteDetailComponent },
+    ]),
 
     // PrimeNG
     CardModule,
-    DialogModule,
     MessageModule,
     ProgressSpinnerModule,
 

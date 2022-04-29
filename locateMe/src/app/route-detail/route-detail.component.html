@@ -1,9 +1,13 @@
-<p-dialog header="Route details" [modal]="true" [(visible)]="display"
-          (onShow)="dialog.maximize()"
-          [blockScroll]="true">
+<nav>
+  <div class="nav-wrapper grey lighten-4">
+    <div class="title">Route details</div>
+    <div class="right-align"><a routerLink="../"><i class="material-icons">close</i></a></div>
+  </div>
+</nav>
+<main>
   <table>
     <tbody>
-    <ng-container *ngFor="let leg of tripDetail?.legs">
+    <ng-container *ngFor="let leg of (tripDetail$ | async)?.legs">
       <tr>
         <td>{{ leg.points[0].dateTime.time }}</td>
         <td style="text-align: center">&#9675;</td>
@@ -28,4 +32,4 @@
     </ng-container>
     </tbody>
   </table>
-</p-dialog>
+</main>

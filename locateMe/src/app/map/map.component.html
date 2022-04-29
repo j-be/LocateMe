@@ -55,5 +55,8 @@
     <i class="material-icons">stop</i>
   </a>
   <app-share></app-share>
-  <app-route></app-route>
+  -<a class="btn-floating btn-large waves-effect waves-light red darken-2 right" style="margin-right: 12px"
+      *ngIf="(positionMe$ | async) && (positionOther$ | async)" routerLink="/trips">
+    <i class="material-icons">directions_transit</i>
+  </a>
 </footer>

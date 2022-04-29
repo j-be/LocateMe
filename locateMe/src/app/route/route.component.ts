@@ -1,23 +1,22 @@
-import {AfterViewInit, Component, ViewChild} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import {WlRoutingService} from '../service/wlRouting.service';
-import {Dialog} from 'primeng/dialog';
-import { combineLatest, Observable } from 'rxjs';
+import { combineLatest, filter, Observable, take } from 'rxjs';
 import {MessageService} from 'primeng/api';
 import {switchMap} from 'rxjs/operators';
 import {AbstractRouteComponent} from './abstract-route.component';
 import {MePositionState, OtherPositionState, PublicTransport, PublicTransportState} from '../store/states/app.state';
 import {Select, Store} from '@ngxs/store';
-import {ClearTrips, SetTrip, SetTrips, StopLocating} from '../store/actions/position.actions';
+import {SetTrip, SetTrips, StopLocating} from '../store/actions/position.actions';
 
 @Component({
   selector: 'app-route',
   templateUrl: './route.component.html',
+  styleUrls: [
+    './route.component.sass',
+  ]
 })
-export class RouteComponent extends AbstractRouteComponent implements AfterViewInit {
-  @ViewChild(Dialog)
-  dialog!: Dialog;
-
-  display = false;
+export class RouteComponent extends AbstractRouteComponent implements OnInit {
 
   @Select(MePositionState)
   origin$!: Observable<GeolocationPosition>;
@@ -30,24 +29,28 @@ export class RouteComponent extends AbstractRouteComponent implements AfterViewI
     private wlRoutingService: WlRoutingService,
     private messageService: MessageService,
     private store: Store,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
   ) {
     super();
   }
 
-  ngAfterViewInit(): void {
-    this.dialog.onHide.subscribe(() => this.store.dispatch(new ClearTrips()));
-  }
-
-  openDialog(): void {
-    this.display = true;
+  ngOnInit(): void {
     this.store.dispatch(new StopLocating());
 
+    this.origin$.pipe(
+      take(1),
+      filter(origin => !origin),
+    ).subscribe(_ => this.router.navigate(['/']));
+
     combineLatest([this.origin$, this.destination$])
-      .pipe(switchMap(([origin, destination]) => this.wlRoutingService.getRoute(origin, destination)))
+      .pipe(
+        filter(([origin, _]) => !!origin),
+        switchMap(([origin, destination]) => this.wlRoutingService.getRoute(origin, destination)),
+      )
       .subscribe({
         next: data => this.store.dispatch(new SetTrips(data.trips)),
         error: _ => {
-          this.display = false;
           this.messageService.add({
             severity: 'error',
             summary: 'Cannot fetch routes',
@@ -59,5 +62,6 @@ export class RouteComponent extends AbstractRouteComponent implements AfterViewI
 
   showDetails(trip: any) {
     this.store.dispatch(new SetTrip(trip));
+    this.router.navigate(['detail'], { relativeTo: this.activatedRoute });
   }
 }

@@ -10,11 +10,11 @@ import {MessageService} from 'primeng/api';
 import {NgxsModule} from '@ngxs/store';
 import {environment} from '../environments/environment';
 import { MapModule} from './map/map.module';
-import { RouteModule } from './route/route.module';
 import { ShareModule } from './share/share.module';
 
 const appRoutes: Routes = [
-  {path: '', component: MapComponent},
+  { path: '', component: MapComponent },
+  { path: 'trips', loadChildren: () => import('./route/route.module').then(m => m.RouteModule) },
   {
     path: 'test',
     redirectTo: '/#48.2009786+16.3693116+12',
@@ -34,7 +34,6 @@ const appRoutes: Routes = [
     NgxsModule.forRoot([], { developmentMode: !environment.production }),
 
     MapModule,
-    RouteModule,
     ShareModule,
   ],
   providers: [

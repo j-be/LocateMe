@@ -1,49 +1,38 @@
-import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {AbstractRouteComponent} from '../route/abstract-route.component';
-import {Dialog} from 'primeng/dialog';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AbstractRouteComponent } from '../route/abstract-route.component';
 import { Select, Store } from '@ngxs/store';
-import { PublicTransport, PublicTransportState } from '../store/states/app.state';
-import { Observable, Subject, takeUntil, tap } from 'rxjs';
+import { MePositionState, PublicTransportState } from '../store/states/app.state';
+import { Observable, take, filter } from 'rxjs';
 import { ClearTrip, } from '../store/actions/position.actions';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-route-detail',
   templateUrl: './route-detail.component.html',
+  styleUrls: ['../route/route.component.sass'],
 })
-export class RouteDetailComponent extends AbstractRouteComponent implements OnInit, OnDestroy, AfterViewInit {
-  @ViewChild(Dialog)
-  dialog!: Dialog;
+export class RouteDetailComponent extends AbstractRouteComponent implements OnInit, OnDestroy {
+  @Select(MePositionState)
+  origin$!: Observable<GeolocationPosition>;
 
-  @Select(PublicTransportState)
-  routes$!: Observable<PublicTransport>;
-
-  onDestroy$ = new Subject<boolean>();
-
-  tripDetail: any = null;
-  display = false;
+  @Select(PublicTransportState.trip)
+  tripDetail$!: Observable<any>;
 
   constructor(
     private store: Store,
+    private router: Router,
   ) {
     super();
   }
 
   ngOnInit() {
-    this.routes$.pipe(
-      takeUntil(this.onDestroy$),
-      tap(console.log),
-    ).subscribe(routes => {
-      this.tripDetail = routes.trip;
-      this.display = !!routes.trip;
-    });
-  }
-
-  ngAfterViewInit(): void {
-    this.dialog.onHide.subscribe(() => this.store.dispatch(new ClearTrip()));
+    this.origin$.pipe(
+      take(1),
+      filter(origin => !origin),
+    ).subscribe(_ => this.router.navigate(['/']));
   }
 
   ngOnDestroy() {
-    this.onDestroy$.next(true);
-    this.onDestroy$.complete();
+    this.store.dispatch(new ClearTrip());
   }
 }
