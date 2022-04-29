@@ -1,14 +1,23 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { NgxsModule } from '@ngxs/store';
+import { RouteComponent } from '../route/route.component';
 
 import { RouteDetailComponent } from './route-detail.component';
+import { RouteModule } from '../route/route.module';
 
 describe('RouteDetailComponent', () => {
   let component: RouteDetailComponent;
   let fixture: ComponentFixture<RouteDetailComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ RouteDetailComponent ]
+      imports: [
+        RouteModule,
+        NgxsModule.forRoot(),
+      ],
+      providers: [
+        RouteComponent,
+      ],
     })
     .compileComponents();
   }));
