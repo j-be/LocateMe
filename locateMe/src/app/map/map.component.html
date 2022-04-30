@@ -9,6 +9,7 @@
   <p-toast key="locating"></p-toast>
 
   <div leaflet *ngIf="!hidden"
+       (resized)="rerenderMap($event)"
        [leafletLayersControl]="layersControl"
        (leafletMapReady)="onMapReady($event)">
   </div>

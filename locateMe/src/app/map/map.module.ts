@@ -8,6 +8,7 @@ import { MapComponent } from './map.component';
 import { ShareModule } from '../share/share.module';
 import { RouterModule } from '@angular/router';
 import { WidgetsModule } from '../widgets/widgets.module';
+import { AngularResizeEventModule } from 'angular-resize-event';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,9 @@ import { WidgetsModule } from '../widgets/widgets.module';
       OtherPositionState,
       GeolocationState,
     ]),
+
+    // Utils
+    AngularResizeEventModule,
 
     // App
     ShareModule,

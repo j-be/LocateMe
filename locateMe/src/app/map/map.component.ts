@@ -1,14 +1,15 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {takeUntil} from 'rxjs/operators';
 import {SEP_CHAR} from '../service/linkGenerator.service';
-import {combineLatest, Observable, Subject} from 'rxjs';
+import {combineLatest, distinctUntilChanged, debounceTime, Observable, Subject} from 'rxjs';
 import {Circle, LatLng, LatLngBoundsExpression, Map, Marker, tileLayer} from 'leaflet';
 import {meOptions, otherOptions, PersonOptions, PositionMarker} from '../common';
 import {LeafletControlLayersConfig} from '@asymmetrik/ngx-leaflet';
 import {Select, Store} from '@ngxs/store';
 import {Geolocation, GeolocationState, MePositionState, OtherPositionState} from '../store/states/app.state';
 import {PositionOther, StartLocating, StopLocating} from '../store/actions/position.actions';
+import { ResizedEvent } from 'angular-resize-event';
 
 @Component({
   selector: 'app-map',
@@ -40,9 +41,12 @@ export class MapComponent implements OnInit, OnDestroy {
     overlays: {},
   };
 
+  private map: Map | null = null;
+
   private me: PositionMarker = MapComponent.forgePositionMarker(meOptions);
   private other: PositionMarker = MapComponent.forgePositionMarker(otherOptions);
 
+  private mapResized$: Subject<number> = new Subject();
   private onDestroy$: Subject<boolean> = new Subject();
 
   constructor(
@@ -90,6 +94,12 @@ export class MapComponent implements OnInit, OnDestroy {
           this.store.dispatch(new PositionOther(MapComponent.parseFragment(fragment)));
         }
       });
+
+    this.mapResized$.pipe(
+      takeUntil(this.onDestroy$),
+      debounceTime(10),
+      distinctUntilChanged(),
+    ).subscribe(() => this.map?.invalidateSize());
   }
 
   ngOnDestroy(): void {
@@ -136,6 +146,13 @@ export class MapComponent implements OnInit, OnDestroy {
           map.fitBounds(this.toLeafletLatLngBound(me, other));
         }
       });
+
+    this.map = map;
+    this.mapResized$.next(0);
+  }
+
+  rerenderMap($event: ResizedEvent) {
+    this.mapResized$.next($event.newRect.height);
   }
 
   private applyPosition(positionMarker: PositionMarker, position: GeolocationPosition): void {

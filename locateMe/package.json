@@ -21,6 +21,7 @@
     "@angular/router": "^13.0.0",
     "@asymmetrik/ngx-leaflet": "^13.0.0",
     "@ngxs/store": "^3.7.3",
+    "angular-resize-event": "^3.1.1",
     "leaflet": "^1.7.1",
     "materialize-css": "^1.0.0",
     "primeicons": "^5.0.0",
