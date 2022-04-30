@@ -43,9 +43,6 @@ import { RouteComponent } from './route.component';
     WlRoutingService,
     MessageService,
   ],
-  exports: [
-    RouteComponent,
-  ],
 })
 export class RouteModule {
 }
