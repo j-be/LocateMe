@@ -7,6 +7,7 @@ import { GeolocationState, MePositionState, OtherPositionState } from '../store/
 import { MapComponent } from './map.component';
 import { ShareModule } from '../share/share.module';
 import { RouterModule } from '@angular/router';
+import { WidgetsModule } from '../widgets/widgets.module';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { RouterModule } from '@angular/router';
 
     // App
     ShareModule,
+    WidgetsModule,
   ],
   exports: [
     MapComponent,

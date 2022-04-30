@@ -120,6 +120,11 @@ export class GeolocationState {
     });
     this.store.dispatch(new Actions.StopLocating());
   }
+
+  @Selector()
+  static locationWatchId(state: Geolocation) {
+    return state.locationWatchId;
+  }
 }
 
 export interface PublicTransport {
