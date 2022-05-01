@@ -7,8 +7,8 @@ import {Circle, LatLng, LatLngBoundsExpression, Map, Marker, tileLayer} from 'le
 import {meOptions, otherOptions, PersonOptions, PositionMarker} from '../common';
 import {LeafletControlLayersConfig} from '@asymmetrik/ngx-leaflet';
 import {Select, Store} from '@ngxs/store';
-import {Geolocation, GeolocationState, MePositionState, OtherPositionState} from '../store/states/app.state';
-import {PositionOther, StartLocating, StopLocating} from '../store/actions/position.actions';
+import {MePositionState, OtherPositionState} from '../store/states/app.state';
+import { PositionOther } from '../store/actions/position.actions';
 import { ResizedEvent } from 'angular-resize-event';
 
 @Component({
@@ -19,8 +19,6 @@ export class MapComponent implements OnInit, OnDestroy {
 
   hidden = true;
 
-  @Select(GeolocationState)
-  isWatchingLocation$!: Observable<Geolocation>;
   @Select(MePositionState)
   positionMe$!: Observable<GeolocationPosition>;
   @Select(OtherPositionState)
@@ -105,14 +103,6 @@ export class MapComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.onDestroy$.next(true);
     this.onDestroy$.complete();
-  }
-
-  locateMe() {
-    this.store.dispatch(new StartLocating());
-  }
-
-  stopLocatingMe() {
-    this.store.dispatch(new StopLocating());
   }
 
   onMapReady(map: Map) {
