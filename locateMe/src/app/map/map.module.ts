@@ -16,7 +16,9 @@ import { AngularResizeEventModule } from 'angular-resize-event';
   imports: [
     // Angular
     CommonModule,
-    RouterModule.forChild([]),
+    RouterModule.forChild([
+      { path: '', component: MapComponent }
+    ]),
 
     // Leaflet
     LeafletModule,

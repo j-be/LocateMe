@@ -1,23 +1,19 @@
-import {Component, OnDestroy, OnInit } from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {takeUntil} from 'rxjs/operators';
-import {SEP_CHAR} from '../service/linkGenerator.service';
-import {combineLatest, distinctUntilChanged, debounceTime, Observable, Subject} from 'rxjs';
-import {Circle, LatLng, LatLngBoundsExpression, Map, Marker, tileLayer} from 'leaflet';
-import {meOptions, otherOptions, PersonOptions, PositionMarker} from '../common';
-import {LeafletControlLayersConfig} from '@asymmetrik/ngx-leaflet';
-import {Select, Store} from '@ngxs/store';
-import {MePositionState, OtherPositionState} from '../store/states/app.state';
-import { PositionOther } from '../store/actions/position.actions';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { LeafletControlLayersConfig } from '@asymmetrik/ngx-leaflet';
+import { Select } from '@ngxs/store';
 import { ResizedEvent } from 'angular-resize-event';
+import { Circle, LatLng, LatLngBoundsExpression, Map, Marker, tileLayer } from 'leaflet';
+import { combineLatest, debounceTime, distinctUntilChanged, filter, Observable, Subject, take, takeUntil } from 'rxjs';
+import { meOptions, otherOptions, PersonOptions, PositionMarker } from '../common';
+import { MePositionState, OtherPositionState } from '../store/states/app.state';
+
 
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
 })
 export class MapComponent implements OnInit, OnDestroy {
-
-  hidden = true;
 
   @Select(MePositionState)
   positionMe$!: Observable<GeolocationPosition>;
@@ -41,15 +37,14 @@ export class MapComponent implements OnInit, OnDestroy {
 
   private map: Map | null = null;
 
-  private me: PositionMarker = MapComponent.forgePositionMarker(meOptions);
-  private other: PositionMarker = MapComponent.forgePositionMarker(otherOptions);
+  private me = MapComponent.forgePositionMarker(meOptions);
+  private other = MapComponent.forgePositionMarker(otherOptions);
 
   private mapResized$: Subject<number> = new Subject();
   private onDestroy$: Subject<boolean> = new Subject();
 
   constructor(
-    private route: ActivatedRoute,
-    private store: Store,
+    private router: Router,
   ) {
   }
 
@@ -60,38 +55,21 @@ export class MapComponent implements OnInit, OnDestroy {
     };
   }
 
-  private static parseFragment(fragment: string): GeolocationPosition {
-    const fragments = fragment.split(SEP_CHAR);
-    return {
-      coords: {
-        latitude: Number(fragments[0]),
-        longitude: Number(fragments[1]),
-        accuracy: Number(fragments[2]),
-        altitude: null,
-        altitudeAccuracy: null,
-        heading: null,
-        speed: null,
-      },
-      timestamp: new Date().getTime(),
-    };
-  }
-
   ngOnInit() {
+    combineLatest([
+      this.positionMe$,
+      this.positionOther$,
+    ]).pipe(
+      take(1),
+      filter(positions => positions.every(position => !position)),
+    ).subscribe(_ => this.router.navigate(['/']));
+
     this.positionMe$
       .pipe(takeUntil(this.onDestroy$))
       .subscribe((me: GeolocationPosition) => this.applyPosition(this.me, me));
-
     this.positionOther$
       .pipe(takeUntil(this.onDestroy$))
       .subscribe((other: GeolocationPosition) => this.applyPosition(this.other, other));
-
-    this.route.fragment
-      .pipe(takeUntil(this.onDestroy$))
-      .subscribe((fragment) => {
-        if (fragment && fragment.length > 0) {
-          this.store.dispatch(new PositionOther(MapComponent.parseFragment(fragment)));
-        }
-      });
 
     this.mapResized$.pipe(
       takeUntil(this.onDestroy$),
@@ -149,8 +127,6 @@ export class MapComponent implements OnInit, OnDestroy {
     if (!position?.coords) {
       return;
     }
-
-    this.hidden = false;
 
     const latLng = this.toLeafletLatLng(position);
     positionMarker.marker.setOpacity(1);

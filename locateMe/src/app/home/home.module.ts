@@ -1,36 +1,33 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { NgxsModule } from '@ngxs/store';
+import { GeolocationState, MePositionState, OtherPositionState } from '../store/states/app.state';
+import { RouterModule } from '@angular/router';
+import { HomeComponent } from './home.component';
+import { WidgetsModule } from '../widgets/widgets.module';
 import { MessageService } from 'primeng/api';
-import { DialogModule } from 'primeng/dialog';
-import { LinkGeneratorService } from '../service/linkGenerator.service';
-import { GeolocationState, MePositionState } from '../store/states/app.state';
-import { ShareComponent } from './share.component';
 
 @NgModule({
   declarations: [
-    ShareComponent,
+    HomeComponent,
   ],
   imports: [
     // Angular
     CommonModule,
-
-    // PrimeNG
-    DialogModule,
+    RouterModule.forChild([]),
 
     // ngxs
     NgxsModule.forFeature([
       MePositionState,
+      OtherPositionState,
       GeolocationState,
     ]),
+
+    WidgetsModule,
   ],
   providers: [
-    LinkGeneratorService,
     MessageService,
   ],
-  exports: [
-    ShareComponent,
-  ],
 })
-export class ShareModule {
+export class HomeModule {
 }

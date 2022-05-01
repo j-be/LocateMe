@@ -2,15 +2,12 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 
 import {AppComponent} from './app.component';
-import {MapComponent} from './map/map.component';
 import { RouterModule } from '@angular/router';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {WlRoutingService} from './service/wlRouting.service';
-import {MessageService} from 'primeng/api';
 import {NgxsModule} from '@ngxs/store';
 import {environment} from '../environments/environment';
-import { MapModule} from './map/map.module';
-import { ShareModule } from './share/share.module';
+import { HomeModule } from './home/home.module';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +15,7 @@ import { ShareModule } from './share/share.module';
   ],
   imports: [
     RouterModule.forRoot([
-      { path: '', component: MapComponent },
+      { path: '', component: HomeComponent },
       { path: 'trips', loadChildren: () => import('./route/route.module').then(m => m.RouteModule) },
       { path: 'map', loadChildren: () => import('./map/map.module').then(m => m.MapModule) },
       { path: 'test', redirectTo: '/#48.2009786+16.3693116+12', pathMatch: 'full', },
@@ -27,12 +24,7 @@ import { ShareModule } from './share/share.module';
     BrowserModule,
     NgxsModule.forRoot([], { developmentMode: !environment.production }),
 
-    MapModule,
-    ShareModule,
-  ],
-  providers: [
-    WlRoutingService,
-    MessageService,
+    HomeModule,
   ],
   bootstrap: [AppComponent]
 })
