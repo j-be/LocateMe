@@ -1,6 +1,6 @@
-import {environment} from '../../environments/environment';
-import {Injectable, SecurityContext} from '@angular/core';
-import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
+import { environment } from '../../environments/environment';
+import { Injectable, SecurityContext } from '@angular/core';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 export const SEP_CHAR = '+';
 
@@ -11,7 +11,7 @@ export interface Links {
   sms: SafeUrl;
 }
 
-@Injectable({providedIn: 'root'})
+@Injectable()
 export class LinkGeneratorService {
 
   constructor(
