@@ -27,4 +27,19 @@ describe('GeolocationControlComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should start and stop geolocation', (done: DoneFn) => {
+    const ids: unknown[] = [];
+    component.locationWatchId$.subscribe(watchId => {
+      ids.push(watchId);
+      if (ids?.length === 3) {
+        expect(ids[0]).toBeNull();
+        expect(ids[1]).toBeTruthy();
+        expect(ids[2]).toBeNull();
+        done();
+      }
+    });
+    component.locateMe();
+    component.stopLocatingMe();
+  });
 });
