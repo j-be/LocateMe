@@ -1,15 +1,11 @@
-<nav>
-  <div class="nav-wrapper light-green">
+<app-layout>
+
+  <div role="nav" class="nav-wrapper light-green">
     <div class="brand-logo">
       <img src="assets/css/img/logo.svg">
       <span>LocateMe</span>
     </div>
   </div>
-</nav>
-
-<main>
-  <p-toast></p-toast>
-  <p-toast key="locating"></p-toast>
 
   <div leaflet *ngIf="!hidden"
        (resized)="rerenderMap($event)"
@@ -47,14 +43,14 @@
       </div>
     </div>
   </div>
-</main>
 
-<footer>
-  <app-geolocation-control></app-geolocation-control>
-  <app-share></app-share>
+  <div role="footer">
+    <app-geolocation-control></app-geolocation-control>
+    <app-share></app-share>
 
-  <a class="btn-floating btn-large waves-effect waves-light red darken-2 right" style="margin-right: 12px"
-      *ngIf="(positionMe$ | async) && (positionOther$ | async)" routerLink="/trips">
-    <i class="material-icons">directions_transit</i>
-  </a>
-</footer>
+    <a class="btn-floating btn-large waves-effect waves-light red darken-2 right" style="margin-right: 12px"
+        *ngIf="(positionMe$ | async) && (positionOther$ | async)" routerLink="/trips">
+      <i class="material-icons">directions_transit</i>
+    </a>
+  </div>
+</app-layout>

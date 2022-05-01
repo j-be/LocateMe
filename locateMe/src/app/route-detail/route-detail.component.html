@@ -1,10 +1,10 @@
-<nav>
-  <div class="nav-wrapper grey lighten-4">
+<app-layout>
+
+  <div role="nav" class="nav-wrapper grey lighten-4">
     <div class="title">Route details</div>
     <div class="right-align"><a routerLink="../"><i class="material-icons">close</i></a></div>
   </div>
-</nav>
-<main>
+
   <table>
     <tbody>
     <ng-container *ngFor="let leg of (tripDetail$ | async)?.legs">
@@ -32,4 +32,5 @@
     </ng-container>
     </tbody>
   </table>
-</main>
+
+</app-layout>

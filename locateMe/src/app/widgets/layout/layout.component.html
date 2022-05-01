@@ -1,0 +1,14 @@
+<nav>
+  <ng-content select="div[role=nav]"></ng-content>
+</nav>
+
+<main>
+  <p-toast></p-toast>
+  <p-toast key="locating"></p-toast>
+
+  <ng-content></ng-content>
+</main>
+
+<footer>
+  <ng-content select="div[role=footer]"></ng-content>
+</footer>

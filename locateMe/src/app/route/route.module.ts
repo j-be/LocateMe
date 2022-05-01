@@ -10,6 +10,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { RouteDetailComponent } from '../route-detail/route-detail.component';
 import { WlRoutingService } from '../service/wlRouting.service';
 import { GeolocationState, MePositionState, OtherPositionState, PublicTransportState } from '../store/states/app.state';
+import { WidgetsModule } from '../widgets/widgets.module';
 import { RouteComponent } from './route.component';
 
 @NgModule({
@@ -38,6 +39,9 @@ import { RouteComponent } from './route.component';
       GeolocationState,
       PublicTransportState,
     ]),
+
+    // This app
+    WidgetsModule,
   ],
   providers: [
     WlRoutingService,

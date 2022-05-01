@@ -1,10 +1,10 @@
-<nav>
-  <div class="nav-wrapper grey lighten-4">
+<app-layout>
+
+  <div role="nav" class="nav-wrapper grey lighten-4">
     <div class="title">Routes</div>
     <div class="right-align"><a routerLink="../"><i class="material-icons">close</i></a></div>
   </div>
-</nav>
-<main>
+
   <ng-container *ngIf="fetching$ | async; else trips">
     <div style="overflow: hidden; text-align: center">
       <p-progressSpinner></p-progressSpinner>
@@ -34,5 +34,5 @@
       </ng-template>
     </ng-container>
   </ng-template>
-</main>
 
+</app-layout>
