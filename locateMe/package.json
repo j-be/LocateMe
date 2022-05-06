@@ -46,6 +46,7 @@
     "@typescript-eslint/eslint-plugin": "^5.17.0",
     "@typescript-eslint/parser": "^5.17.0",
     "eslint": "^8.12.0",
+    "eslint-plugin-ngxs-style-guide": "^3.0.0",
     "jasmine-core": "^3.10.0",
     "karma": "^6.3.0",
     "karma-chrome-launcher": "^3.1.0",

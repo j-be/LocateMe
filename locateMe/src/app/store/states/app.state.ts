@@ -4,10 +4,11 @@ import {geolocationOptions} from '../../common';
 import {MessageService} from 'primeng/api';
 import {Injectable} from '@angular/core';
 import { WlRoutingService } from 'src/app/service/wlRouting.service';
+import { catchError, map, of } from 'rxjs';
 
 const MSG_LOCATING = 'locating';
 
-export interface Geolocation {
+export interface GeolocationStateModel {
   locationWatchId: number | null;
 }
 
@@ -47,7 +48,7 @@ export class OtherPositionState {
   }
 }
 
-@State<Geolocation>({
+@State<GeolocationStateModel>({
   name: 'GeolocationState',
   defaults: {
     locationWatchId: null,
@@ -61,7 +62,7 @@ export class GeolocationState {
   ) { }
 
   @Action(Actions.StartLocating)
-  startLocating(ctx: StateContext<Geolocation>) {
+  startLocating(ctx: StateContext<GeolocationStateModel>) {
     ctx.dispatch(new Actions.ClearTrips());
 
     if (ctx.getState().locationWatchId != null) {
@@ -98,7 +99,7 @@ export class GeolocationState {
   }
 
   @Action(Actions.StopLocating)
-  stopLocating(ctx: StateContext<Geolocation>) {
+  stopLocating(ctx: StateContext<GeolocationStateModel>) {
     const state = ctx.getState();
 
     if (state.locationWatchId != null) {
@@ -122,19 +123,19 @@ export class GeolocationState {
   }
 
   @Selector()
-  static locationWatchId(state: Geolocation) {
+  static locationWatchId(state: GeolocationStateModel) {
     return state.locationWatchId;
   }
 }
 
-export interface PublicTransport {
+export interface PublicTransportModel {
   trips: any[];
   trip: any;
   fetching: boolean;
 }
 
-@State<PublicTransport>({
-  name: 'PublicTransportState',
+@State<PublicTransportModel>({
+  name: 'PublicTransport',
   defaults: {
     trips: [],
     trip: null,
@@ -151,23 +152,24 @@ export class PublicTransportState {
   }
 
   @Action(Actions.FetchTrips)
-  fetchTrips(ctx: StateContext<PublicTransport>, action: Actions.FetchTrips) {
+  fetchTrips(ctx: StateContext<PublicTransportModel>, action: Actions.FetchTrips) {
     ctx.patchState({ fetching: true });
-    this.wlRoutingService.getRoute(action.origin, action.destination).subscribe({
-      next: data => ctx.dispatch(new Actions.SetTrips(data.trips)),
-      error: _ => {
+    return this.wlRoutingService.getRoute(action.origin, action.destination).pipe(
+      map(data => ctx.dispatch(new Actions.SetTrips(data.trips))),
+      catchError(_ => {
         this.messageService.add({
           severity: 'error',
           summary: 'Cannot fetch routes',
           detail: 'An error occured while fetching data from WienerLininen!'
         });
         ctx.patchState({ fetching: false });
-      }
-    });
+        return of();
+      })
+    );
   }
 
   @Action(Actions.SetTrips)
-  setTrips(ctx: StateContext<PublicTransport>, action: Actions.SetTrips) {
+  setTrips(ctx: StateContext<PublicTransportModel>, action: Actions.SetTrips) {
     ctx.setState({
       trips: action.trips,
       trip: null,
@@ -176,12 +178,12 @@ export class PublicTransportState {
   }
 
   @Action(Actions.SetTrip)
-  setTrip(ctx: StateContext<PublicTransport>, action: Actions.SetTrip) {
+  setTrip(ctx: StateContext<PublicTransportModel>, action: Actions.SetTrip) {
     ctx.patchState({trip: action.trip});
   }
 
   @Action(Actions.ClearTrips)
-  clearTrips(ctx: StateContext<PublicTransport>) {
+  clearTrips(ctx: StateContext<PublicTransportModel>) {
     ctx.setState({
       trips: [],
       trip: null,
@@ -190,19 +192,19 @@ export class PublicTransportState {
   }
 
   @Action(Actions.ClearTrip)
-  clearTrip(ctx: StateContext<PublicTransport>) {
+  clearTrip(ctx: StateContext<PublicTransportModel>) {
     ctx.patchState({
       trip: null,
     });
   }
 
   @Selector()
-  static trip(state: PublicTransport) {
+  static trip(state: PublicTransportModel) {
     return state.trip;
   }
 
   @Selector()
-  static fetching(state: PublicTransport) {
+  static fetching(state: PublicTransportModel) {
     return state.fetching;
   }
 }

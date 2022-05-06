@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { NgxsModule } from '@ngxs/store';
-import { GeolocationState, MePositionState, OtherPositionState } from '../store/states/app.state';
+import { MePositionState, OtherPositionState } from '../store/states/app.state';
 import { MapComponent } from './map.component';
 import { ShareModule } from '../share/share.module';
 import { RouterModule } from '@angular/router';
@@ -27,7 +27,6 @@ import { AngularResizeEventModule } from 'angular-resize-event';
     NgxsModule.forFeature([
       MePositionState,
       OtherPositionState,
-      GeolocationState,
     ]),
 
     // Utils

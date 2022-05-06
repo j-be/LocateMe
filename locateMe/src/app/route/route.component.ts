@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest, Observable, take } from 'rxjs';
 import {AbstractRouteComponent} from './abstract-route.component';
-import {MePositionState, OtherPositionState, PublicTransport, PublicTransportState} from '../store/states/app.state';
+import {MePositionState, OtherPositionState, PublicTransportModel, PublicTransportState} from '../store/states/app.state';
 import {Select, Store} from '@ngxs/store';
 import {FetchTrips, SetTrip, StopLocating} from '../store/actions/position.actions';
 
@@ -20,7 +20,7 @@ export class RouteComponent extends AbstractRouteComponent implements OnInit {
   @Select(OtherPositionState)
   destination$!: Observable<GeolocationPosition>;
   @Select(PublicTransportState)
-  routes$!: Observable<PublicTransport>;
+  routes$!: Observable<PublicTransportModel>;
   @Select(PublicTransportState.fetching)
   fetching$!: Observable<boolean>;
 
