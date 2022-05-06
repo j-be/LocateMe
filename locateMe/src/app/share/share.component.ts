@@ -25,8 +25,8 @@ export class ShareComponent {
   showDialog() {
     this.display = true;
     this.store.dispatch(new StopLocating());
-    this.location$
-      .pipe(take(1))
-      .subscribe(position => this.links = this.linkGeneratorService.getLinks(position));
+    this.location$.pipe(
+      take(1),
+    ).subscribe(position => this.links = this.linkGeneratorService.getLinks(position));
   }
 }

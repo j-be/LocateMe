@@ -20,9 +20,8 @@ export class WlRoutingService {
       params: new HttpParams()
         .set('name_origin', WlRoutingService.formatLocation(origin))
         .set('name_destination', WlRoutingService.formatLocation(destination)) };
-    return this.http.get(url, options)
-      .pipe(
-        retry({count: 3, delay: 1000}),
-      );
+    return this.http.get(url, options).pipe(
+      retry({count: 3, delay: 1000}),
+    );
   }
 }

@@ -64,12 +64,12 @@ export class MapComponent implements OnInit, OnDestroy {
       filter(positions => positions.every(position => !position)),
     ).subscribe(_ => this.router.navigate(['/']));
 
-    this.positionMe$
-      .pipe(takeUntil(this.onDestroy$))
-      .subscribe((me: GeolocationPosition) => this.applyPosition(this.me, me));
-    this.positionOther$
-      .pipe(takeUntil(this.onDestroy$))
-      .subscribe((other: GeolocationPosition) => this.applyPosition(this.other, other));
+    this.positionMe$.pipe(
+      takeUntil(this.onDestroy$),
+    ).subscribe((me: GeolocationPosition) => this.applyPosition(this.me, me));
+    this.positionOther$.pipe(
+      takeUntil(this.onDestroy$),
+    ).subscribe((other: GeolocationPosition) => this.applyPosition(this.other, other));
 
     this.mapResized$.pipe(
       debounceTime(10),
@@ -89,8 +89,8 @@ export class MapComponent implements OnInit, OnDestroy {
 
     // Add the markers
     map.addLayer(this.me.marker)
-      .addLayer(this.me.accuracy);
-    map.addLayer(this.other.marker)
+      .addLayer(this.me.accuracy)
+      .addLayer(this.other.marker)
       .addLayer(this.other.accuracy);
 
     map.on({
@@ -101,19 +101,19 @@ export class MapComponent implements OnInit, OnDestroy {
     combineLatest([
       this.positionMe$,
       this.positionOther$,
-    ])
-      .pipe(takeUntil(this.onDestroy$))
-      .subscribe(([me, other]: [GeolocationPosition, GeolocationPosition]) => {
-        if (!me && !other) {
-          return;
-        } else if (!me && other) {
-          map.setView(this.toLeafletLatLng(other), 18);
-        } else if (me && !other) {
-          map.setView(this.toLeafletLatLng(me), 18);
-        } else {
-          map.fitBounds(this.toLeafletLatLngBound(me, other));
-        }
-      });
+    ]).pipe(
+      takeUntil(this.onDestroy$),
+    ).subscribe(([me, other]: [GeolocationPosition, GeolocationPosition]) => {
+      if (!me && !other) {
+        return;
+      } else if (!me && other) {
+        map.setView(this.toLeafletLatLng(other), 18);
+      } else if (me && !other) {
+        map.setView(this.toLeafletLatLng(me), 18);
+      } else {
+        map.fitBounds(this.toLeafletLatLngBound(me, other));
+      }
+    });
 
     this.map = map;
     this.mapResized$.next(0);

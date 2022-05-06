@@ -31,17 +31,17 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.positionMe$,
       this.positionOther$,
     ]).pipe(
-        filter(([me, other]) => !!me || !!other),
-        takeUntil(this.onDestroy$),
-      ).subscribe(() => this.router.navigate(['map']));
+      filter(([me, other]) => !!me || !!other),
+      takeUntil(this.onDestroy$),
+    ).subscribe(() => this.router.navigate(['map']));
 
-    this.route.fragment
-      .pipe(takeUntil(this.onDestroy$))
-      .subscribe(fragment => {
-        if (fragment && fragment.length > 0) {
-          this.store.dispatch(new PositionOther(HomeComponent.parseFragment(fragment)));
-        }
-      });
+    this.route.fragment.pipe(
+      takeUntil(this.onDestroy$),
+    ).subscribe(fragment => {
+      if (fragment?.length) {
+        this.store.dispatch(new PositionOther(HomeComponent.parseFragment(fragment)));
+      }
+    });
   }
 
   ngOnDestroy(): void {
