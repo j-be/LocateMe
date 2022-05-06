@@ -31,8 +31,8 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.positionMe$,
       this.positionOther$,
     ]).pipe(
-        takeUntil(this.onDestroy$),
         filter(([me, other]) => !!me || !!other),
+        takeUntil(this.onDestroy$),
       ).subscribe(() => this.router.navigate(['map']));
 
     this.route.fragment

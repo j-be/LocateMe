@@ -72,9 +72,9 @@ export class MapComponent implements OnInit, OnDestroy {
       .subscribe((other: GeolocationPosition) => this.applyPosition(this.other, other));
 
     this.mapResized$.pipe(
-      takeUntil(this.onDestroy$),
       debounceTime(10),
       distinctUntilChanged(),
+      takeUntil(this.onDestroy$),
     ).subscribe(() => this.map?.invalidateSize());
   }
 
