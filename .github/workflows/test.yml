@@ -5,8 +5,9 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - name: Install Chromium
-        run: sudo apt-get install -y chromium
+
+      - uses: browser-actions/setup-chrome@latest
+      - run: chrome --version
 
       - name: Checkout
         uses: actions/checkout@v2
@@ -24,4 +25,4 @@ jobs:
       - name: Lint
         run: |
           cd locateMe
-          CHROME_BIN=chromium npm run test:headless
+          npm run test:headless
