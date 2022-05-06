@@ -6,7 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Install Chromium
-        run: apt install -y chromium
+        run: sudo apt-get install -y chromium
 
       - name: Checkout
         uses: actions/checkout@v2
