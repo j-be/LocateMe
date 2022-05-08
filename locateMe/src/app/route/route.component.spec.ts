@@ -7,7 +7,7 @@ import { RouteModule } from './route.module';
 import { of } from 'rxjs';
 import { PositionFound, PositionOther } from '../store/actions/position.actions';
 import { forgeGeolocation } from '../common';
-import * as wlResponse from '../../../wl-response.json';
+import { default as wlResponse } from '../../../wl-response.json';
 import { WlRoutingService } from '../service/wlRouting.service';
 
 const wlRoutingServiceSpy = { getRoute: jasmine.createSpy('getRoute').and.returnValue(of(wlResponse)) };
@@ -40,7 +40,7 @@ describe('RouteComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should fetch routes', () => {
+  it('should fetch routes', (done) => {
     expect(wlRoutingServiceSpy.getRoute).toHaveBeenCalledTimes(0);
 
     TestBed.inject(Store).dispatch(new PositionFound(forgeGeolocation(1, 2, 3)));
@@ -49,5 +49,21 @@ describe('RouteComponent', () => {
     component.ngOnInit();
 
     expect(wlRoutingServiceSpy.getRoute).toHaveBeenCalledTimes(1);
+
+    component.routes$.subscribe(routes => {
+      expect(routes.trips).toEqual(wlResponse.trips);
+      done();
+    });
+  });
+
+  it('should set trip', (done) => {
+    const trip = wlResponse.trips[0];
+
+    expect(TestBed.inject(Store).snapshot().PublicTransport.trip).toBeFalsy();
+    component.showDetails(trip);
+    TestBed.inject(Store).select(state => state.PublicTransport.trip).subscribe(tripFromState => {
+      expect(tripFromState).toEqual(trip);
+      done();
+    });
   });
 });
