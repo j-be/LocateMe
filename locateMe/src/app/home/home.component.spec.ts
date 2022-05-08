@@ -28,6 +28,8 @@ describe('HomeComponent', () => {
   });
 
   beforeEach(() => {
+    routerSpy.navigate.calls.reset();
+
     fixture = TestBed.createComponent(HomeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
