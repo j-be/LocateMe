@@ -47,5 +47,5 @@ describe('HomeComponent', () => {
       expect(routerSpy.navigate).toHaveBeenCalledOnceWith(['map']);
       done();
     });
-  })
+  });
 });

@@ -1,9 +1,16 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { NgxsModule } from '@ngxs/store';
+import { NgxsModule, Store } from '@ngxs/store';
 
 import { RouteComponent } from './route.component';
 import { RouteModule } from './route.module';
+import { of } from 'rxjs';
+import { PositionFound, PositionOther } from '../store/actions/position.actions';
+import { forgeGeolocation } from '../common';
+import * as wlResponse from '../../../wl-response.json';
+import { WlRoutingService } from '../service/wlRouting.service';
+
+const wlRoutingServiceSpy = { getRoute: jasmine.createSpy('getRoute').and.returnValue(of(wlResponse)) };
 
 describe('RouteComponent', () => {
   let component: RouteComponent;
@@ -16,6 +23,9 @@ describe('RouteComponent', () => {
         RouterTestingModule,
         NgxsModule.forRoot(),
       ],
+      providers: [
+        { provide: WlRoutingService, useValue: wlRoutingServiceSpy },
+      ]
     })
     .compileComponents();
   }));
@@ -28,5 +38,16 @@ describe('RouteComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should fetch routes', () => {
+    expect(wlRoutingServiceSpy.getRoute).toHaveBeenCalledTimes(0);
+
+    TestBed.inject(Store).dispatch(new PositionFound(forgeGeolocation(1, 2, 3)));
+    TestBed.inject(Store).dispatch(new PositionOther(forgeGeolocation(4, 5, 6)));
+
+    component.ngOnInit();
+
+    expect(wlRoutingServiceSpy.getRoute).toHaveBeenCalledTimes(1);
   });
 });
