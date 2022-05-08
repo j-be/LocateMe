@@ -1,4 +1,4 @@
-import {Circle, CircleMarkerOptions, Icon, LocateOptions, Marker, tileLayer} from 'leaflet';
+import { Circle, CircleMarkerOptions, Icon, LocateOptions, Marker } from 'leaflet';
 
 export interface PositionMarker {
   marker: Marker;
