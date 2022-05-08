@@ -8,7 +8,7 @@
     "build:gh-pages": "ng build --configuration gh-pages",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "test:headless": "ng test --watch=false --browsers=ChromeHeadless",
+    "test:headless": "ng test --watch=false --browsers=ChromeHeadless --code-coverage",
     "lint": "ng lint"
   },
   "private": true,
