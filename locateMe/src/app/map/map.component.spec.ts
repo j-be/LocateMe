@@ -2,25 +2,11 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgxsModule, Store } from '@ngxs/store';
 import { latLng } from 'leaflet';
+import { forgeGeolocation } from '../common';
 import { PositionFound, PositionOther } from '../store/actions/position.actions';
 
 import { MapComponent } from './map.component';
 import { MapModule } from './map.module';
-
-function forgeGeolocation(latitude: number, longitude: number, accuracy: number): GeolocationPosition {
-  return {
-    coords: {
-      latitude,
-      longitude,
-      accuracy,
-      altitude: null,
-      altitudeAccuracy: null,
-      heading: null,
-      speed: null,
-    },
-    timestamp: 0,
-  };
-}
 
 describe('MapComponent', () => {
   let component: MapComponent;

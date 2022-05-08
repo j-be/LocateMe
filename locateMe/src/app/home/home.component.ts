@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Select, Store } from '@ngxs/store';
 import { combineLatest, filter, Observable, Subject, takeUntil } from 'rxjs';
+import { forgeGeolocation } from '../common';
 import { SEP_CHAR } from '../service/linkGenerator.service';
 import { PositionOther } from '../store/actions/position.actions';
 import { MePositionState, OtherPositionState } from '../store/states/app.state';
@@ -51,17 +52,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   private static parseFragment(fragment: string): GeolocationPosition {
     const fragments = fragment.split(SEP_CHAR);
-    return {
-      coords: {
-        latitude: Number(fragments[0]),
-        longitude: Number(fragments[1]),
-        accuracy: Number(fragments[2]),
-        altitude: null,
-        altitudeAccuracy: null,
-        heading: null,
-        speed: null,
-      },
-      timestamp: new Date().getTime(),
-    };
+    return forgeGeolocation(Number(fragments[0]), Number(fragments[1]), Number(fragments[2]));
   }
 }

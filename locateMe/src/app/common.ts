@@ -46,3 +46,18 @@ export const geolocationOptions: LocateOptions = {
   maximumAge: 60000,
   watch: true,
 };
+
+export function forgeGeolocation(latitude: number, longitude: number, accuracy: number): GeolocationPosition {
+  return {
+    coords: {
+      latitude,
+      longitude,
+      accuracy,
+      altitude: null,
+      altitudeAccuracy: null,
+      heading: null,
+      speed: null,
+    },
+    timestamp: new Date().getTime(),
+  };
+};
