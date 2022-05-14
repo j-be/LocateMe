@@ -1,1 +1,4 @@
-<div class="transport-chip" [ngClass]="styleClass">{{ line.number || '&#8203;' }}</div>
+<div class="transport-chip flex-row" [ngClass]="styleClass">
+  <i class="material-icons">{{ styleClass }}</i>
+  <div>{{ line.number || '&#8203;' }}</div>
+</div>

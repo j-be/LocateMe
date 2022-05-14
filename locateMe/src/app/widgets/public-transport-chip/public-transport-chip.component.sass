@@ -2,13 +2,13 @@
   $roundess: 3px
   $padding-left: 24px
 
-  display: inline-block
+  display: inline-flex
 
   border-radius: $roundess
   padding: $roundess
-  padding-left: $padding-left
+
   margin: 0 3px
-  height: $padding-left
+  height: 30px
   min-width: $padding-left
 
   color: white
@@ -16,22 +16,23 @@
 
   background-repeat: no-repeat
 
+  & > div
+    padding: 1.5px 3px
+
 .subway
   background-color: #2675b3
-  background-image: url('/assets/css/img/ic_subway.svg')
+
+.train
+  background-color: #831012
 
 .tram
   background-color: #c0181b
-  background-image: url('/assets/css/img/ic_tram.svg')
 
-.bus
+.directions_bus
   background-color: #1e3158
-  background-image: url('/assets/css/img/ic_bus.svg')
 
-.walk
-  background-color: #fff
-  background-image: url('/assets/css/img/ic_walk.svg')
-  padding: 0
+.directions_walk
+  color: black
 
 .unknown
   background-color: #888

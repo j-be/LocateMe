@@ -14,14 +14,17 @@ export class PublicTransportChipComponent {
     switch (this.line.type) {
       case '1':
         return 'subway';
+      case '2':
+        return 'train';
       case '3':
-        return 'bus';
+        return 'directions_bus';
       case '4':
         return 'tram';
       case '99':
       case '100':
-        return 'walk';
+        return 'directions_walk';
       default:
+        console.log('unknown type', this.line);
         return 'unknown';
     }
   }
