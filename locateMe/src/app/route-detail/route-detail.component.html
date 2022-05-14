@@ -17,7 +17,7 @@
         <td></td>
         <td style="text-align: center">&#124;</td>
         <td>
-          <span class="transport-chip" [ngClass]="getStyleForTransportationType(leg.mode.type)">{{ leg.mode.number }}</span>
+          <app-public-transport-chip [line]="leg.mode"></app-public-transport-chip>
           <small>{{ leg.mode.destination }}</small>
         </td>
       </tr>

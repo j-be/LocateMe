@@ -19,9 +19,7 @@
             <span>{{ formatPoint(trip.legs[0].points[0]) }}</span><br/>
             <span class="duration">{{ trip.duration }}</span>
             <div class="transport-sequence">
-            <span class="transport-chip"
-                  [ngClass]="getStyleForTransportationType(leg.mode.type)"
-                  *ngFor="let leg of trip.legs">{{ leg.mode.number }}</span>
+              <app-public-transport-chip *ngFor="let leg of trip.legs" [line]="leg.mode"></app-public-transport-chip>
             </div>
             <span>{{ formatPoint(trip.legs[trip.legs.length - 1].points[1]) }}</span>
           </p-card>

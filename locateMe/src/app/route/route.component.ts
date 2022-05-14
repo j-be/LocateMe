@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest, Observable, take } from 'rxjs';
-import {AbstractRouteComponent} from './abstract-route.component';
-import {MePositionState, OtherPositionState, PublicTransportModel, PublicTransportState} from '../store/states/app.state';
-import {Select, Store} from '@ngxs/store';
-import {FetchTrips, SetTrip, StopLocating} from '../store/actions/position.actions';
+import { MePositionState, OtherPositionState, PublicTransportModel, PublicTransportState } from '../store/states/app.state';
+import { Select, Store } from '@ngxs/store';
+import { FetchTrips, SetTrip, StopLocating } from '../store/actions/position.actions';
 
 @Component({
   selector: 'app-route',
@@ -13,7 +12,7 @@ import {FetchTrips, SetTrip, StopLocating} from '../store/actions/position.actio
     './route.component.sass',
   ]
 })
-export class RouteComponent extends AbstractRouteComponent implements OnInit {
+export class RouteComponent implements OnInit {
 
   @Select(MePositionState)
   origin$!: Observable<GeolocationPosition>;
@@ -29,7 +28,6 @@ export class RouteComponent extends AbstractRouteComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
   ) {
-    super();
   }
 
   ngOnInit(): void {
@@ -48,5 +46,9 @@ export class RouteComponent extends AbstractRouteComponent implements OnInit {
   showDetails(trip: any) {
     this.store.dispatch(new SetTrip(trip));
     this.router.navigate(['detail'], { relativeTo: this.activatedRoute });
+  }
+
+  formatPoint(point: any) {
+    return point.dateTime.time + ' ' + point.name;
   }
 }

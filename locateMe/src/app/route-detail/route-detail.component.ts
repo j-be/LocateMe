@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AbstractRouteComponent } from '../route/abstract-route.component';
 import { Select, Store } from '@ngxs/store';
 import { MePositionState, PublicTransportState } from '../store/states/app.state';
 import { Observable, take, filter } from 'rxjs';
@@ -11,7 +10,7 @@ import { Router } from '@angular/router';
   templateUrl: './route-detail.component.html',
   styleUrls: ['../route/route.component.sass'],
 })
-export class RouteDetailComponent extends AbstractRouteComponent implements OnInit, OnDestroy {
+export class RouteDetailComponent implements OnInit, OnDestroy {
   @Select(MePositionState)
   origin$!: Observable<GeolocationPosition>;
 
@@ -22,7 +21,6 @@ export class RouteDetailComponent extends AbstractRouteComponent implements OnIn
     private store: Store,
     private router: Router,
   ) {
-    super();
   }
 
   ngOnInit() {
