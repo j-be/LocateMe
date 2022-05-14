@@ -7,7 +7,6 @@ import { MessageService } from 'primeng/api';
 import { CardModule } from 'primeng/card';
 import { MessageModule } from 'primeng/message';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
-import { RouteDetailComponent } from '../route-detail/route-detail.component';
 import { WlRoutingService } from '../service/wlRouting.service';
 import { GeolocationState, MePositionState, OtherPositionState, PublicTransportState } from '../store/states/app.state';
 import { WidgetsModule } from '../widgets/widgets.module';
@@ -16,7 +15,6 @@ import { RouteComponent } from './route.component';
 @NgModule({
   declarations: [
     RouteComponent,
-    RouteDetailComponent,
   ],
   imports: [
     // Angular
@@ -24,7 +22,7 @@ import { RouteComponent } from './route.component';
     HttpClientModule,
     RouterModule.forChild([
       { path: '', component: RouteComponent },
-      { path: 'detail', component: RouteDetailComponent },
+      { path: 'detail', loadChildren: () => import('../route-detail/route-detail.module').then(m => m.RouteDetailModule) },
     ]),
 
     // PrimeNG

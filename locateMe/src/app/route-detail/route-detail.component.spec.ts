@@ -3,8 +3,8 @@ import { NgxsModule } from '@ngxs/store';
 import { RouteComponent } from '../route/route.component';
 
 import { RouteDetailComponent } from './route-detail.component';
-import { RouteModule } from '../route/route.module';
 import { RouterTestingModule } from '@angular/router/testing';
+import { RouteDetailModule } from './route-detail.module';
 
 describe('RouteDetailComponent', () => {
   let component: RouteDetailComponent;
@@ -13,7 +13,7 @@ describe('RouteDetailComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
-        RouteModule,
+        RouteDetailModule,
         RouterTestingModule,
         NgxsModule.forRoot(),
       ],
