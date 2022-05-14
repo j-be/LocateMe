@@ -18,14 +18,16 @@ td
   margin-bottom: 12px
 
 .duration
-  flex-grow: 1
-  text-align: right
+  float: right
   margin-left: 10px
   padding-top: 6px
 
-.transport-sequence
-  $padding-top: 5px
-  padding-top: $padding-top
-  padding-bottom: $padding-top
-  overflow-x: auto
-  margin-right: $padding-top
+.leg
+  border-bottom: #aaa solid 1px
+  padding: 6px 0
+  & > div > div
+    height: 24px
+    margin: 0 3px
+
+.destination
+  padding: 4px 0

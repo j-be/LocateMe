@@ -1,10 +1,37 @@
 .transport-chip
   $roundess: 3px
   $padding-left: 24px
+
+  display: inline-block
+
+  border-radius: $roundess
   padding: $roundess
   padding-left: $padding-left
-  margin-right: 7px
-  height: $padding-left + 2 * $roundess
-  border-radius: $roundess
+  margin: 0 3px
+  height: $padding-left
+  min-width: $padding-left
+
   color: white
+  font-weight: 700
+
   background-repeat: no-repeat
+
+.subway
+  background-color: #2675b3
+  background-image: url('/assets/css/img/ic_subway.svg')
+
+.tram
+  background-color: #c0181b
+  background-image: url('/assets/css/img/ic_tram.svg')
+
+.bus
+  background-color: #1e3158
+  background-image: url('/assets/css/img/ic_bus.svg')
+
+.walk
+  background-color: #fff
+  background-image: url('/assets/css/img/ic_walk.svg')
+  padding: 0
+
+.unknown
+  background-color: #888

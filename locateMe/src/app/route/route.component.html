@@ -17,9 +17,13 @@
         <div class="trip" *ngFor="let trip of routes.trips" (click)="showDetails(trip)">
           <p-card>
             <span>{{ formatPoint(trip.legs[0].points[0]) }}</span><br/>
-            <span class="duration">{{ trip.duration }}</span>
-            <div class="transport-sequence">
-              <app-public-transport-chip *ngFor="let leg of trip.legs" [line]="leg.mode"></app-public-transport-chip>
+            <div class="flex-row">
+              <div class="transport-sequence flex-row">
+                <div *ngFor="let leg of trip.legs">
+                  <app-public-transport-chip [line]="leg.mode"></app-public-transport-chip>
+                </div>
+              </div>
+              <div class="duration">{{ trip.duration }}</div>
             </div>
             <span>{{ formatPoint(trip.legs[trip.legs.length - 1].points[1]) }}</span>
           </p-card>

@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-route-detail',
   templateUrl: './route-detail.component.html',
-  styleUrls: ['../route/route.component.sass'],
+  styleUrls: ['./route-detail.component.sass'],
 })
 export class RouteDetailComponent implements OnInit, OnDestroy {
   @Select(MePositionState)
