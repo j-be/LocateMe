@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgxsModule, Store } from '@ngxs/store';
 
@@ -16,8 +16,8 @@ describe('RouteComponent', () => {
   let component: RouteComponent;
   let fixture: ComponentFixture<RouteComponent>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       imports: [
         RouteModule,
         RouterTestingModule,
@@ -26,9 +26,8 @@ describe('RouteComponent', () => {
       providers: [
         { provide: WlRoutingService, useValue: wlRoutingServiceSpy },
       ]
-    })
-    .compileComponents();
-  }));
+    }).compileComponents();
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(RouteComponent);

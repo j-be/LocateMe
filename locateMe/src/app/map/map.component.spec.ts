@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgxsModule, Store } from '@ngxs/store';
 import { latLng } from 'leaflet';
@@ -12,16 +12,15 @@ describe('MapComponent', () => {
   let component: MapComponent;
   let fixture: ComponentFixture<MapComponent>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
         MapModule,
         NgxsModule.forRoot()
       ]
-    })
-    .compileComponents();
-  }));
+    }).compileComponents();
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(MapComponent);

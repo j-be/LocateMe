@@ -14,8 +14,7 @@ describe('GeolocationControlComponent', () => {
         WidgetsModule,
         NgxsModule.forRoot(),
       ],
-    })
-    .compileComponents();
+    }).compileComponents();
   });
 
   beforeEach(() => {

@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NgxsModule, Store } from '@ngxs/store';
 import { PositionFound, StartLocating } from '../store/actions/position.actions';
 
@@ -10,19 +10,18 @@ describe('ShareComponent', () => {
   let fixture: ComponentFixture<ShareComponent>;
   let store: Store;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       imports: [
         ShareModule,
         NgxsModule.forRoot(),
       ],
-    })
-    .compileComponents();
-
-    store = TestBed.inject(Store);
-  }));
+    }).compileComponents();
+  });
 
   beforeEach(() => {
+    store = TestBed.inject(Store);
+
     fixture = TestBed.createComponent(ShareComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
