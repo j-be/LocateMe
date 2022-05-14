@@ -29,6 +29,6 @@ describe('PublicTransportChipComponent', () => {
   });
 
   it('should translate type to icon', () => {
-    expect(component.styleClass).toEqual('bus');
+    expect(component.styleClass).toEqual('directions_bus');
   });
 });
