@@ -19,6 +19,7 @@ export class PublicTransportChipComponent {
       case '3':
         return 'directions_bus';
       case '4':
+      case '6':
         return 'tram';
       case '99':
       case '100':
@@ -26,6 +27,18 @@ export class PublicTransportChipComponent {
       default:
         console.log('unknown type', this.line);
         return 'unknown';
+    }
+  }
+
+  get lineName(): string {
+    switch (this.line.type) {
+      case '6':
+        return 'WLB';
+      case '99':
+      case '100':
+        return '\u200B';
+      default:
+        return this.line.number;
     }
   }
 }
