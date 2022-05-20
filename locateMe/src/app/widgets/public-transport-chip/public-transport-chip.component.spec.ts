@@ -31,4 +31,8 @@ describe('PublicTransportChipComponent', () => {
   it('should translate type to icon', () => {
     expect(component.styleClass).toEqual('directions_bus');
   });
+
+  it('should return line number', () => {
+    expect(component.lineName).toEqual('66A');
+  });
 });

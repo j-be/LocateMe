@@ -65,4 +65,8 @@ describe('RouteComponent', () => {
       done();
     });
   });
+
+  it('should format the point', () => {
+    expect(component.formatPoint(wlResponse.trips[0].legs[1].points[1])).toEqual('19:15 Wien Alterlaa U');
+  });
 });

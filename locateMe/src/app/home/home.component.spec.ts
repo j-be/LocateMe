@@ -49,3 +49,34 @@ describe('HomeComponent', () => {
     });
   });
 });
+
+describe('HomeComponent - no fragment', () => {
+  let component: HomeComponent;
+  let fixture: ComponentFixture<HomeComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [
+        RouterTestingModule,
+        HomeModule,
+        NgxsModule.forRoot()
+      ],
+      providers: [
+        { provide: ActivatedRoute, useValue: { fragment: of(null), } },
+        { provide: Router, useValue: routerSpy },
+      ]
+    }).compileComponents();
+  });
+
+  beforeEach(() => {
+    routerSpy.navigate.calls.reset();
+
+    fixture = TestBed.createComponent(HomeComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should not emit', () => {
+    expect(routerSpy.navigate).toHaveBeenCalledTimes(0);
+  });
+});
