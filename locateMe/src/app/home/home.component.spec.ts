@@ -51,8 +51,6 @@ describe('HomeComponent', () => {
 });
 
 describe('HomeComponent - no fragment', () => {
-  let component: HomeComponent;
-  let fixture: ComponentFixture<HomeComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -70,10 +68,7 @@ describe('HomeComponent - no fragment', () => {
 
   beforeEach(() => {
     routerSpy.navigate.calls.reset();
-
-    fixture = TestBed.createComponent(HomeComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    TestBed.createComponent(HomeComponent).detectChanges();
   });
 
   it('should not emit', () => {
