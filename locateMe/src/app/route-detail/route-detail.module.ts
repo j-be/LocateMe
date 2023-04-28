@@ -3,7 +3,10 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { NgxsModule } from '@ngxs/store';
 import { RouteDetailComponent } from './route-detail.component';
-import { MePositionState, PublicTransportState } from '../store/states/app.state';
+import {
+  MePositionState,
+  PublicTransportState,
+} from '../store/states/app.state';
 import { WidgetsModule } from '../widgets/widgets.module';
 import { WlRoutingService } from '../service/wlRouting.service';
 import { HttpClientModule } from '@angular/common/http';

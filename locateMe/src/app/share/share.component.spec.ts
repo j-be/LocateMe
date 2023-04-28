@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NgxsModule, Store } from '@ngxs/store';
-import { PositionFound, StartLocating } from '../store/actions/position.actions';
+import {
+  PositionFound,
+  StartLocating,
+} from '../store/actions/position.actions';
 
 import { ShareComponent } from './share.component';
 import { ShareModule } from './share.module';
@@ -66,6 +69,6 @@ describe('ShareComponent', () => {
     expect(component.links?.link.endsWith('/#1+2+3')).toBeTrue();
     expect(component.links?.mailto.endsWith('/#1+2+3')).toBeTrue();
     expect(component.links?.whatsApp.endsWith('/#1+2+3')).toBeTrue();
-    expect("" + component.links?.sms).toMatch(/\/#1\+2\+3 /);
+    expect('' + component.links?.sms).toMatch(/\/#1\+2\+3 /);
   });
 });

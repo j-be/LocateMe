@@ -3,11 +3,31 @@ import { Router } from '@angular/router';
 import { LeafletControlLayersConfig } from '@asymmetrik/ngx-leaflet';
 import { Select } from '@ngxs/store';
 import { ResizedEvent } from 'angular-resize-event';
-import { Circle, LatLng, LatLngBoundsExpression, Map, Marker, tileLayer } from 'leaflet';
-import { combineLatest, debounceTime, distinctUntilChanged, filter, Observable, Subject, take, takeUntil } from 'rxjs';
-import { meOptions, otherOptions, PersonOptions, PositionMarker } from '../common';
+import {
+  Circle,
+  LatLng,
+  LatLngBoundsExpression,
+  Map,
+  Marker,
+  tileLayer,
+} from 'leaflet';
+import {
+  combineLatest,
+  debounceTime,
+  distinctUntilChanged,
+  filter,
+  Observable,
+  Subject,
+  take,
+  takeUntil,
+} from 'rxjs';
+import {
+  meOptions,
+  otherOptions,
+  PersonOptions,
+  PositionMarker,
+} from '../common';
 import { MePositionState, OtherPositionState } from '../store/states/app.state';
-
 
 @Component({
   selector: 'app-map',

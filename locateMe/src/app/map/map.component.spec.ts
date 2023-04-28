@@ -3,7 +3,10 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { NgxsModule, Store } from '@ngxs/store';
 import { latLng } from 'leaflet';
 import { forgeGeolocation } from '../common';
-import { PositionFound, PositionOther } from '../store/actions/position.actions';
+import {
+  PositionFound,
+  PositionOther,
+} from '../store/actions/position.actions';
 
 import { MapComponent } from './map.component';
 import { MapModule } from './map.module';

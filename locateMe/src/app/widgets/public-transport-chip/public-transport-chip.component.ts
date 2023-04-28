@@ -3,12 +3,11 @@ import { Component, Input } from '@angular/core';
 @Component({
   selector: 'app-public-transport-chip',
   templateUrl: './public-transport-chip.component.html',
-  styleUrls: ['./public-transport-chip.component.sass']
+  styleUrls: ['./public-transport-chip.component.sass'],
 })
 export class PublicTransportChipComponent {
-
   @Input()
-  line!: { type: string, number: string }
+  line!: { type: string; number: string };
 
   get styleClass(): string {
     switch (this.line.type) {

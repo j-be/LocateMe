@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { StartLocating, StopLocating } from 'src/app/store/actions/position.actions';
+import {
+  StartLocating,
+  StopLocating,
+} from 'src/app/store/actions/position.actions';
 import { GeolocationState } from 'src/app/store/states/app.state';
 
 @Component({

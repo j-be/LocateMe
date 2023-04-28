@@ -1,8 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
-import { MePositionState, PublicTransportState } from '../store/states/app.state';
+import {
+  MePositionState,
+  PublicTransportState,
+} from '../store/states/app.state';
 import { Observable, take, filter } from 'rxjs';
-import { ClearTrip, } from '../store/actions/position.actions';
+import { ClearTrip } from '../store/actions/position.actions';
 import { Router } from '@angular/router';
 
 @Component({

@@ -8,7 +8,12 @@ import { CardModule } from 'primeng/card';
 import { MessageModule } from 'primeng/message';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { WlRoutingService } from '../service/wlRouting.service';
-import { GeolocationState, MePositionState, OtherPositionState, PublicTransportState } from '../store/states/app.state';
+import {
+  GeolocationState,
+  MePositionState,
+  OtherPositionState,
+  PublicTransportState,
+} from '../store/states/app.state';
 import { WidgetsModule } from '../widgets/widgets.module';
 import { RouteComponent } from './route.component';
 

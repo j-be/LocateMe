@@ -1,16 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest, Observable, take } from 'rxjs';
-import { MePositionState, OtherPositionState, PublicTransportModel, PublicTransportState } from '../store/states/app.state';
+import {
+  MePositionState,
+  OtherPositionState,
+  PublicTransportModel,
+  PublicTransportState,
+} from '../store/states/app.state';
 import { Select, Store } from '@ngxs/store';
-import { FetchTrips, SetTrip, StopLocating } from '../store/actions/position.actions';
+import {
+  FetchTrips,
+  SetTrip,
+  StopLocating,
+} from '../store/actions/position.actions';
 
 @Component({
   selector: 'app-route',
   templateUrl: './route.component.html',
-  styleUrls: [
-    './route.component.sass',
-  ]
+  styleUrls: ['./route.component.sass'],
 })
 export class RouteComponent implements OnInit {
 

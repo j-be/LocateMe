@@ -23,7 +23,7 @@ describe('HomeComponent', () => {
       providers: [
         { provide: ActivatedRoute, useValue: { fragment: of('7+8+9'), } },
         { provide: Router, useValue: routerSpy },
-      ]
+      ],
     }).compileComponents();
   });
 
@@ -62,7 +62,7 @@ describe('HomeComponent - no fragment', () => {
       providers: [
         { provide: ActivatedRoute, useValue: { fragment: of(null), } },
         { provide: Router, useValue: routerSpy },
-      ]
+      ],
     }).compileComponents();
   });
 

@@ -7,18 +7,23 @@
     </div>
   </div>
 
-  <div leaflet
-       (resized)="rerenderMap($event)"
-       [leafletLayersControl]="layersControl"
-       (leafletMapReady)="onMapReady($event)">
-  </div>
+  <div
+    leaflet
+    (resized)="rerenderMap($event)"
+    [leafletLayersControl]="layersControl"
+    (leafletMapReady)="onMapReady($event)"
+  ></div>
 
   <div role="footer">
     <app-geolocation-control></app-geolocation-control>
     <app-share></app-share>
 
-    <a class="btn-floating btn-large waves-effect waves-light red darken-2 right" style="margin-right: 12px"
-        *ngIf="(positionMe$ | async) && (positionOther$ | async)" routerLink="/trips">
+    <a
+      class="btn-floating btn-large waves-effect waves-light red darken-2 right"
+      style="margin-right: 12px"
+      *ngIf="(positionMe$ | async) && (positionOther$ | async)"
+      routerLink="/trips"
+    >
       <i class="material-icons">directions_transit</i>
     </a>
   </div>

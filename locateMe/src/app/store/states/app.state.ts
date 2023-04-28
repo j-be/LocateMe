@@ -1,8 +1,8 @@
-import {Action, Selector, State, StateContext, Store} from '@ngxs/store';
+import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import * as Actions from '../actions/position.actions';
-import {geolocationOptions} from '../../common';
-import {MessageService} from 'primeng/api';
-import {Injectable} from '@angular/core';
+import { geolocationOptions } from '../../common';
+import { MessageService } from 'primeng/api';
+import { Injectable } from '@angular/core';
 import { WlRoutingService } from 'src/app/service/wlRouting.service';
 import { catchError, map, of } from 'rxjs';
 
@@ -112,12 +112,12 @@ export class GeolocationState {
     this.messageService.clear(MSG_LOCATING);
   }
 
-  private errorLocation(error: {message: string}): void {
+  private errorLocation(error: { message: string }): void {
     this.messageService.clear();
     this.messageService.add({
       severity: 'error',
       summary: 'Error while locating',
-      detail: error.message
+      detail: error.message,
     });
     this.store.dispatch(new Actions.StopLocating());
   }
@@ -179,7 +179,7 @@ export class PublicTransportState {
 
   @Action(Actions.SetTrip)
   setTrip(ctx: StateContext<PublicTransportModel>, action: Actions.SetTrip) {
-    ctx.patchState({trip: action.trip});
+    ctx.patchState({ trip: action.trip });
   }
 
   @Action(Actions.ClearTrips)

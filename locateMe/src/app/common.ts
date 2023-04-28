@@ -22,7 +22,7 @@ export const meOptions = {
     fillColor: '#007CC4',
     fillOpacity: 0.5,
     radius: 0,
-  }
+  },
 };
 
 export const otherOptions = {
@@ -37,7 +37,7 @@ export const otherOptions = {
     fillColor: '#74BF45',
     fillOpacity: 0.5,
     radius: 0,
-  }
+  },
 };
 
 export const geolocationOptions: LocateOptions = {
@@ -60,4 +60,4 @@ export function forgeGeolocation(latitude: number, longitude: number, accuracy: 
     },
     timestamp: new Date().getTime(),
   };
-};
+}

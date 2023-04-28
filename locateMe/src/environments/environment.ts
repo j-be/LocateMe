@@ -5,7 +5,7 @@
 export const environment = {
   wlRoutingHost: 'http://localhost:8080',
   baseHref: '/',
-  production: false
+  production: false,
 };
 
 /*
