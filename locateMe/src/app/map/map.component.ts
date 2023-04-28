@@ -12,8 +12,6 @@ import {
 } from 'leaflet';
 import {
   combineLatest,
-  debounceTime,
-  distinctUntilChanged,
   filter,
   Observable,
   Subject,
