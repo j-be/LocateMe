@@ -44,7 +44,7 @@ describe('HomeComponent', () => {
       expect(positionOther.coords.latitude).toEqual(7);
       expect(positionOther.coords.longitude).toEqual(8);
       expect(positionOther.coords.accuracy).toEqual(9);
-      expect(routerSpy.navigate).toHaveBeenCalledOnceWith(['map']);
+      expect(routerSpy.navigate).toHaveBeenCalledOnceWith(['map'], { skipLocationChange: true });
       done();
     });
   });
