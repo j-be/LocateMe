@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LeafletControlLayersConfig } from '@asymmetrik/ngx-leaflet';
 import { Select } from '@ngxs/store';
-import { ResizedEvent } from 'angular-resize-event';
 import {
   Circle,
   LatLng,
@@ -90,12 +89,6 @@ export class MapComponent implements OnInit, OnDestroy {
     this.positionOther$.pipe(
       takeUntil(this.onDestroy$),
     ).subscribe((other: GeolocationPosition) => this.applyPosition(this.other, other));
-
-    this.mapResized$.pipe(
-      debounceTime(10),
-      distinctUntilChanged(),
-      takeUntil(this.onDestroy$),
-    ).subscribe(() => this.map?.invalidateSize());
   }
 
   ngOnDestroy(): void {
@@ -137,10 +130,6 @@ export class MapComponent implements OnInit, OnDestroy {
 
     this.map = map;
     this.mapResized$.next(0);
-  }
-
-  rerenderMap($event: ResizedEvent) {
-    this.mapResized$.next($event.newRect.height);
   }
 
   private applyPosition(positionMarker: PositionMarker, position: GeolocationPosition): void {
