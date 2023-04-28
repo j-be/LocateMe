@@ -160,7 +160,7 @@ export class PublicTransportState {
         this.messageService.add({
           severity: 'error',
           summary: 'Cannot fetch routes',
-          detail: 'An error occured while fetching data from WienerLininen!'
+          detail: 'An error occured while fetching data from WienerLinien!'
         });
         ctx.patchState({ fetching: false });
         return of();
