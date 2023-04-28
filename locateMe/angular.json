@@ -146,6 +146,8 @@
   },
   "defaultProject": "locate-me",
   "cli": {
-    "defaultCollection": "@angular-eslint/schematics"
+    "schematicCollections": [
+      "@angular-eslint/schematics"
+    ]
   }
 }
