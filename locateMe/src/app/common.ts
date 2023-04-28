@@ -1,4 +1,4 @@
-import { Circle, CircleMarkerOptions, Icon, LocateOptions, Marker } from 'leaflet';
+import { Circle, CircleOptions, Icon, LocateOptions, Marker } from 'leaflet';
 
 export interface PositionMarker {
   marker: Marker;
@@ -7,7 +7,7 @@ export interface PositionMarker {
 
 export interface PersonOptions {
   readonly icon: Icon;
-  readonly accuracyOptions: CircleMarkerOptions;
+  readonly accuracyOptions: CircleOptions;
 }
 
 export const meOptions = {
