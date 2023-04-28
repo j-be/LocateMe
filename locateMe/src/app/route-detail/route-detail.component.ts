@@ -27,7 +27,7 @@ export class RouteDetailComponent implements OnInit, OnDestroy {
     this.origin$.pipe(
       take(1),
       filter(origin => !origin),
-    ).subscribe(_ => this.router.navigate(['/']));
+    ).subscribe(() => this.router.navigate(['/']));
   }
 
   ngOnDestroy() {

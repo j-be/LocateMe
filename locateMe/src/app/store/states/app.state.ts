@@ -156,7 +156,7 @@ export class PublicTransportState {
     ctx.patchState({ fetching: true });
     return this.wlRoutingService.getRoute(action.origin, action.destination).pipe(
       map(data => ctx.dispatch(new Actions.SetTrips(data.trips))),
-      catchError(_ => {
+      catchError(() => {
         this.messageService.add({
           severity: 'error',
           summary: 'Cannot fetch routes',
