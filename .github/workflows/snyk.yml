@@ -1,0 +1,29 @@
+name: Snyk
+on:
+  push:
+    branches:
+    - master
+
+jobs:
+  security:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Setup Node
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'
+
+    - name: Install and Build
+      run: |
+        cd locateMe
+        npm install
+
+    - name: Run Snyk to check for vulnerabilities
+      uses: snyk/actions/node@master
+      with:
+        args: --file=locateMe/package.json
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
