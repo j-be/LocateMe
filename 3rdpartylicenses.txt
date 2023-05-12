@@ -42,9 +42,6 @@ SOFTWARE.
 @ngxs/store
 MIT
 
-angular-resize-event
-MIT
-
 leaflet
 BSD-2-Clause
 BSD 2-Clause License
