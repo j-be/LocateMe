@@ -21,13 +21,13 @@
     "@angular/platform-browser": "^16.1.1",
     "@angular/platform-browser-dynamic": "^16.1.1",
     "@angular/router": "^16.1.1",
-    "@asymmetrik/ngx-leaflet": "^15.0.1",
-    "@ngxs/store": "^3.8.0",
-    "leaflet": "^1.9.3",
-    "materialize-css": "^1.0.0",
+    "@asymmetrik/ngx-leaflet": "^16.0.1",
+    "@materializecss/materialize": "^1.2.2",
+    "@ngxs/store": "^3.8.1",
+    "leaflet": "^1.9.4",
     "primeicons": "^6.0.1",
-    "primeng": "^15.4.1",
-    "rxjs": "~7.8.0",
+    "primeng": "^16.0.1",
+    "rxjs": "^7.4.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.1"
   },
@@ -55,6 +55,6 @@
     "karma-jasmine": "^5.1.0",
     "karma-jasmine-html-reporter": "^2.0.0",
     "prettier": "2.8.8",
-    "typescript": "~4.9.5"
+    "typescript": "~5.1.0"
   }
 }
