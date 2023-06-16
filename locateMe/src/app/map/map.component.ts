@@ -26,6 +26,10 @@ import {
 } from '../common';
 import { MePositionState, OtherPositionState } from '../store/states/app.state';
 
+
+const DEFAULT_LAYER = 'Wikimedia Maps';
+
+
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
@@ -48,6 +52,10 @@ export class MapComponent implements OnInit, OnDestroy {
       'Wikimedia Maps':
         tileLayer('https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png',
           {attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'}),
+      'CartoDB Voyager':
+        tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+	        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+	        subdomains: 'abcd'}),
     },
     overlays: {},
   };
@@ -95,8 +103,8 @@ export class MapComponent implements OnInit, OnDestroy {
   }
 
   onMapReady(map: Map) {
-    map.addLayer(this.layersControl.baseLayers[localStorage.getItem('baseLayer') || 'Wikimedia Maps'] ||
-      this.layersControl.baseLayers['Wikimedia Maps']);
+    map.addLayer(this.layersControl.baseLayers[localStorage.getItem('baseLayer') || DEFAULT_LAYER] ||
+      this.layersControl.baseLayers[DEFAULT_LAYER]);
 
     // Add the markers
     map.addLayer(this.me.marker)
