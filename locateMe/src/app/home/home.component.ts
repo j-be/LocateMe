@@ -34,8 +34,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     ]).pipe(
       filter(([me, other]) => !!me || !!other),
       takeUntil(this.onDestroy$),
-    ).subscribe(() => this.router.navigate(['map'], { skipLocationChange: true }));
-
+    ).subscribe(() => {
+      this.router.navigate(['map'], { skipLocationChange: true })
+        .catch((err) => console.error("Failed to navigate", err)) });
     this.route.fragment.pipe(
       takeUntil(this.onDestroy$),
     ).subscribe(fragment => {

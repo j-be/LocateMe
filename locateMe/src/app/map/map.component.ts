@@ -79,7 +79,7 @@ export class MapComponent implements OnInit, OnDestroy {
     ]).pipe(
       take(1),
       filter(positions => positions.every(position => !position)),
-    ).subscribe(() => this.router.navigate(['/']));
+    ).subscribe(() => { this.router.navigate(['/']).catch((err) => console.error("Failed to navigate", err)) });
 
     this.positionMe$.pipe(
       takeUntil(this.onDestroy$),
