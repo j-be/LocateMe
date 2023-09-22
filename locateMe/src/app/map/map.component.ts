@@ -27,7 +27,19 @@ import {
 import { MePositionState, OtherPositionState } from '../store/states/app.state';
 
 
-const DEFAULT_LAYER = 'Wikimedia Maps';
+const BASE_LAYERS = {
+  'OSM Mapnik':
+    tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+      {attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'}),
+  'Carto Light':
+    tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png',
+      {attribution: 'Map tiles by Carto, under CC BY 3.0. Data by OpenStreetMap, under ODbL'}),
+  'CartoDB Voyager':
+    tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+      subdomains: 'abcd'}),
+};
+const DEFAULT_LAYER: keyof typeof BASE_LAYERS = 'CartoDB Voyager';
 
 
 @Component({
@@ -42,21 +54,7 @@ export class MapComponent implements OnInit, OnDestroy {
   positionOther$!: Observable<GeolocationPosition>;
 
   layersControl: LeafletControlLayersConfig = {
-    baseLayers: {
-      'OSM Mapnik':
-        tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-          {attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'}),
-      'Carto Light':
-        tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png',
-          {attribution: 'Map tiles by Carto, under CC BY 3.0. Data by OpenStreetMap, under ODbL'}),
-      'Wikimedia Maps':
-        tileLayer('https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png',
-          {attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'}),
-      'CartoDB Voyager':
-        tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-	        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-	        subdomains: 'abcd'}),
-    },
+    baseLayers: BASE_LAYERS,
     overlays: {},
   };
 
