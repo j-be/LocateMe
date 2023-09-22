@@ -35,7 +35,7 @@ jobs:
       - name: ZIP the package
         run: |
           cd locateMe/dist/
-          zip -r wake-up-web wake-up-web
+          zip -r locateMe locateMe
 
       - name: Create Release
         id: create_release
