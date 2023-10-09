@@ -22,7 +22,7 @@
     "@angular/compiler": "^16.2.6",
     "@angular/core": "^16.2.6",
     "@angular/platform-browser": "^16.2.6",
-    "@angular/platform-browser-dynamic": "^16.2.6",
+    "@angular/platform-browser-dynamic": "^16.2.8",
     "@angular/router": "^16.2.6",
     "@asymmetrik/ngx-leaflet": "^16.0.1",
     "@materializecss/materialize": "^1.2.2",
