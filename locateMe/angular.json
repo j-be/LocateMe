@@ -102,10 +102,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "locate-me:build:production"
+              "buildTarget": "locate-me:build:production"
             },
             "development": {
-              "browserTarget": "locate-me:build:development"
+              "buildTarget": "locate-me:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -113,7 +113,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "locate-me:build"
+            "buildTarget": "locate-me:build"
           }
         },
         "test": {
