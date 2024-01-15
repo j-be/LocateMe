@@ -4,3 +4,10 @@ updates:
     directory: "/locateMe"
     schedule:
       interval: "weekly"
+    groups:
+      angular:
+        patterns:
+        - "@angular*"
+        update-types:
+        - "minor"
+        - "patch"
