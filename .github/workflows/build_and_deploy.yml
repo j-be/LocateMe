@@ -27,7 +27,7 @@ jobs:
         run: touch locateMe/dist/locateMe/.nojekyll
 
       - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@v4.4.3
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
           folder: locateMe/dist/locateMe
