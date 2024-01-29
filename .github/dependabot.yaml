@@ -7,7 +7,14 @@ updates:
     groups:
       angular:
         patterns:
-        - "@angular*"
+        - "@angular/*"
+        - "@angular-devkit/*"
+        update-types:
+        - "minor"
+        - "patch"
+      angular-eslint:
+        patterns:
+        - "@angular-eslint/*"
         update-types:
         - "minor"
         - "patch"
