@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { NgxsModule } from '@ngxs/store';
@@ -24,6 +24,7 @@ import { RouteComponent } from './route.component';
   imports: [
     // Angular
     CommonModule,
+    HttpClientModule,
     RouterModule.forChild([
       { path: '', component: RouteComponent },
       { path: 'detail', loadChildren: () => import('../route-detail/route-detail.module').then(m => m.RouteDetailModule) },
@@ -48,7 +49,6 @@ import { RouteComponent } from './route.component';
   providers: [
     WlRoutingService,
     MessageService,
-    provideHttpClient(withInterceptorsFromDi()),
   ],
 })
 export class RouteModule {
