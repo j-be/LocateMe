@@ -34,7 +34,7 @@ import { HttpClientModule } from '@angular/common/http';
   ],
   providers: [
     WlRoutingService,
-  ]
+  ],
 })
 export class RouteDetailModule {
 }
