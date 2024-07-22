@@ -1,9 +1,10 @@
 import { TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { forgeGeolocation } from '../common';
 
 import { WlRoutingService } from './wlRouting.service';
 import { default as wlResponse } from '../../../wl-response.json';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('WlRoutingService', () => {
   let service: WlRoutingService;
@@ -11,11 +12,10 @@ describe('WlRoutingService', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule,
-      ],
       providers: [
         WlRoutingService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
       ],
     }).compileComponents();
   });

@@ -9,7 +9,7 @@ import {
 } from '../store/states/app.state';
 import { WidgetsModule } from '../widgets/widgets.module';
 import { WlRoutingService } from '../service/wlRouting.service';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -18,7 +18,6 @@ import { HttpClientModule } from '@angular/common/http';
   imports: [
     // Angular
     CommonModule,
-    HttpClientModule,
     RouterModule.forChild([
       { path: '', component: RouteDetailComponent },
     ]),
@@ -34,6 +33,7 @@ import { HttpClientModule } from '@angular/common/http';
   ],
   providers: [
     WlRoutingService,
+    provideHttpClient(withInterceptorsFromDi()),
   ],
 })
 export class RouteDetailModule {
