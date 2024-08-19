@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Select, Store } from '@ngxs/store';
+import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import {
   StartLocating,
@@ -13,8 +13,7 @@ import { GeolocationState } from 'src/app/store/states/app.state';
 })
 export class GeolocationControlComponent {
 
-  @Select(GeolocationState.locationWatchId)
-  locationWatchId$!: Observable<unknown>;
+  locationWatchId$: Observable<unknown> = this.store.select(GeolocationState.locationWatchId);
 
   constructor(
       private store: Store,

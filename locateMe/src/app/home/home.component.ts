@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Select, Store } from '@ngxs/store';
+import { Store } from '@ngxs/store';
 import { combineLatest, filter, Observable, Subject, takeUntil } from 'rxjs';
 import { forgeGeolocation } from '../common';
 import { SEP_CHAR } from '../service/linkGenerator.service';
@@ -14,10 +14,8 @@ import { MePositionState, OtherPositionState } from '../store/states/app.state';
 })
 export class HomeComponent implements OnInit, OnDestroy {
 
-  @Select(MePositionState)
-  positionMe$!: Observable<GeolocationPosition>;
-  @Select(OtherPositionState)
-  positionOther$!: Observable<GeolocationPosition>;
+  positionMe$: Observable<GeolocationPosition> = this.store.select(MePositionState.getState);
+  positionOther$: Observable<GeolocationPosition> = this.store.select(OtherPositionState.getState);
 
   private onDestroy$: Subject<boolean> = new Subject();
 

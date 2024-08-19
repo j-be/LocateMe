@@ -7,7 +7,7 @@ import {
   PublicTransportModel,
   PublicTransportState,
 } from '../store/states/app.state';
-import { Select, Store } from '@ngxs/store';
+import { Store } from '@ngxs/store';
 import {
   FetchTrips,
   SetTrip,
@@ -21,14 +21,10 @@ import {
 })
 export class RouteComponent implements OnInit {
 
-  @Select(MePositionState)
-  origin$!: Observable<GeolocationPosition>;
-  @Select(OtherPositionState)
-  destination$!: Observable<GeolocationPosition>;
-  @Select(PublicTransportState)
-  routes$!: Observable<PublicTransportModel>;
-  @Select(PublicTransportState.fetching)
-  fetching$!: Observable<boolean>;
+  origin$: Observable<GeolocationPosition> = this.store.select(MePositionState.getState);
+  destination$: Observable<GeolocationPosition> = this.store.select(OtherPositionState.getState);
+  routes$: Observable<PublicTransportModel> = this.store.select(PublicTransportState.getState);
+  fetching$: Observable<boolean> = this.store.select(PublicTransportState.fetching);
 
   constructor(
     private store: Store,

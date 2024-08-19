@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LeafletControlLayersConfig } from '@asymmetrik/ngx-leaflet';
-import { Select } from '@ngxs/store';
+import { Store } from '@ngxs/store';
 import {
   Circle,
   LatLng,
@@ -48,10 +48,8 @@ const DEFAULT_LAYER: keyof typeof BASE_LAYERS = 'CartoDB Voyager';
 })
 export class MapComponent implements OnInit, OnDestroy {
 
-  @Select(MePositionState)
-  positionMe$!: Observable<GeolocationPosition>;
-  @Select(OtherPositionState)
-  positionOther$!: Observable<GeolocationPosition>;
+  positionMe$: Observable<GeolocationPosition> = this.store.select(MePositionState.getState);
+  positionOther$: Observable<GeolocationPosition> = this.store.select(OtherPositionState.getState);
 
   layersControl: LeafletControlLayersConfig = {
     baseLayers: BASE_LAYERS,
@@ -67,6 +65,7 @@ export class MapComponent implements OnInit, OnDestroy {
   private onDestroy$: Subject<boolean> = new Subject();
 
   constructor(
+    private store: Store,
     private router: Router,
   ) {
   }

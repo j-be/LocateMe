@@ -23,6 +23,11 @@ export class MePositionState {
     private messageService: MessageService,
   ) { }
 
+  @Selector()
+  static getState(state: GeolocationPosition) {
+    return state;
+  }
+
   @Action(Actions.PositionFound)
   positionMe(ctx: StateContext<GeolocationPosition>, action: Actions.PositionFound) {
     ctx.setState({
@@ -39,6 +44,12 @@ export class MePositionState {
 })
 @Injectable()
 export class OtherPositionState {
+
+  @Selector()
+  static getState(state: GeolocationPosition) {
+    return state;
+  }
+
   @Action(Actions.PositionOther)
   positionOther(ctx: StateContext<GeolocationPosition>, action: Actions.PositionOther) {
     ctx.setState({
@@ -149,6 +160,11 @@ export class PublicTransportState {
     private wlRoutingService: WlRoutingService,
     private messageService: MessageService,
   ) {
+  }
+
+  @Selector()
+  static getState(state: PublicTransportModel) {
+    return state;
   }
 
   @Action(Actions.FetchTrips)

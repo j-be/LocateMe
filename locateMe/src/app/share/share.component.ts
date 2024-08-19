@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Select, Store } from '@ngxs/store';
+import { Store } from '@ngxs/store';
 import { Observable, take } from 'rxjs';
 import { LinkGeneratorService, Links } from '../service/linkGenerator.service';
 import { StopLocating } from '../store/actions/position.actions';
@@ -13,8 +13,7 @@ export class ShareComponent {
   display = false;
   links: Links | null = null;
 
-  @Select(MePositionState)
-  location$!: Observable<GeolocationPosition>;
+  location$: Observable<GeolocationPosition> = this.store.select(MePositionState.getState);
 
   constructor(
     private linkGeneratorService: LinkGeneratorService,

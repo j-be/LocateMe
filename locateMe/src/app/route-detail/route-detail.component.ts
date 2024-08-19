@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Select, Store } from '@ngxs/store';
+import { Store } from '@ngxs/store';
 import {
   MePositionState,
   PublicTransportState,
@@ -14,11 +14,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./route-detail.component.sass'],
 })
 export class RouteDetailComponent implements OnInit, OnDestroy {
-  @Select(MePositionState)
-  origin$!: Observable<GeolocationPosition>;
 
-  @Select(PublicTransportState.trip)
-  tripDetail$!: Observable<any>;
+  origin$: Observable<GeolocationPosition> = this.store.select(MePositionState.getState);
+  tripDetail$: Observable<any> = this.store.select(PublicTransportState.trip);
 
   constructor(
     private store: Store,
