@@ -47,7 +47,7 @@
     "@types/jasmine": "^5.1.4",
     "@types/leaflet": "^1.9.12",
     "@types/node": "^18.19.7",
-    "@typescript-eslint/eslint-plugin": "^8.4.0",
+    "@typescript-eslint/eslint-plugin": "^8.5.0",
     "eslint": "^9.10.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-ngxs-style-guide": "^3.0.0",
