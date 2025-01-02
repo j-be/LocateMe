@@ -9,6 +9,7 @@ import { PositionFound, PositionOther } from '../store/actions/position.actions'
 import { forgeGeolocation } from '../common';
 import { default as wlResponse } from '../../../wl-response.json';
 import { WlRoutingService } from '../service/wlRouting.service';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 const wlRoutingServiceSpy = { getRoute: jasmine.createSpy('getRoute').and.returnValue(of(wlResponse)) };
 
@@ -19,6 +20,7 @@ describe('RouteComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
+        NoopAnimationsModule,
         RouteModule,
         RouterTestingModule,
         NgxsModule.forRoot(),
