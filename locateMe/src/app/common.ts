@@ -10,6 +10,15 @@ export interface PersonOptions {
   readonly accuracyOptions: CircleOptions;
 }
 
+export interface Geolocation {
+  readonly coords: {
+    readonly latitude: number,
+    readonly longitude: number,
+    readonly accuracy: number,
+  }
+  readonly timestamp: EpochTimeStamp;
+}
+
 export const meOptions = {
   icon: new Icon({
     iconUrl: 'assets/css/img/location-pin-me.svg',
@@ -47,16 +56,12 @@ export const geolocationOptions: LocateOptions = {
   watch: true,
 };
 
-export function forgeGeolocation(latitude: number, longitude: number, accuracy: number): GeolocationPosition {
+export function forgeGeolocation(latitude: number, longitude: number, accuracy: number): Geolocation {
   return {
     coords: {
       latitude,
       longitude,
       accuracy,
-      altitude: null,
-      altitudeAccuracy: null,
-      heading: null,
-      speed: null,
     },
     timestamp: new Date().getTime(),
   };

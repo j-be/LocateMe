@@ -1,10 +1,13 @@
+import { Geolocation } from "../../common";
+
 export class PositionFound {
   static readonly type = '[GeolocationPosition] Found';
-  constructor(public payload: GeolocationPosition) {}
+  constructor(public payload: Geolocation
+  ) {}
 }
 export class PositionOther {
   static readonly type = '[GeolocationPosition] Other';
-  constructor(public payload: GeolocationPosition) {}
+  constructor(public payload: Geolocation) {}
 }
 
 export class StartLocating {
@@ -16,7 +19,7 @@ export class StopLocating {
 
 export class FetchTrips {
   static readonly type = '[PublicTransport] Fetch trips';
-  constructor(public origin: GeolocationPosition, public destination: GeolocationPosition) {}
+  constructor(public origin: Geolocation, public destination: Geolocation) {}
 }
 export class SetTrips {
   static readonly type = '[PublicTransport] Set trips';

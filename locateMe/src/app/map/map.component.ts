@@ -19,6 +19,7 @@ import {
   takeUntil,
 } from 'rxjs';
 import {
+  Geolocation,
   meOptions,
   otherOptions,
   PersonOptions,
@@ -48,8 +49,8 @@ const DEFAULT_LAYER: keyof typeof BASE_LAYERS = 'CartoDB Voyager';
 })
 export class MapComponent implements OnInit, OnDestroy {
 
-  positionMe$: Observable<GeolocationPosition> = this.store.select(MePositionState.getState);
-  positionOther$: Observable<GeolocationPosition> = this.store.select(OtherPositionState.getState);
+  positionMe$: Observable<Geolocation> = this.store.select(MePositionState.getState);
+  positionOther$: Observable<Geolocation> = this.store.select(OtherPositionState.getState);
 
   layersControl: LeafletControlLayersConfig = {
     baseLayers: BASE_LAYERS,
@@ -88,10 +89,10 @@ export class MapComponent implements OnInit, OnDestroy {
 
     this.positionMe$.pipe(
       takeUntil(this.onDestroy$),
-    ).subscribe((me: GeolocationPosition) => this.applyPosition(this.me, me));
+    ).subscribe((me) => this.applyPosition(this.me, me));
     this.positionOther$.pipe(
       takeUntil(this.onDestroy$),
-    ).subscribe((other: GeolocationPosition) => this.applyPosition(this.other, other));
+    ).subscribe((other) => this.applyPosition(this.other, other));
   }
 
   ngOnDestroy(): void {
@@ -119,7 +120,7 @@ export class MapComponent implements OnInit, OnDestroy {
       this.positionOther$,
     ]).pipe(
       takeUntil(this.onDestroy$),
-    ).subscribe(([me, other]: [GeolocationPosition, GeolocationPosition]) => {
+    ).subscribe(([me, other]) => {
       if (!me && !other) {
         return;
       } else if (!me && other) {
@@ -135,7 +136,7 @@ export class MapComponent implements OnInit, OnDestroy {
     this.mapResized$.next(0);
   }
 
-  private applyPosition(positionMarker: PositionMarker, position: GeolocationPosition): void {
+  private applyPosition(positionMarker: PositionMarker, position: Geolocation): void {
     if (!position?.coords) {
       return;
     }
@@ -148,11 +149,11 @@ export class MapComponent implements OnInit, OnDestroy {
     positionMarker.accuracy.setRadius(position.coords.accuracy);
   }
 
-  private toLeafletLatLng(position: GeolocationPosition): LatLng {
+  private toLeafletLatLng(position: Geolocation): LatLng {
     return new LatLng(position.coords.latitude, position.coords.longitude);
   }
 
-  private toLeafletLatLngBound(first: GeolocationPosition, second: GeolocationPosition): LatLngBoundsExpression {
+  private toLeafletLatLngBound(first: Geolocation, second: Geolocation): LatLngBoundsExpression {
     return [[first.coords.latitude, first.coords.longitude], [second.coords.latitude, second.coords.longitude]];
   }
 }

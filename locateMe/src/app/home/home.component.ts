@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { combineLatest, filter, Observable, Subject, takeUntil } from 'rxjs';
-import { forgeGeolocation } from '../common';
+import { forgeGeolocation, Geolocation } from '../common';
 import { SEP_CHAR } from '../service/linkGenerator.service';
 import { PositionOther } from '../store/actions/position.actions';
 import { MePositionState, OtherPositionState } from '../store/states/app.state';
@@ -14,8 +14,8 @@ import { MePositionState, OtherPositionState } from '../store/states/app.state';
 })
 export class HomeComponent implements OnInit, OnDestroy {
 
-  positionMe$: Observable<GeolocationPosition> = this.store.select(MePositionState.getState);
-  positionOther$: Observable<GeolocationPosition> = this.store.select(OtherPositionState.getState);
+  positionMe$: Observable<Geolocation> = this.store.select(MePositionState.getState);
+  positionOther$: Observable<Geolocation> = this.store.select(OtherPositionState.getState);
 
   private onDestroy$: Subject<boolean> = new Subject();
 
@@ -50,7 +50,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.onDestroy$.complete();
   }
 
-  private static parseFragment(fragment: string): GeolocationPosition {
+  private static parseFragment(fragment: string): Geolocation {
     const fragments = fragment.split(SEP_CHAR);
     return forgeGeolocation(Number(fragments[0]), Number(fragments[1]), Number(fragments[2]));
   }

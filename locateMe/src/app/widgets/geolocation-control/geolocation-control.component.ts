@@ -4,8 +4,8 @@ import { Observable } from 'rxjs';
 import {
   StartLocating,
   StopLocating,
-} from 'src/app/store/actions/position.actions';
-import { GeolocationState } from 'src/app/store/states/app.state';
+} from '../../store/actions/position.actions';
+import { GeolocationState } from '../../store/states/app.state';
 
 @Component({
   selector: 'app-geolocation-control',
@@ -13,11 +13,13 @@ import { GeolocationState } from 'src/app/store/states/app.state';
 })
 export class GeolocationControlComponent {
 
-  locationWatchId$: Observable<unknown> = this.store.select(GeolocationState.locationWatchId);
+  locationWatchId$: Observable<unknown>;
 
   constructor(
       private store: Store,
-  ) { }
+  ) {
+    this.locationWatchId$ = this.store.select(GeolocationState.locationWatchId);
+   }
 
   locateMe() {
     this.store.dispatch(new StartLocating());

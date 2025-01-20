@@ -13,6 +13,7 @@ import {
   SetTrip,
   StopLocating,
 } from '../store/actions/position.actions';
+import { Geolocation } from '../common';
 
 @Component({
   selector: 'app-route',
@@ -21,8 +22,8 @@ import {
 })
 export class RouteComponent implements OnInit {
 
-  origin$: Observable<GeolocationPosition> = this.store.select(MePositionState.getState);
-  destination$: Observable<GeolocationPosition> = this.store.select(OtherPositionState.getState);
+  origin$: Observable<Geolocation> = this.store.select(MePositionState.getState);
+  destination$: Observable<Geolocation> = this.store.select(OtherPositionState.getState);
   routes$: Observable<PublicTransportModel> = this.store.select(PublicTransportState.getState);
   fetching$: Observable<boolean> = this.store.select(PublicTransportState.fetching);
 

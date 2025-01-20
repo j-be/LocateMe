@@ -7,6 +7,7 @@ import {
 import { Observable, take, filter } from 'rxjs';
 import { ClearTrip } from '../store/actions/position.actions';
 import { Router } from '@angular/router';
+import { Geolocation } from '../common';
 
 @Component({
   selector: 'app-route-detail',
@@ -15,7 +16,7 @@ import { Router } from '@angular/router';
 })
 export class RouteDetailComponent implements OnInit, OnDestroy {
 
-  origin$: Observable<GeolocationPosition> = this.store.select(MePositionState.getState);
+  origin$: Observable<Geolocation> = this.store.select(MePositionState.getState);
   tripDetail$: Observable<any> = this.store.select(PublicTransportState.trip);
 
   constructor(

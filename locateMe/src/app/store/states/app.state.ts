@@ -1,6 +1,6 @@
 import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import * as Actions from '../actions/position.actions';
-import { geolocationOptions } from '../../common';
+import { Geolocation, geolocationOptions } from '../../common';
 import { MessageService } from 'primeng/api';
 import { Injectable } from '@angular/core';
 import { WlRoutingService } from 'src/app/service/wlRouting.service';
@@ -12,7 +12,7 @@ export interface GeolocationStateModel {
   locationWatchId: number | null;
 }
 
-@State<GeolocationPosition | null>({
+@State<Geolocation | null>({
   name: 'MyPositionState',
   defaults: null,
 })
@@ -24,12 +24,12 @@ export class MePositionState {
   ) { }
 
   @Selector()
-  static getState(state: GeolocationPosition) {
+  static getState(state: Geolocation) {
     return state;
   }
 
   @Action(Actions.PositionFound)
-  positionMe(ctx: StateContext<GeolocationPosition>, action: Actions.PositionFound) {
+  positionMe(ctx: StateContext<Geolocation>, action: Actions.PositionFound) {
     ctx.setState({
       coords: action.payload.coords,
       timestamp: action.payload.timestamp,
@@ -38,7 +38,7 @@ export class MePositionState {
   }
 }
 
-@State<GeolocationPosition | null>({
+@State<Geolocation | null>({
   name: 'OtherPositionState',
   defaults: null,
 })
@@ -46,12 +46,12 @@ export class MePositionState {
 export class OtherPositionState {
 
   @Selector()
-  static getState(state: GeolocationPosition) {
+  static getState(state: Geolocation) {
     return state;
   }
 
   @Action(Actions.PositionOther)
-  positionOther(ctx: StateContext<GeolocationPosition>, action: Actions.PositionOther) {
+  positionOther(ctx: StateContext<Geolocation>, action: Actions.PositionOther) {
     ctx.setState({
       coords: action.payload.coords,
       timestamp: action.payload.timestamp,

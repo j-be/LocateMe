@@ -1,6 +1,7 @@
 import { environment } from '../../environments/environment';
 import { Injectable, SecurityContext } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { Geolocation } from '../common';
 
 export const SEP_CHAR = '+';
 
@@ -19,7 +20,7 @@ export class LinkGeneratorService {
   ) {
   }
 
-  getLinks(location: GeolocationPosition): Links | null {
+  getLinks(location: Geolocation): Links | null {
     if (!location) {
       return null;
     }

@@ -7,6 +7,7 @@ import {
 
 import { ShareComponent } from './share.component';
 import { ShareModule } from './share.module';
+import { Geolocation } from '../common';
 
 describe('ShareComponent', () => {
   let component: ShareComponent;
@@ -49,15 +50,11 @@ describe('ShareComponent', () => {
   });
 
   it('should should generate links', () => {
-    const location: GeolocationPosition = {
+    const location: Geolocation = {
       coords: {
         latitude: 1,
         longitude: 2,
         accuracy: 3,
-        altitude: null,
-        altitudeAccuracy: null,
-        heading: null,
-        speed: null,
       },
       timestamp: 0,
     };
