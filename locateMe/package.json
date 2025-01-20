@@ -49,7 +49,7 @@
     "@types/node": "^18.19.7",
     "@typescript-eslint/eslint-plugin": "^8.19.1",
     "eslint": "^9.16.0",
-    "eslint-config-prettier": "^9.1.0",
+    "eslint-config-prettier": "^10.0.1",
     "eslint-plugin-ngxs-style-guide": "^3.0.0",
     "jasmine-core": "^5.4.0",
     "karma": "^6.4.4",
