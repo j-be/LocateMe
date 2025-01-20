@@ -21,7 +21,7 @@ export interface Geolocation {
 
 export const meOptions = {
   icon: new Icon({
-    iconUrl: 'assets/css/img/location-pin-me.svg',
+    iconUrl: 'css/img/location-pin-me.svg',
 
     iconSize: [38, 38], // size of the icon
     iconAnchor: [19, 38], // point of the icon which will correspond to marker's location
@@ -36,7 +36,7 @@ export const meOptions = {
 
 export const otherOptions = {
   icon: new Icon({
-    iconUrl: 'assets/css/img/location-pin-other.svg',
+    iconUrl: 'css/img/location-pin-other.svg',
 
     iconSize: [38, 38], // size of the icon
     iconAnchor: [19, 38], // point of the icon which will correspond to marker's location

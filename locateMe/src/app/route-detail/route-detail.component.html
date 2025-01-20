@@ -5,25 +5,27 @@
     <div class="right-align"><a routerLink="../"><i class="material-icons">close</i></a></div>
   </div>
 
-  <div class="flex-row leg" *ngFor="let leg of (tripDetail$ | async)?.legs">
-    <div class="flex-column">
-      <div>{{ leg.points[0].dateTime.time }}</div>
-      <div></div>
-      <div>{{ leg.points[1].dateTime.time }}</div>
-    </div>
-    <div class="flex-colum">
-      <div style="text-align: center">&#9675;</div>
-      <div style="text-align: center">&#124;</div>
-      <div style="text-align: center">&#9675;</div>
-    </div>
-    <div class="flex-column">
-      <div class="station-name">{{ leg.points[0].name }}</div>
-      <div class="flex-row">
-        <app-public-transport-chip [line]="leg.mode"></app-public-transport-chip>
-        <small class="destination">{{ leg.mode.destination }}</small>
+  @for (leg of (tripDetail$ | async)?.legs; track leg) {
+    <div class="flex-row leg">
+      <div class="flex-column">
+        <div>{{ leg.points[0].dateTime.time }}</div>
+        <div></div>
+        <div>{{ leg.points[1].dateTime.time }}</div>
       </div>
-      <div class="station-name">{{ leg.points[1].name }}</div>
+      <div class="flex-colum">
+        <div style="text-align: center">&#9675;</div>
+        <div style="text-align: center">&#124;</div>
+        <div style="text-align: center">&#9675;</div>
+      </div>
+      <div class="flex-column">
+        <div class="station-name">{{ leg.points[0].name }}</div>
+        <div class="flex-row">
+          <app-public-transport-chip [line]="leg.mode"></app-public-transport-chip>
+          <small class="destination">{{ leg.mode.destination }}</small>
+        </div>
+        <div class="station-name">{{ leg.points[1].name }}</div>
+      </div>
     </div>
-  </div>
+  }
 
 </app-layout>

@@ -1,4 +1,5 @@
 /* You can add global styles to this file, and also import map style files */
+$navHeight: 64px
 
 html,
 body,
@@ -9,18 +10,16 @@ main,
 nav
   position: fixed
   z-index: 1000
+  width: 100%
+  height: $navHeight
   img
     height: 56px
     padding: 12px 6px
-    float: left
-    @media screen and (min-width: 601px)
-      height: 64px
-      padding: 16px 8px 16px 16px
 
 main
   padding-top: 56px
   @media screen and (min-width: 601px)
-    padding-top: 64px
+    padding-top: $navHeight
 
 footer
   position: fixed
@@ -29,6 +28,9 @@ footer
   bottom: 0
   z-index: 1000
 
+.container
+  padding-top: var(--gap-size)
+
 .flex-row
   display: flex
   flex-direction: row
@@ -36,6 +38,10 @@ footer
 .flex-column
   display: flex
   flex-direction: column
+
+.justify-center
+  display: flex
+  justify-content: center
 
 #tileLayerSelector
   top: 15px
@@ -52,7 +58,7 @@ body .ui-dialog.card-dialog .ui-dialog-content
   background-color: #eee
 
 .ui-toast
-  margin-top: 62px
+  margin-top: $navHeight
 
 .start-hint
   display: flex
@@ -60,3 +66,12 @@ body .ui-dialog.card-dialog .ui-dialog-content
   width: 100%
   font-size: 24px
   font-weight: 300
+
+i.material-icons
+  vertical-align: bottom
+
+nav h1
+  line-height: $navHeight
+  font-size: 36px
+  font-weight: bold
+  margin: 0

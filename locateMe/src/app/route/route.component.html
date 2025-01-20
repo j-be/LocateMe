@@ -5,36 +5,38 @@
     <div class="right-align"><a routerLink="../"><i class="material-icons">close</i></a></div>
   </div>
 
-  <ng-container *ngIf="fetching$ | async; else trips">
+  @if (fetching$ | async) {
     <div style="overflow: hidden; text-align: center">
       <p-progressSpinner></p-progressSpinner>
     </div>
-  </ng-container>
-
-  <ng-template #trips>
-    <ng-container *ngIf="(routes$ | async) as routes">
-      <ng-container *ngIf="routes.trips?.length; else noRoutes">
-        <div class="trip" *ngFor="let trip of routes.trips" (click)="showDetails(trip)">
-          <p-card>
-            <span>{{ formatPoint(trip.legs[0].points[0]) }}</span><br/>
-            <div class="flex-row">
-              <div class="transport-sequence flex-row">
-                <div *ngFor="let leg of trip.legs">
-                  <app-public-transport-chip [line]="leg.mode"></app-public-transport-chip>
+  } @else {
+    @if ((routes$ | async); as routes) {
+      @if (routes.trips?.length) {
+        @for (trip of routes.trips; track trip) {
+          <div class="trip card" (click)="showDetails(trip)" tabindex="0">
+            <div class="card-content">
+              <span class="card-title">{{ formatPoint(trip.legs[0].points[0]) }}</span><br/>
+              <div class="flex-row">
+                <div class="transport-sequence flex-row">
+                  @for (leg of trip.legs; track leg) {
+                    <div>
+                      <app-public-transport-chip [line]="leg.mode"></app-public-transport-chip>
+                    </div>
+                  }
                 </div>
+                <div class="duration">{{ trip.duration }}</div>
               </div>
-              <div class="duration">{{ trip.duration }}</div>
+              <span>{{ formatPoint(trip.legs[trip.legs.length - 1].points[1]) }}</span>
             </div>
-            <span>{{ formatPoint(trip.legs[trip.legs.length - 1].points[1]) }}</span>
-          </p-card>
-        </div>
-      </ng-container>
-      <ng-template #noRoutes>
+          </div>
+        }
+      } @else {
         <div>
-          <p-message severity="warning" text="Sorry, could not find any routes."></p-message>
+          <p-message severity="warn" text="Sorry, could not find any routes."></p-message>
         </div>
-      </ng-template>
-    </ng-container>
-  </ng-template>
+      }
+    }
+  }
+
 
 </app-layout>

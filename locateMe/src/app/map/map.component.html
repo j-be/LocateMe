@@ -1,9 +1,9 @@
 <app-layout>
 
-  <div role="nav" class="nav-wrapper light-green">
-    <div class="brand-logo">
-      <img src="assets/css/img/logo.svg" alt="LocateMe Logo">
-      <span>LocateMe</span>
+  <div role="nav" class="nav-wrapper">
+    <div class="brand-logo flex-row justify-center">
+      <img src="css/img/logo.svg" alt="LocateMe Logo">
+      <h1>LocateMe</h1>
     </div>
   </div>
 
@@ -17,13 +17,14 @@
     <app-geolocation-control></app-geolocation-control>
     <app-share></app-share>
 
-    <a
-      class="btn-floating btn-large waves-effect waves-light red darken-2 right"
-      style="margin-right: 12px"
-      *ngIf="(positionMe$ | async) && (positionOther$ | async)"
-      routerLink="/trips"
-    >
-      <i class="material-icons">directions_transit</i>
-    </a>
+    @if ((positionMe$ | async) && (positionOther$ | async)) {
+      <a
+        class="btn-floating btn-large waves-effect waves-light red darken-2 right"
+        style="margin-right: 12px"
+        routerLink="/trips"
+        >
+        <i class="material-icons">directions_transit</i>
+      </a>
+    }
   </div>
 </app-layout>

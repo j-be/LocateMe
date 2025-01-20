@@ -4,6 +4,7 @@ import { Component, Input } from '@angular/core';
   selector: 'app-public-transport-chip',
   templateUrl: './public-transport-chip.component.html',
   styleUrls: ['./public-transport-chip.component.sass'],
+  standalone: false,
 })
 export class PublicTransportChipComponent {
   @Input()

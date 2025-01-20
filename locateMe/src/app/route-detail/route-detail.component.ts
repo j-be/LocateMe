@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { Store } from '@ngxs/store';
 import {
   MePositionState,
@@ -13,16 +13,18 @@ import { Geolocation } from '../common';
   selector: 'app-route-detail',
   templateUrl: './route-detail.component.html',
   styleUrls: ['./route-detail.component.sass'],
+  standalone: false,
 })
 export class RouteDetailComponent implements OnInit, OnDestroy {
+  private readonly store = inject(Store);
+  private readonly router = inject(Router);
 
-  origin$: Observable<Geolocation> = this.store.select(MePositionState.getState);
-  tripDetail$: Observable<any> = this.store.select(PublicTransportState.trip);
+  origin$: Observable<Geolocation>;
+  tripDetail$: Observable<any>;
 
-  constructor(
-    private store: Store,
-    private router: Router,
-  ) {
+  constructor() {
+    this.origin$ = this.store.select(MePositionState.getState);
+    this.tripDetail$ = this.store.select(PublicTransportState.trip);
   }
 
   ngOnInit() {

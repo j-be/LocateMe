@@ -1,15 +1,21 @@
 <p-dialog header="Share" [modal]="true" [(visible)]="display">
-  <div *ngIf="links">
-    <p><a href="{{ links.mailto }}">EMail</a></p>
-    <p><a [href]="links.sms">SMS</a></p>
-    <p><a href="{{ links.whatsApp }}">WhatsApp</a></p>
-    <p>... or copy the link:</p>
-    <p><a href="{{ links.link }}">[ Long-press here to copy ]</a></p>
-    <p><input onClick="this.select();" type="text" READONLY value="{{ links.link }}"></p>
-  </div>
+  @if (links) {
+    <div>
+      <p><a href="{{ links.mailto }}">EMail</a></p>
+      <p><a [href]="links.sms">SMS</a></p>
+      <p><a href="{{ links.whatsApp }}">WhatsApp</a></p>
+      <p>... or copy the link:</p>
+      <p><a href="{{ links.link }}">[ Long-press here to copy ]</a></p>
+      <p><input onClick="this.select();" type="text" READONLY value="{{ links.link }}"></p>
+    </div>
+  }
 </p-dialog>
 
-<a class="btn-floating btn-large waves-effect waves-light light-blue right" style="margin-right: 12px"
-  (click)="showDialog()" *ngIf="location$ | async">
-  <i class="material-icons">share</i>
-</a>
+@if (location$ | async) {
+  <a class="btn-floating btn-large waves-effect waves-light light-blue right"
+    style="margin-right: 12px"
+    tabindex="0"
+    (click)="showDialog()">
+    <i class="material-icons">share</i>
+  </a>
+}

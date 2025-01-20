@@ -2,7 +2,7 @@ import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import * as Actions from '../actions/position.actions';
 import { Geolocation, geolocationOptions } from '../../common';
 import { MessageService } from 'primeng/api';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { WlRoutingService } from '../../service/wlRouting.service';
 import { catchError, map, of } from 'rxjs';
 
@@ -18,10 +18,9 @@ export interface GeolocationStateModel {
 })
 @Injectable()
 export class MePositionState {
+  private readonly messageService = inject(MessageService);
 
-  constructor(
-    private messageService: MessageService,
-  ) { }
+  constructor() { }
 
   @Selector()
   static getState(state: Geolocation) {
@@ -67,10 +66,10 @@ export class OtherPositionState {
 })
 @Injectable()
 export class GeolocationState {
-  constructor(
-    private messageService: MessageService,
-    private store: Store,
-  ) { }
+  private readonly messageService = inject(MessageService);
+  private readonly store = inject(Store);
+
+  constructor() { }
 
   @Action(Actions.StartLocating)
   startLocating(ctx: StateContext<GeolocationStateModel>) {
@@ -155,11 +154,10 @@ export interface PublicTransportModel {
 })
 @Injectable()
 export class PublicTransportState {
+  private readonly wlRoutingService = inject(WlRoutingService);
+  private readonly messageService = inject(MessageService);
 
-  constructor(
-    private wlRoutingService: WlRoutingService,
-    private messageService: MessageService,
-  ) {
+  constructor() {
   }
 
   @Selector()

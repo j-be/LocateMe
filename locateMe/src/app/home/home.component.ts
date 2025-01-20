@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { combineLatest, filter, Observable, Subject, takeUntil } from 'rxjs';
@@ -13,7 +13,6 @@ import { MessageService } from 'primeng/api';
   selector: 'app-home',
   styleUrls: ['./home.component.sass'],
   templateUrl: './home.component.html',
-  standalone: true,
   imports: [
     WidgetsModule,
   ],
@@ -22,17 +21,16 @@ import { MessageService } from 'primeng/api';
   ],
 })
 export class HomeComponent implements OnInit, OnDestroy {
+  private readonly route = inject(ActivatedRoute);
+  private readonly store = inject(Store);
+  private readonly router = inject(Router);
 
   positionMe$: Observable<Geolocation>;
   positionOther$: Observable<Geolocation>;
 
   private onDestroy$: Subject<boolean> = new Subject();
 
-  constructor(
-    private route: ActivatedRoute,
-    private readonly store: Store,
-    private router: Router,
-  ) {
+  constructor() {
     this.positionMe$ = this.store.select(MePositionState.getState);
     this.positionOther$ = this.store.select(OtherPositionState.getState);
   }
