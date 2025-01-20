@@ -1,10 +1,13 @@
-<a class="btn-floating btn-large waves-effect waves-light light-green right"
-   (click)="locateMe()" *ngIf="(locationWatchId$ | async) === null; else stopLocating">
-  <i class="material-icons">my_location</i>
-</a>
-<ng-template #stopLocating>
+@if ((locationWatchId$ | async) === null) {
   <a class="btn-floating btn-large waves-effect waves-light light-green right"
-     (click)="stopLocatingMe()">
+    tabindex="0"
+    (click)="locateMe()">
+    <i class="material-icons">my_location</i>
+  </a>
+} @else {
+  <a class="btn-floating btn-large waves-effect waves-light light-green right"
+    tabindex="0"
+    (click)="stopLocatingMe()">
     <i class="material-icons">stop</i>
   </a>
-</ng-template>
+}

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { LeafletModule } from '@bluehalo/ngx-leaflet';
 import { NgxsModule } from '@ngxs/store';
 import { MePositionState, OtherPositionState } from '../store/states/app.state';
 import { MapComponent } from './map.component';

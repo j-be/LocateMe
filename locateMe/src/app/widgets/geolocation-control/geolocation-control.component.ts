@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import {
@@ -10,14 +10,14 @@ import { GeolocationState } from '../../store/states/app.state';
 @Component({
   selector: 'app-geolocation-control',
   templateUrl: './geolocation-control.component.html',
+  standalone: false,
 })
 export class GeolocationControlComponent {
+  private readonly store = inject(Store);
 
   locationWatchId$: Observable<unknown>;
 
-  constructor(
-      private store: Store,
-  ) {
+  constructor() {
     this.locationWatchId$ = this.store.select(GeolocationState.locationWatchId);
    }
 

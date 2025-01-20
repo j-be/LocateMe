@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest, Observable, take } from 'rxjs';
 import {
@@ -19,19 +19,23 @@ import { Geolocation } from '../common';
   selector: 'app-route',
   templateUrl: './route.component.html',
   styleUrls: ['./route.component.sass'],
+  standalone: false,
 })
 export class RouteComponent implements OnInit {
+  private readonly store = inject(Store);
+  private readonly router = inject(Router);
+  private readonly activatedRoute = inject(ActivatedRoute);
 
-  origin$: Observable<Geolocation> = this.store.select(MePositionState.getState);
-  destination$: Observable<Geolocation> = this.store.select(OtherPositionState.getState);
-  routes$: Observable<PublicTransportModel> = this.store.select(PublicTransportState.getState);
-  fetching$: Observable<boolean> = this.store.select(PublicTransportState.fetching);
+  origin$: Observable<Geolocation>;
+  destination$: Observable<Geolocation>;
+  routes$: Observable<PublicTransportModel>;
+  fetching$: Observable<boolean>;
 
-  constructor(
-    private store: Store,
-    private router: Router,
-    private activatedRoute: ActivatedRoute,
-  ) {
+  constructor() {
+    this.origin$ = this.store.select(MePositionState.getState);
+    this.destination$ = this.store.select(OtherPositionState.getState);
+    this.routes$ = this.store.select(PublicTransportState.getState);
+    this.fetching$ = this.store.select(PublicTransportState.fetching);
   }
 
   ngOnInit(): void {

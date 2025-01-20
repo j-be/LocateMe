@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import {Observable, retry} from 'rxjs';
 import {environment} from '../../environments/environment';
@@ -8,8 +8,9 @@ const url = `${environment.wlRoutingHost}/ogd_routing/XML_TRIP_REQUEST2`;
 
 @Injectable()
 export class WlRoutingService {
+  private readonly http = inject(HttpClient);
 
-  constructor(private http: HttpClient) { }
+  constructor() { }
 
   private static formatLocation(position: Geolocation) {
     return `${position.coords.longitude}:${position.coords.latitude}:WGS84`;

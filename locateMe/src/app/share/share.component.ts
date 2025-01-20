@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { Observable, take } from 'rxjs';
 import { LinkGeneratorService, Links } from '../service/linkGenerator.service';
@@ -9,17 +9,18 @@ import { Geolocation } from '../common';
 @Component({
   selector: 'app-share',
   templateUrl: './share.component.html',
+  standalone: false,
 })
 export class ShareComponent {
+  private readonly linkGeneratorService = inject(LinkGeneratorService);
+  private readonly store = inject(Store);
+
   display = false;
   links: Links | null = null;
 
   location$: Observable<Geolocation>;
 
-  constructor(
-    private linkGeneratorService: LinkGeneratorService,
-    private store: Store,
-  ) {
+  constructor() {
     this.location$ = this.store.select(MePositionState.getState);
   }
 

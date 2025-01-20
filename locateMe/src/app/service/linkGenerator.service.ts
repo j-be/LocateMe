@@ -1,5 +1,5 @@
 import { environment } from '../../environments/environment';
-import { Injectable, SecurityContext } from '@angular/core';
+import { Injectable, SecurityContext, inject } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Geolocation } from '../common';
 
@@ -14,10 +14,9 @@ export interface Links {
 
 @Injectable()
 export class LinkGeneratorService {
+  private readonly sanitizer = inject(DomSanitizer);
 
-  constructor(
-    private sanitizer: DomSanitizer,
-  ) {
+  constructor() {
   }
 
   getLinks(location: Geolocation): Links | null {

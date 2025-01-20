@@ -1,6 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { LeafletControlLayersConfig } from '@asymmetrik/ngx-leaflet';
+import { LeafletControlLayersConfig } from '@bluehalo/ngx-leaflet';
 import { Store } from '@ngxs/store';
 import {
   Circle,
@@ -46,11 +46,14 @@ const DEFAULT_LAYER: keyof typeof BASE_LAYERS = 'CartoDB Voyager';
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
+  standalone: false,
 })
 export class MapComponent implements OnInit, OnDestroy {
+  private readonly store = inject(Store);
+  private readonly router = inject(Router);
 
-  positionMe$: Observable<Geolocation> = this.store.select(MePositionState.getState);
-  positionOther$: Observable<Geolocation> = this.store.select(OtherPositionState.getState);
+  positionMe$: Observable<Geolocation>;
+  positionOther$: Observable<Geolocation>;
 
   layersControl: LeafletControlLayersConfig = {
     baseLayers: BASE_LAYERS,
@@ -65,10 +68,9 @@ export class MapComponent implements OnInit, OnDestroy {
   private mapResized$: Subject<number> = new Subject();
   private onDestroy$: Subject<boolean> = new Subject();
 
-  constructor(
-    private store: Store,
-    private router: Router,
-  ) {
+  constructor() {
+    this.positionMe$ = this.store.select(MePositionState.getState);
+    this.positionOther$ = this.store.select(OtherPositionState.getState);
   }
 
   private static forgePositionMarker(options: PersonOptions): PositionMarker {
