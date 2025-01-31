@@ -11,7 +11,6 @@ import { HomeModule } from './home/home.module';
 import { HomeComponent } from './home/home.component';
 import { providePrimeNG } from 'primeng/config';
 import Lara from '@primeng/themes/lara';
-import { updatePrimaryPalette, palette } from '@primeng/themes';
 
 @NgModule({
   declarations: [
