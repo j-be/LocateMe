@@ -1,11 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ActivatedRoute, Router } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
-import { NgxsModule } from '@ngxs/store';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { NgxsModule, provideStore } from '@ngxs/store';
 import { of } from 'rxjs';
 
 import { HomeComponent } from './home.component';
-import { HomeModule } from './home.module';
+import { MePositionState, OtherPositionState } from '../store/states/app.state';
 
 const routerSpy = { navigate: jasmine.createSpy('navigate').and.returnValue(Promise.resolve(true)) };
 
@@ -16,11 +15,14 @@ describe('HomeComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule,
-        HomeModule,
-        NgxsModule.forRoot()
+        RouterModule,
+        HomeComponent,
       ],
       providers: [
+        provideStore([
+          MePositionState,
+          OtherPositionState,
+        ]),
         { provide: ActivatedRoute, useValue: { fragment: of('7+8+9'), } },
         { provide: Router, useValue: routerSpy },
       ],
@@ -55,8 +57,8 @@ describe('HomeComponent - no fragment', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule,
-        HomeModule,
+        RouterModule,
+        HomeComponent,
         NgxsModule.forRoot()
       ],
       providers: [

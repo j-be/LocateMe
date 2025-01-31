@@ -3,7 +3,7 @@ import * as Actions from '../actions/position.actions';
 import { Geolocation, geolocationOptions } from '../../common';
 import { MessageService } from 'primeng/api';
 import { Injectable } from '@angular/core';
-import { WlRoutingService } from 'src/app/service/wlRouting.service';
+import { WlRoutingService } from '../../service/wlRouting.service';
 import { catchError, map, of } from 'rxjs';
 
 const MSG_LOCATING = 'locating';

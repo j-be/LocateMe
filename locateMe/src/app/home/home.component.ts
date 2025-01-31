@@ -6,24 +6,35 @@ import { forgeGeolocation, Geolocation } from '../common';
 import { SEP_CHAR } from '../service/linkGenerator.service';
 import { PositionOther } from '../store/actions/position.actions';
 import { MePositionState, OtherPositionState } from '../store/states/app.state';
+import { WidgetsModule } from '../widgets/widgets.module';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-home',
   styleUrls: ['./home.component.sass'],
   templateUrl: './home.component.html',
+  standalone: true,
+  imports: [
+    WidgetsModule,
+  ],
+  providers: [
+    MessageService,
+  ],
 })
 export class HomeComponent implements OnInit, OnDestroy {
 
-  positionMe$: Observable<Geolocation> = this.store.select(MePositionState.getState);
-  positionOther$: Observable<Geolocation> = this.store.select(OtherPositionState.getState);
+  positionMe$: Observable<Geolocation>;
+  positionOther$: Observable<Geolocation>;
 
   private onDestroy$: Subject<boolean> = new Subject();
 
   constructor(
     private route: ActivatedRoute,
-    private store: Store,
+    private readonly store: Store,
     private router: Router,
   ) {
+    this.positionMe$ = this.store.select(MePositionState.getState);
+    this.positionOther$ = this.store.select(OtherPositionState.getState);
   }
 
   ngOnInit() {
