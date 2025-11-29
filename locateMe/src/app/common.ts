@@ -63,6 +63,6 @@ export function forgeGeolocation(latitude: number, longitude: number, accuracy: 
       longitude,
       accuracy,
     },
-    timestamp: new Date().getTime(),
+    timestamp: Date.now(),
   };
 }

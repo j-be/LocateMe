@@ -24,7 +24,7 @@ export class LinkGeneratorService {
       return null;
     }
 
-    const link = window.location.protocol + '//' + window.location.host + environment.baseHref + '#' +
+    const link = globalThis.location.protocol + '//' + globalThis.location.host + environment.baseHref + '#' +
       location.coords.latitude + SEP_CHAR +
       location.coords.longitude + SEP_CHAR +
       location.coords.accuracy;
