@@ -1,8 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NgxsModule } from '@ngxs/store';
-import { WidgetsModule } from '../widgets.module';
+import { provideStore } from '@ngxs/store';
 
 import { PublicTransportChipComponent } from './public-transport-chip.component';
+import { GeolocationState } from '../../store/states/app.state';
+import { MessageService } from 'primeng/api';
 
 describe('PublicTransportChipComponent', () => {
   let component: PublicTransportChipComponent;
@@ -11,9 +12,13 @@ describe('PublicTransportChipComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        NgxsModule.forRoot(),
-
-        WidgetsModule,
+        PublicTransportChipComponent,
+      ],
+      providers: [
+        provideStore([
+          GeolocationState,
+        ]),
+        MessageService,
       ],
     }).compileComponents();
   });

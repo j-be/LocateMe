@@ -6,6 +6,7 @@ import { NgxsModule } from '@ngxs/store';
 import { MePositionState, OtherPositionState } from '../store/states/app.state';
 import { MapComponent } from './map.component';
 import { ShareModule } from '../share/share.module';
+import { GeolocationControlComponent } from '../widgets/geolocation-control/geolocation-control.component';
 import { WidgetsModule } from '../widgets/widgets.module';
 
 @NgModule({
@@ -29,6 +30,7 @@ import { WidgetsModule } from '../widgets/widgets.module';
     ]),
 
     // App
+    GeolocationControlComponent,
     ShareModule,
     WidgetsModule,
   ],

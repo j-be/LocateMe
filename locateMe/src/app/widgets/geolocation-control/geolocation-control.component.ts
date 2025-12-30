@@ -6,11 +6,14 @@ import {
   StopLocating,
 } from '../../store/actions/position.actions';
 import { GeolocationState } from '../../store/states/app.state';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-geolocation-control',
   templateUrl: './geolocation-control.component.html',
-  standalone: false,
+  imports: [
+    AsyncPipe,
+  ],
 })
 export class GeolocationControlComponent {
   private readonly store = inject(Store);

@@ -1,8 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NgxsModule } from '@ngxs/store';
-import { WidgetsModule } from '../widgets.module';
+import { NgxsModule, provideStates } from '@ngxs/store';
 
 import { GeolocationControlComponent } from './geolocation-control.component';
+import { GeolocationState } from '../../store/states/app.state';
+import { MessageService } from 'primeng/api';
 
 describe('GeolocationControlComponent', () => {
   let component: GeolocationControlComponent;
@@ -27,7 +28,13 @@ describe('GeolocationControlComponent', () => {
       imports: [
         NgxsModule.forRoot(),
 
-        WidgetsModule,
+        GeolocationControlComponent,
+      ],
+      providers: [
+        provideStates([
+          GeolocationState,
+        ]),
+        MessageService,
       ],
     }).compileComponents();
   });
