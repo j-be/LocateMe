@@ -23,6 +23,13 @@ jobs:
           npm install
           npm run build:gh-pages
 
+      - name: Rename output folder
+        run: |
+          cd locateMe/dist
+          mv locateMe/browser .
+          rm -rf locateMe
+          mv browser locateMe
+
       - name: Put .nojekyll file
         run: touch locateMe/dist/locateMe/.nojekyll
 
