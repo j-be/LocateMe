@@ -10,6 +10,7 @@ import {
 import { WidgetsModule } from '../widgets/widgets.module';
 import { WlRoutingService } from '../service/wlRouting.service';
 import { HttpClientModule } from '@angular/common/http';
+import { PublicTransportChipComponent } from '../widgets/public-transport-chip/public-transport-chip.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { HttpClientModule } from '@angular/common/http';
     ]),
 
     // This app
+    PublicTransportChipComponent,
     WidgetsModule,
   ],
   providers: [

@@ -15,6 +15,7 @@ import {
 } from '../store/states/app.state';
 import { WidgetsModule } from '../widgets/widgets.module';
 import { RouteComponent } from './route.component';
+import { PublicTransportChipComponent } from '../widgets/public-transport-chip/public-transport-chip.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { RouteComponent } from './route.component';
     ]),
 
     // This app
+    PublicTransportChipComponent,
     WidgetsModule,
   ],
   providers: [

@@ -8,12 +8,14 @@ import { PositionOther } from '../store/actions/position.actions';
 import { MePositionState, OtherPositionState } from '../store/states/app.state';
 import { WidgetsModule } from '../widgets/widgets.module';
 import { MessageService } from 'primeng/api';
+import { GeolocationControlComponent } from '../widgets/geolocation-control/geolocation-control.component';
 
 @Component({
   selector: 'app-home',
   styleUrls: ['./home.component.sass'],
   templateUrl: './home.component.html',
   imports: [
+    GeolocationControlComponent,
     WidgetsModule,
   ],
   providers: [

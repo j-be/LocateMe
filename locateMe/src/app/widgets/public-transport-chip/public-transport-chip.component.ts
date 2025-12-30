@@ -1,10 +1,13 @@
+import { NgClass } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-public-transport-chip',
   templateUrl: './public-transport-chip.component.html',
   styleUrls: ['./public-transport-chip.component.sass'],
-  standalone: false,
+  imports: [
+    NgClass,
+  ],
 })
 export class PublicTransportChipComponent {
   @Input()
