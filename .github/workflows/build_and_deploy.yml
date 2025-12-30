@@ -57,3 +57,11 @@ jobs:
           asset_path: locateMe/dist/locateMe.zip
           asset_name: locateMe.zip
           asset_content_type: application/zip
+
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/node@v1
+        with:
+          args: --file=locateMe/package.json
+          command: monitor
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}

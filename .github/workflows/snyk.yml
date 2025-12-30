@@ -22,8 +22,9 @@ jobs:
         npm install
 
     - name: Run Snyk to check for vulnerabilities
-      uses: snyk/actions/node@master
+      uses: snyk/actions/node@v1
       with:
         args: --file=locateMe/package.json
+        command: monitor
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
