@@ -7,6 +7,20 @@ import { GeolocationControlComponent } from './geolocation-control.component';
 describe('GeolocationControlComponent', () => {
   let component: GeolocationControlComponent;
   let fixture: ComponentFixture<GeolocationControlComponent>;
+  let initialGeolocation: unknown;
+
+  beforeAll(() => {
+    initialGeolocation = navigator.geolocation;
+    (navigator as any).geolocation = {
+      watchPosition: vi.fn(() => 1),
+      clearWatch: vi.fn(),
+      getCurrentPosition: vi.fn(),
+    };
+  });
+
+  afterAll(() => {
+    (navigator as any).geolocation = initialGeolocation;
+  });
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -28,7 +42,7 @@ describe('GeolocationControlComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should start and stop geolocation', (done: DoneFn) => {
+  it('should start and stop geolocation', () => new Promise<void>(done => {
     const ids: unknown[] = [];
     component.locationWatchId$.subscribe(watchId => {
       ids.push(watchId);
@@ -41,5 +55,5 @@ describe('GeolocationControlComponent', () => {
     });
     component.locateMe();
     component.stopLocatingMe();
-  });
+  }));
 });

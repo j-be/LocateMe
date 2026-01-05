@@ -13,6 +13,20 @@ describe('ShareComponent', () => {
   let component: ShareComponent;
   let fixture: ComponentFixture<ShareComponent>;
   let store: Store;
+  let initialGeolocation: unknown;
+
+  beforeAll(() => {
+    initialGeolocation = navigator.geolocation;
+    (navigator as any).geolocation = {
+      watchPosition: vi.fn(() => 1),
+      clearWatch: vi.fn(),
+      getCurrentPosition: vi.fn(),
+    };
+  });
+
+  afterAll(() => {
+    (navigator as any).geolocation = initialGeolocation;
+  });
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -46,7 +60,7 @@ describe('ShareComponent', () => {
 
     expect(watches.length).toBe(3);
     expect(watches[0]).toBeNull();
-    expect(watches[1]).toBeTruthy();
+    expect(watches[1]).toBe(1);
     expect(watches[2]).toBeNull();
   });
 
@@ -64,9 +78,9 @@ describe('ShareComponent', () => {
     component.showDialog();
 
     expect(component.links).toBeTruthy();
-    expect(component.links?.link.endsWith('/#1+2+3')).toBeTrue();
-    expect(component.links?.mailto.endsWith('/#1+2+3')).toBeTrue();
-    expect(component.links?.whatsApp.endsWith('/#1+2+3')).toBeTrue();
+    expect(component.links?.link.endsWith('/#1+2+3')).toBe(true);
+    expect(component.links?.mailto.endsWith('/#1+2+3')).toBe(true);
+    expect(component.links?.whatsApp.endsWith('/#1+2+3')).toBe(true);
     expect('' + component.links?.sms).toMatch(/\/#1\+2\+3 /);
   });
 });
