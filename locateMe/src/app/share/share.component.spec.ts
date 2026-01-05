@@ -17,8 +17,9 @@ describe('ShareComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        ShareModule,
         NgxsModule.forRoot(),
+
+        ShareModule,
       ],
     }).compileComponents();
   });

@@ -13,9 +13,10 @@ describe('RouteDetailComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
+        NgxsModule.forRoot(),
+
         RouteDetailModule,
         RouterTestingModule,
-        NgxsModule.forRoot(),
       ],
       providers: [
         RouteComponent,

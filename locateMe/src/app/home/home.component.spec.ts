@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { NgxsModule, provideStore } from '@ngxs/store';
+import { NgxsModule, provideStates } from '@ngxs/store';
 import { of } from 'rxjs';
 
 import { HomeComponent } from './home.component';
@@ -15,11 +15,13 @@ describe('HomeComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
+        NgxsModule.forRoot(),
+
         RouterModule,
         HomeComponent,
       ],
       providers: [
-        provideStore([
+        provideStates([
           MePositionState,
           OtherPositionState,
         ]),
@@ -57,9 +59,10 @@ describe('HomeComponent - no fragment', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
+        NgxsModule.forRoot(),
+
         RouterModule,
         HomeComponent,
-        NgxsModule.forRoot()
       ],
       providers: [
         { provide: ActivatedRoute, useValue: { fragment: of(null), } },

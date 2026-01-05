@@ -11,8 +11,9 @@ describe('PublicTransportChipComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        WidgetsModule,
         NgxsModule.forRoot(),
+
+        WidgetsModule,
       ],
     }).compileComponents();
   });
