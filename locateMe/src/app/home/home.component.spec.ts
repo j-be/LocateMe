@@ -6,7 +6,7 @@ import { of } from 'rxjs';
 import { HomeComponent } from './home.component';
 import { MePositionState, OtherPositionState } from '../store/states/app.state';
 
-const routerSpy = { navigate: jasmine.createSpy('navigate').and.returnValue(Promise.resolve(true)) };
+const routerSpy = { navigate: vi.fn(() => Promise.resolve(true)) };
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -32,7 +32,7 @@ describe('HomeComponent', () => {
   });
 
   beforeEach(() => {
-    routerSpy.navigate.calls.reset();
+    routerSpy.navigate.mockReset();
 
     fixture = TestBed.createComponent(HomeComponent);
     component = fixture.componentInstance;
@@ -43,15 +43,16 @@ describe('HomeComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should navigate to map', (done) => {
+  it('should navigate to map', () => new Promise<void>(done => {
     component.positionOther$.subscribe(positionOther => {
       expect(positionOther.coords.latitude).toEqual(7);
       expect(positionOther.coords.longitude).toEqual(8);
       expect(positionOther.coords.accuracy).toEqual(9);
-      expect(routerSpy.navigate).toHaveBeenCalledOnceWith(['map'], { skipLocationChange: true });
+      expect(routerSpy.navigate).toBeCalledTimes(1);
+      expect(routerSpy.navigate).toHaveBeenCalledWith(['map'], { skipLocationChange: true });
       done();
     });
-  });
+  }));
 });
 
 describe('HomeComponent - no fragment', () => {
@@ -72,7 +73,7 @@ describe('HomeComponent - no fragment', () => {
   });
 
   beforeEach(() => {
-    routerSpy.navigate.calls.reset();
+    routerSpy.navigate.mockReset();
     TestBed.createComponent(HomeComponent).detectChanges();
   });
 

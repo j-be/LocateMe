@@ -29,7 +29,7 @@ describe('WlRoutingService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should fetch', (done) => {
+  it('should fetch', () => new Promise<void>(done => {
     service.getRoute(forgeGeolocation(11, 12, 13), forgeGeolocation(14, 15, 16)).subscribe(response => {
       expect(response).toEqual(wlResponse);
       done();
@@ -40,5 +40,5 @@ describe('WlRoutingService', () => {
       req.params.get('name_destination') === '15:14:WGS84' &&
       req.method === 'GET'
     ).flush(wlResponse);
-  });
+  }));
 });

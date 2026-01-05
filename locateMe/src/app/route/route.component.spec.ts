@@ -11,7 +11,7 @@ import { default as wlResponse } from '../../../wl-response.json';
 import { WlRoutingService } from '../service/wlRouting.service';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
-const wlRoutingServiceSpy = { getRoute: jasmine.createSpy('getRoute').and.returnValue(of(wlResponse)) };
+const wlRoutingServiceSpy = { getRoute: vi.fn(() => of(wlResponse)) };
 
 describe('RouteComponent', () => {
   let component: RouteComponent;
@@ -42,7 +42,7 @@ describe('RouteComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should fetch routes', (done) => {
+  it('should fetch routes', () => new Promise<void>(done => {
     expect(wlRoutingServiceSpy.getRoute).toHaveBeenCalledTimes(0);
 
     TestBed.inject(Store).dispatch(new PositionFound(forgeGeolocation(1, 2, 3)));
@@ -56,9 +56,9 @@ describe('RouteComponent', () => {
       expect(routes.trips).toEqual(wlResponse.trips);
       done();
     });
-  });
+  }));
 
-  it('should set trip', (done) => {
+  it('should set trip', () => new Promise<void>(done => {
     const trip = wlResponse.trips[0];
 
     expect(TestBed.inject(Store).snapshot().PublicTransport.trip).toBeFalsy();
@@ -67,7 +67,7 @@ describe('RouteComponent', () => {
       expect(tripFromState).toEqual(trip);
       done();
     });
-  });
+  }));
 
   it('should format the point', () => {
     expect(component.formatPoint(wlResponse.trips[0].legs[1].points[1])).toEqual('19:15 Wien Alterlaa U');
