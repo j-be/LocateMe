@@ -18,9 +18,10 @@ describe('MapComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
+        NgxsModule.forRoot(),
+
         RouterTestingModule,
         MapModule,
-        NgxsModule.forRoot()
       ]
     }).compileComponents();
   });

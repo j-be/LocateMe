@@ -20,10 +20,11 @@ describe('RouteComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
+        NgxsModule.forRoot(),
+
         NoopAnimationsModule,
         RouteModule,
         RouterTestingModule,
-        NgxsModule.forRoot(),
       ],
       providers: [
         { provide: WlRoutingService, useValue: wlRoutingServiceSpy },
