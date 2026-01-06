@@ -65,8 +65,8 @@ export class MapComponent implements OnInit, OnDestroy {
   private me = MapComponent.forgePositionMarker(meOptions);
   private other = MapComponent.forgePositionMarker(otherOptions);
 
-  private mapResized$: Subject<number> = new Subject();
-  private onDestroy$: Subject<boolean> = new Subject();
+  private mapResized$ = new Subject<number>();
+  private onDestroy$= new Subject<boolean>();
 
   constructor() {
     this.positionMe$ = this.store.select(MePositionState.getState);

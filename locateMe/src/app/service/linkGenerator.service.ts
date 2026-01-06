@@ -16,9 +16,6 @@ export interface Links {
 export class LinkGeneratorService {
   private readonly sanitizer = inject(DomSanitizer);
 
-  constructor() {
-  }
-
   getLinks(location: Geolocation): Links | null {
     if (!location) {
       return null;

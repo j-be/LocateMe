@@ -28,7 +28,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   positionMe$: Observable<Geolocation>;
   positionOther$: Observable<Geolocation>;
 
-  private onDestroy$: Subject<boolean> = new Subject();
+  private onDestroy$ = new Subject();
 
   constructor() {
     this.positionMe$ = this.store.select(MePositionState.getState);
