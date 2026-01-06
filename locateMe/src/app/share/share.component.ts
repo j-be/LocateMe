@@ -5,11 +5,20 @@ import { LinkGeneratorService, Links } from '../service/linkGenerator.service';
 import { StopLocating } from '../store/actions/position.actions';
 import { MePositionState } from '../store/states/app.state';
 import { Geolocation } from '../common';
+import { AsyncPipe } from '@angular/common';
+import { DialogModule } from 'primeng/dialog';
 
 @Component({
   selector: 'app-share',
   templateUrl: './share.component.html',
-  standalone: false,
+  imports: [
+    AsyncPipe,
+    // PrimeNG
+    DialogModule,
+  ],
+  providers: [
+    LinkGeneratorService,
+  ],
 })
 export class ShareComponent {
   private readonly linkGeneratorService = inject(LinkGeneratorService);

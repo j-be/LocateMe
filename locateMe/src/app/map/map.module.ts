@@ -5,7 +5,7 @@ import { LeafletModule } from '@bluehalo/ngx-leaflet';
 import { NgxsModule } from '@ngxs/store';
 import { MePositionState, OtherPositionState } from '../store/states/app.state';
 import { MapComponent } from './map.component';
-import { ShareModule } from '../share/share.module';
+import { ShareComponent } from '../share/share.component';
 import { GeolocationControlComponent } from '../widgets/geolocation-control/geolocation-control.component';
 import { WidgetsModule } from '../widgets/widgets.module';
 
@@ -31,7 +31,7 @@ import { WidgetsModule } from '../widgets/widgets.module';
 
     // App
     GeolocationControlComponent,
-    ShareModule,
+    ShareComponent,
     WidgetsModule,
   ],
   exports: [

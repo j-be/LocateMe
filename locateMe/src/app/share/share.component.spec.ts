@@ -1,13 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NgxsModule, Store } from '@ngxs/store';
+import { NgxsModule, provideStates, Store } from '@ngxs/store';
 import {
   PositionFound,
   StartLocating,
 } from '../store/actions/position.actions';
 
 import { ShareComponent } from './share.component';
-import { ShareModule } from './share.module';
 import { Geolocation } from '../common';
+import { GeolocationState, MePositionState } from '../store/states/app.state';
+import { MessageService } from 'primeng/api';
 
 describe('ShareComponent', () => {
   let component: ShareComponent;
@@ -33,7 +34,14 @@ describe('ShareComponent', () => {
       imports: [
         NgxsModule.forRoot(),
 
-        ShareModule,
+        ShareComponent,
+      ],
+      providers: [
+        provideStates([
+          MePositionState,
+          GeolocationState,
+        ]),
+        MessageService,
       ],
     }).compileComponents();
   });
