@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { NgxsModule } from '@ngxs/store';
 import { RouteDetailComponent } from './route-detail.component';
 import {
@@ -9,7 +10,6 @@ import {
 } from '../store/states/app.state';
 import { WidgetsModule } from '../widgets/widgets.module';
 import { WlRoutingService } from '../service/wlRouting.service';
-import { HttpClientModule } from '@angular/common/http';
 import { PublicTransportChipComponent } from '../widgets/public-transport-chip/public-transport-chip.component';
 
 @NgModule({
@@ -19,7 +19,6 @@ import { PublicTransportChipComponent } from '../widgets/public-transport-chip/p
   imports: [
     // Angular
     CommonModule,
-    HttpClientModule,
     RouterModule.forChild([
       { path: '', component: RouteDetailComponent },
     ]),
@@ -35,6 +34,7 @@ import { PublicTransportChipComponent } from '../widgets/public-transport-chip/p
     WidgetsModule,
   ],
   providers: [
+    provideHttpClient(withInterceptorsFromDi()),
     WlRoutingService,
   ],
 })
