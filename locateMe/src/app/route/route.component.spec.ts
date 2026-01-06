@@ -9,7 +9,6 @@ import { PositionFound, PositionOther } from '../store/actions/position.actions'
 import { forgeGeolocation } from '../common';
 import { default as wlResponse } from '../../../wl-response.json';
 import { WlRoutingService } from '../service/wlRouting.service';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 const wlRoutingServiceSpy = { getRoute: vi.fn(() => of(wlResponse)) };
 
@@ -22,7 +21,6 @@ describe('RouteComponent', () => {
       imports: [
         NgxsModule.forRoot(),
 
-        NoopAnimationsModule,
         RouteModule,
       ],
       providers: [
