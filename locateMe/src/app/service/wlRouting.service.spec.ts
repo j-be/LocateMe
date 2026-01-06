@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { forgeGeolocation } from '../common';
 
 import { WlRoutingService } from './wlRouting.service';
@@ -12,9 +12,9 @@ describe('WlRoutingService', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        HttpClientTestingModule,
       ],
       providers: [
+        provideHttpClientTesting(),
         WlRoutingService,
       ],
     }).compileComponents();
