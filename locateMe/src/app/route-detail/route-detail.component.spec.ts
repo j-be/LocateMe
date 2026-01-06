@@ -1,9 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 import { NgxsModule } from '@ngxs/store';
-import { RouteComponent } from '../route/route.component';
 
 import { RouteDetailComponent } from './route-detail.component';
-import { RouterTestingModule } from '@angular/router/testing';
 import { RouteDetailModule } from './route-detail.module';
 
 describe('RouteDetailComponent', () => {
@@ -16,10 +15,9 @@ describe('RouteDetailComponent', () => {
         NgxsModule.forRoot(),
 
         RouteDetailModule,
-        RouterTestingModule,
       ],
       providers: [
-        RouteComponent,
+        provideRouter([]),
       ],
     }).compileComponents();
   });
