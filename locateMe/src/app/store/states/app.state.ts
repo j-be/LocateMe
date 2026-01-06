@@ -20,8 +20,6 @@ export interface GeolocationStateModel {
 export class MePositionState {
   private readonly messageService = inject(MessageService);
 
-  constructor() { }
-
   @Selector()
   static getState(state: Geolocation) {
     return state;
@@ -68,8 +66,6 @@ export class OtherPositionState {
 export class GeolocationState {
   private readonly messageService = inject(MessageService);
   private readonly store = inject(Store);
-
-  constructor() { }
 
   @Action(Actions.StartLocating)
   startLocating(ctx: StateContext<GeolocationStateModel>) {
@@ -156,9 +152,6 @@ export interface PublicTransportModel {
 export class PublicTransportState {
   private readonly wlRoutingService = inject(WlRoutingService);
   private readonly messageService = inject(MessageService);
-
-  constructor() {
-  }
 
   @Selector()
   static getState(state: PublicTransportModel) {

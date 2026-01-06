@@ -10,8 +10,6 @@ const url = `${environment.wlRoutingHost}/ogd_routing/XML_TRIP_REQUEST2`;
 export class WlRoutingService {
   private readonly http = inject(HttpClient);
 
-  constructor() { }
-
   private static formatLocation(position: Geolocation) {
     return `${position.coords.longitude}:${position.coords.latitude}:WGS84`;
   }
