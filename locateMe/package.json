@@ -25,7 +25,7 @@
     "@bluehalo/ngx-leaflet": "^21.0.0",
     "@materializecss/materialize": "^2.2.2",
     "@ngxs/store": "^21.0.0",
-    "@primeng/themes": "^21.0.2",
+    "@primeng/themes": "^21.0.3",
     "@vitest/coverage-v8": "^4.0.16",
     "leaflet": "^1.9.4",
     "primeng": "^21.0.2",
