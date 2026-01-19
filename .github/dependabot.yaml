@@ -18,6 +18,10 @@ updates:
         update-types:
         - "minor"
         - "patch"
+      primeng:
+        patterns:
+        - "primeng"
+        - "@primeng/themes
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
