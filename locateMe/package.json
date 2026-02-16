@@ -39,7 +39,7 @@
     "@angular/compiler-cli": "^21.1.4",
     "@types/leaflet": "^1.9.4",
     "angular-eslint": "21.2.0",
-    "eslint": "^9.39.1",
+    "eslint": "^10.0.0",
     "jsdom": "^28.1.0",
     "typescript": "~5.9.3",
     "typescript-eslint": "8.55.0",
