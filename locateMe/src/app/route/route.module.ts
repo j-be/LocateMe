@@ -51,5 +51,4 @@ import { PublicTransportChipComponent } from '../widgets/public-transport-chip/p
     provideHttpClient(withInterceptorsFromDi()),
   ],
 })
-export class RouteModule {
-}
+export class RouteModule {}

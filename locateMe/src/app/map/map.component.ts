@@ -42,7 +42,6 @@ const BASE_LAYERS = {
 };
 const DEFAULT_LAYER: keyof typeof BASE_LAYERS = 'CartoDB Voyager';
 
-
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
@@ -66,7 +65,7 @@ export class MapComponent implements OnInit, OnDestroy {
   private other = MapComponent.forgePositionMarker(otherOptions);
 
   private mapResized$ = new Subject<number>();
-  private onDestroy$= new Subject<boolean>();
+  private onDestroy$ = new Subject<boolean>();
 
   constructor() {
     this.positionMe$ = this.store.select(MePositionState.getState);
@@ -113,7 +112,7 @@ export class MapComponent implements OnInit, OnDestroy {
       .addLayer(this.other.accuracy);
 
     map.on({
-      baselayerchange: event => localStorage.setItem('baseLayer', event.name),
+      baselayerchange: (event) => localStorage.setItem('baseLayer', event.name),
     });
 
     // Register pan-and-zoom on location changes
@@ -146,7 +145,7 @@ export class MapComponent implements OnInit, OnDestroy {
     const latLng = this.toLeafletLatLng(position);
     positionMarker.marker.setOpacity(1);
     positionMarker.marker.setLatLng(latLng);
-    positionMarker.accuracy.setStyle({opacity: 1});
+    positionMarker.accuracy.setStyle({ opacity: 1 });
     positionMarker.accuracy.setLatLng(latLng);
     positionMarker.accuracy.setRadius(position.coords.accuracy);
   }
@@ -156,6 +155,9 @@ export class MapComponent implements OnInit, OnDestroy {
   }
 
   private toLeafletLatLngBound(first: Geolocation, second: Geolocation): LatLngBoundsExpression {
-    return [[first.coords.latitude, first.coords.longitude], [second.coords.latitude, second.coords.longitude]];
+    return [
+      [first.coords.latitude, first.coords.longitude],
+      [second.coords.latitude, second.coords.longitude],
+    ];
   }
 }
