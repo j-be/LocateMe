@@ -21,7 +21,7 @@ updates:
       primeng:
         patterns:
         - "primeng"
-        - "@primeng/themes
+        - "@primeng/themes"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
