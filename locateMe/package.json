@@ -26,7 +26,7 @@
     "@eslint/js": "10.0.1",
     "@materializecss/materialize": "2.3.3",
     "@ngxs/store": "21.0.0",
-    "@primeng/themes": "21.0.4",
+    "@primeuix/themes": "2.0.3",
     "@vitest/coverage-v8": "4.1.7",
     "leaflet": "1.9.4",
     "primeng": "21.1.9",
