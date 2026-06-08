@@ -22,7 +22,7 @@ export class GeolocationControlComponent {
 
   constructor() {
     this.locationWatchId$ = this.store.select(GeolocationState.locationWatchId);
-   }
+  }
 
   locateMe() {
     this.store.dispatch(new StartLocating());

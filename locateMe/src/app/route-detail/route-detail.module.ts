@@ -38,5 +38,4 @@ import { PublicTransportChipComponent } from '../widgets/public-transport-chip/p
     WlRoutingService,
   ],
 })
-export class RouteDetailModule {
-}
+export class RouteDetailModule {}
