@@ -22,6 +22,10 @@ updates:
         patterns:
         - "primeng"
         - "@primeng/themes"
+      vitest:
+        patterns:
+        - "vitest"
+        - "@vitest/*"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
