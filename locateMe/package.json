@@ -33,7 +33,7 @@
   "devDependencies": {
     "@angular/build": "21.2.13",
     "@angular/cli": "21.2.13",
-    "@angular/compiler": "21.2.15",
+    "@angular/compiler": "22.0.1",
     "@angular/compiler-cli": "21.2.15",
     "@eslint/js": "10.0.1",
     "@types/leaflet": "1.9.21",
